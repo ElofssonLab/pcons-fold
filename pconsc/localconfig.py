@@ -50,26 +50,28 @@ cores = 4
 # Enable work-around for PSICOV not handling low complexity alignments?
 # Warning: enable ONLY if you are certain that it is what you want to do!
 # To enable, change False into True
-psicovfail = False
+psicovfail = True
 
 # Path to formatdb formatted sequence database (e.g. Uniref90, nr90 etc.)
 # We recommend UniRef100
 # e.g. jackhmmerdb = '/home/mjs/db/uniref/uniref100.fasta'
-jackhmmerdb = ''
+jackhmmerdb = '/home/mircomic/glob/databases/uniref/current_release/uniref90.fasta'
 
 
 # Path to HHblits database
 # e.g. hhblitsdb = '/home/mjs/db/hhpred/new/nr20_12Aug11'
-hhblitsdb = ''
+hhblitsdb = '/home/mircomic/glob/databases/hhsuite_db/uniprot20/uniprot20_2012_10_klust20_dc_2012_12_10'
 
 # Path to MATLAB executable
 # e.g. matlab = '/afs/pdc.kth.se/pdc/vol/matlab/r2012a/bin/matlab'
-matlab = ''
+matlab = '/bubo/sw/apps/matlab/x86_64/7.13/bin/matlab'
 
 # Path to executable files
-jackhmmer = ''
-hhblits = ''
-psicov = ''
+jackhmmer = '/home/mircomic/glob/hmmer-3.0/src/jackhmmer'
+hhblits = '/home/mircomic/glob/hhsuite-2.0.16/bin/hhblits'
+psicov = '/home/mircomic/glob/psicov/psicov'
+netsurf = '/home/mircomic/glob/netsurfp-1.0/netsurfp'
+psipred = '/home/mircomic/glob/psipred/runpsipred'
 
 # These are included. Should not need changing.
 scriptpath = root + 'scripts'

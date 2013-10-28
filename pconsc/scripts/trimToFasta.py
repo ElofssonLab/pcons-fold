@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import sys, os, random
+import numpy as np
 
 infilef = sys.argv[1]
 
@@ -17,6 +18,7 @@ sequences = {}
 key = 'n/a'
 trimto = 'target'
 
+sys.stderr.write('Looking for: ' + lookfor + '\n')
 for l in infile:
 	if l.find('>') == 0:
 		if key == trimto:
@@ -24,6 +26,7 @@ for l in infile:
 		key = l[1:]
                 if key.find(lookfor) > -1:
                         key = trimto
+			sys.stderr.write('Found: ' + lookfor + '\n')
 		continue
 
 	if key in sequences:
@@ -32,6 +35,7 @@ for l in infile:
 		sequences[key] = l
 
 
+sys.stderr.write('Got trime sequence ' + key + '\n')
 chosen = ['target']
 for l in infile:
 	if l.find('>') == 0:
@@ -64,6 +68,7 @@ for l in infile:
 			key = l[1:]
                 	if key.find(lookfor) > -1:
                         	key = trimto
+				sys.stderr.write('Found: ' + lookfor + '/' + str(counter) + '\n')
 			sequence = ""
 			continue
                 
@@ -75,7 +80,7 @@ for l in infile:
 		        for i in range(len(keep)):
 		        	seq = seq + sequence[keep[i]]
                         if key != 'target':
-                                key = 'sequence' + str(counter) + '/1-100'
+                                key = 'sequence{0:07d}/1-100'.format(counter)
                                 counter = counter + 1
                         else:
                                 key = 'target/1-100'
@@ -85,6 +90,7 @@ for l in infile:
 		sequence = ""
                 if key.find(lookfor) > -1:
                        	key = trimto
+			sys.stderr.write('Found: ' + lookfor + ' [' + str(counter) + ']\n')
 		continue
 
 	sequence = sequence + l.replace('X', '-')
@@ -95,7 +101,7 @@ if key in chosen:
 		for i in range(len(keep)):
 			seq = seq + sequence[keep[i]]
 		if key != 'target':
-			key = 'sequence' + str(counter) + '/1-100'
+			key = 'sequence{0:07d}/1-100'.format(counter)
 			counter = counter + 1
 		else:
 			key = 'target/1-100'

@@ -47,13 +47,21 @@ hhpredictionnames = []
 failed = []
 
 for i in range(4):
-    if not os.path.exists(seqfile + '.jh' + names[i] + '.fas'):
+    
+    exists_jh = os.path.exists(seqfile + '.jh' + names[i] + '.fas')
+    exists_jh_psicov = os.path.exists(seqfile + '.jh' + names[i] + '.psicov')
+    exists_jh_plmdca = os.path.exists(seqfile + '.jh' + names[i] + '.plmdca')
+    exists_hh = os.path.exists(seqfile + '.hh' + names[i] + '.fas')
+    exists_hh_psicov = os.path.exists(seqfile + '.hh' + names[i] + '.psicov')
+    exists_hh_plmdca = os.path.exists(seqfile + '.hh' + names[i] + '.plmdca')
+
+    if not exists_jh and not exists_jh_psicov and not exists_jh_plmdca:
         sys.stderr.write(str(datetime.now()) + ' jackhmmer ' + names[i] + ': generating alignment\nThis may take quite a few minutes!\n ')
         t = check_output([jackhmmer, '--cpu', str(cores), '-N', '5', '-E', cutoffs[i], '-A', seqfile +'.jh' + names[i] + '.ali', seqfile + '.fasta', jackhmmerdb])
         check_output([reformat, 'sto', 'fas', seqfile + '.jh' + names[i] + '.ali', seqfile + '.jh' + names[i] + '.fas'])
         check_output(['rm', seqfile + '.jh' + names[i] + '.ali'])
 
-    if not os.path.exists(seqfile + '.jh' + names[i] + '.psicov'):
+    if not exists_jh_psicov:
         t = check_output([trim, seqfile + '.jh' + names[i] + '.fas'])
         f = open(seqfile + '.jh' + names[i] + '.jones', 'w')
         f.write(t)
@@ -61,18 +69,17 @@ for i in range(4):
 
         t = ''
         sys.stderr.write(str(datetime.now()) + ' jackhmmer ' + names[i] + ': running PSICOV\nThis may take more than an hour.\n')
-        if not os.path.exists(seqfile + '.jh' + names[i] + '.psicov'):
-            try:
-                t = check_output([psicov, seqfile + '.jh' + names[i] + '.jones'])
-            except:
-                t = ''
-            f = open(seqfile + '.jh' + names[i] + '.psicov', 'w')
-            f.write(t)
-            f.close()
+        try:
+            t = check_output([psicov, seqfile + '.jh' + names[i] + '.jones'])
+        except:
+            t = ''
+        f = open(seqfile + '.jh' + names[i] + '.psicov', 'w')
+        f.write(t)
+        f.close()
 
-           jhpredictionnames.append(seqfile + '.jh' + names[i] + '.psicov')
+    jhpredictionnames.append(seqfile + '.jh' + names[i] + '.psicov')
     
-    if not os.path.exists(seqfile + '.jh' + names[i] + '.plmdca'):
+    if not exists_jh_plmdca:
         t = check_output([trim2, seqfile + '.jh' + names[i] + '.fas'])
         f = open(seqfile + '.jh' + names[i] + '.trimmed', 'w')
         f.write(t)
@@ -83,12 +90,12 @@ for i in range(4):
 
     jhpredictionnames.append(seqfile + '.jh' + names[i] + '.plmdca')
 
-    if not os.path.exists(seqfile + '.hh' + names[i] + '.fas'):
+    if not exists_hh and not exists_hh_psicov and not exists_hh_plmdca:
         sys.stderr.write(str(datetime.now()) + ' HHblits' + names[i] + ': generating alignment\nThis may take quite a few minutes!\n ')
         t = check_output([hhblits, '-all', '-oa3m', seqfile + '.hh' + names[i] + '.a3m', '-e', cutoffs[i], '-cpu', str(cores), '-i', seqfile + '.fasta', '-d', hhblitsdb])
         check_output([reformat, 'a3m', 'fas', seqfile + '.hh' + names[i] + '.a3m', seqfile + '.hh' + names[i] + '.fas'])
     
-    if not os.path.exists(seqfile + '.hh' + names[i] + '.psicov'):
+    if not exists_hh_psicov:
         t = check_output([trim, seqfile + '.hh' + names[i] + '.fas'])
         f = open(seqfile + '.hh' + names[i] + '.jones', 'w')
         f.write(t)
@@ -96,18 +103,17 @@ for i in range(4):
         
         sys.stderr.write(str(datetime.now()) + ' HHblits ' + names[i] + ': running PSICOV\nThis may take more than an hour.\n')
         t = ''
-        if not os.path.exists(seqfile + '.hh' + names[i] + '.psicov'):
-            try:
-                t = check_output([psicov, seqfile + '.hh' + names[i] + '.jones'])
-            except:
-                t = ''
-            f = open(seqfile + '.hh' + names[i] + '.psicov', 'w')
-            f.write(t)
-            f.close()
+        try:
+            t = check_output([psicov, seqfile + '.hh' + names[i] + '.jones'])
+        except:
+            t = ''
+        f = open(seqfile + '.hh' + names[i] + '.psicov', 'w')
+        f.write(t)
+        f.close()
 
-        hhpredictionnames.append(seqfile + '.hh' + names[i] + '.psicov')
+    hhpredictionnames.append(seqfile + '.hh' + names[i] + '.psicov')
     
-    if not os.path.exists(seqfile + '.hh' + names[i] + '.plmdca'):
+    if not exists_hh_plmdca:
         t = check_output([trim2, seqfile + '.hh' + names[i] + '.fas'])
         f = open(seqfile + '.hh' + names[i] + '.trimmed', 'w')
         f.write(t)
@@ -125,26 +131,32 @@ if not os.path.exists(seqfile + '.rsa'):
     f.write(t)
     f.close()
 
+netsurfpredictionname = seqfile + '.rsa'
+
 if not os.path.exists(seqfile + '.psipred'):
     sys.stderr.write(str(datetime.now()) + ': running Psipred\nThis may take quite a few minutes!\n')
     check_output([psipred, seqfile])
 
+sspredictionname = seqfile + '.psipred'
+
 sys.stderr.write("Predicting layer 0...\n")
 result_i_name = seqfile + '.layer0.out'
-l = [os.path.dirname(os.path.abspath(sys.argv[0])) + '/predict-l0.py']
+l = [os.path.dirname(os.path.abspath(sys.argv[0])) + '/predict-Sl0.py']
 l.extend(jhpredictionnames)
 l.extend(hhpredictionnames)
-l.extend([nfpredictionname, sspredictionname, result_i_name])
+l.extend([netsurfpredictionname, sspredictionname, result_i_name])
 check_output(l)
 
-for layer_i in xrange(1, layers + 1)
+layers = int(sys.argv[2])
+
+for layer_i in xrange(1, layers + 1):
     sys.stderr.write("Predicting layer %s...\n" % layer_i)
     prev_result_i_name = result_i_name
-    result_i_name = seqfile + '.layer' + layer_i + '.out'
-    l = [os.path.dirname(os.path.abspath(sys.argv[0])) + '/predict-ln.py']
-    l.append(layer_i)
+    result_i_name = seqfile + '.layer' + str(layer_i) + '.out'
+    l = [os.path.dirname(os.path.abspath(sys.argv[0])) + '/predict-Sln.py']
+    l.append(str(layer_i))
     l.extend(jhpredictionnames)
     l.extend(hhpredictionnames)
-    l.extend([netsurfpredictionname, sspredictionname, lipredictionname, prev_result_i_name, result_i_name])
+    l.extend([netsurfpredictionname, sspredictionname, prev_result_i_name, result_i_name])
     check_output(l)
 
