@@ -5,17 +5,18 @@ import operator
 from collections import defaultdict
 from subprocess import call
 
-sys.path.append('/home/mircomic/toolbox')
+import parse_rosetta_scores
+import parse_tmscore
+import fix_numbering
 
-from parsing import parse_rosetta_scores
-from parsing import parse_tmscore
-from rosetta import fix_numbering
+# directory containing the rundir
+# there is a rundir for every core rosetta was run on
+# e.g. on Triolith 1 node = 16 cores => there are 16 rundirs (run_1, ..., run_16)
+rootdir = '/home/x_mirmi/pcons-fold/folding/rosetta/test'
 
-
-rootdir = '/home/mircomic/2013-04-22_folding_performance'
-#rootdir = '/home/mircomic/2013-04-22_folding_performance/evfold_sequences'
 rosetta_binary_dir = '/home/mircomic/glob/rosetta/rosetta_source/bin'
 rosetta_db_dir = '/home/mircomic/glob/rosetta/rosetta_database'
+
 tmscore_binary = '/home/mircomic/glob/TMscore/TMscore'
 
 
