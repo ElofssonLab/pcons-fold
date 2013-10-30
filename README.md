@@ -1,4 +1,4 @@
-pcons-fold
+PconsFold
 ===========
 
 The pipeline for folding using PconsC version 1 and 2 and Rosetta
