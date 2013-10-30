@@ -1,10 +1,13 @@
 #!/usr/bin/env python
-import sys, os, subprocess
+import os
+import sys
+import multiprocessing
+import subprocess
 
 if __name__ == '__main__':
-	print 'Please do not run me! Use predict.py or predictAll.py'
-	print '\n\tYours sincerely,\n\n\t', sys.argv[0]
-	sys.exit(0)
+    print 'Please do not run me! Use predict.py or predictAll.py'
+    print '\n\tYours sincerely,\n\n\t', sys.argv[0]
+    sys.exit(0)
 
 sys.stderr.write("""
 ****************************************************************************
@@ -45,28 +48,37 @@ doi:10.1038/nmeth.1818
 root = os.path.dirname(os.path.abspath(sys.argv[0])) + '/'
 
 # Maximum amount of cores to use
-cores = 4
+# joel@nsc: Using all the resources available is probably the default that makes most sense.
+cores = multiprocessing.cpu_count()
 
 # Enable work-around for PSICOV not handling low complexity alignments?
 # Warning: enable ONLY if you are certain that it is what you want to do!
 # To enable, change False into True
+#psicovfail = False
 psicovfail = True
 
 # Path to formatdb formatted sequence database (e.g. Uniref90, nr90 etc.)
 # We recommend UniRef100
 # e.g. jackhmmerdb = '/home/mjs/db/uniref/uniref100.fasta'
-jackhmmerdb = '/home/x_mirmi/glob/databases/uniref/current_release/uniref90.fasta'
+# joel@nsc: Better set as command line parameter.
+#jackhmmerdb = None
 
 
 # Path to HHblits database
 # e.g. hhblitsdb = '/home/mjs/db/hhpred/new/nr20_12Aug11'
-hhblitsdb = '/home/x_mirmi/glob/databases/hhsuite_db/uniprot20/uniprot20_2012_10_klust20_dc_2012_12_10'
+# joel@nsc: Better set as command line parameter.
+#hhblitsdb = None
 
 # Path to MATLAB executable
 # e.g. matlab = '/afs/pdc.kth.se/pdc/vol/matlab/r2012a/bin/matlab'
-#matlab = '/bubo/sw/apps/matlab/x86_64/7.13/bin/matlab'
+matlab = None
 
 # Path to executable files
+#jackhmmer = 'jackhmmer'
+#hhblits = 'hhblits'
+#psicov = 'psicov'
+## joel@nsc: Better have a script launcher or similar. This allows you to use e.g. the MCR and not have to use a complete Matlab install.
+#plmdca = 'plmdca'
 jackhmmer = root + 'dependencies/hmmer-3.0/src/jackhmmer'
 hhblits = root + 'dependencies/hhsuite-2.0.16/bin/hhblits'
 psicov = root + 'dependencies/psicov-1.11/psicov'
@@ -84,75 +96,93 @@ reformat = root + 'scripts/reformat.pl'
 # Download plmDCA from http://plmdca.csc.kth.se/ and put it into scripts/plmDCA_symmetric_v2 directory
 # e.g. plmdca = root + 'scripts/plmDCA_symmetric_v2/plmDCA_symmetric.m'
 
-plmdca = root + 'scripts/plmDCA_symmetric_v2/plmDCA_symmetric.m'
-if not os.path.exists(plmdca):
-	sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
-	sys.stderr.write('Download plmDCA from http://plmdca.csc.kth.se/ and put it into scripts/plmDCA_symmetric_v2 directory!\n')
-	sys.exit(1)
+# joel@nsc: Better to test e.g. $(type plmdca) and let people take care of their own software. 
+#plmdca = root + 'scripts/plmDCA_symmetric_v2/plmDCA_symmetric.m'
+#if not os.path.exists(plmdca):
+#    sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
+#    sys.stderr.write('Download plmDCA from http://plmdca.csc.kth.se/ and put it into scripts/plmDCA_symmetric_v2 directory!\n')
+#    sys.exit(1)
 
-if len(jackhmmerdb) < 2:
-	sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
-	sys.stderr.write('jackhmmer database NOT SET!\n')
-	sys.exit(1)
+#if len(jackhmmerdb) < 2:
+#    sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
+#    sys.stderr.write('jackhmmer database NOT SET!\n')
+#    sys.exit(1)
 
-if not os.path.exists(jackhmmerdb):
-	sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
-	sys.stderr.write('jackhmmer database (' + jackhmmerdb + ') DOES NOT EXIST!\n')
-	sys.exit(1)
+#if not os.path.exists(jackhmmerdb):
+#    sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
+#    sys.stderr.write('jackhmmer database (' + jackhmmerdb + ') DOES NOT EXIST!\n')
+#    sys.exit(1)
 
-if len(hhblitsdb) < 2:
-	sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
-	sys.stderr.write('HHblits database NOT SET!\n')
-	sys.exit(1)
+#if len(hhblitsdb) < 2:
+#    sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
+#    sys.stderr.write('HHblits database NOT SET!\n')
+#    sys.exit(1)
 
-if not os.path.exists(hhblitsdb+'_a3m_db'):
-	sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
-	sys.stderr.write('HHblits database (' + hhblitsdb + ') DOES NOT EXIST!\n')
-	sys.exit(1)
+#if not os.path.exists(hhblitsdb+'_a3m_db'):
+#    sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
+#    sys.stderr.write('HHblits database (' + hhblitsdb + ') DOES NOT EXIST!\n')
+#    sys.exit(1)
+
+
+""" only for testing, can be remved later
+if plmdca:
+    try:
+        f = open(os.devnull, "w") 
+        x  = subprocess.call([plmdca, '-h'], stdout=f, stderr=f)
+        f.close()
+    except Exception as e:
+        sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
+        sys.stderr.write('Chosen plmdca binary does not seem to work!\n')
+        sys.exit(1)
+elif matlab:
+    try:
+        f = open(os.devnull, "w") 
+        x  = subprocess.call([matlab, '-h'], stdout=f, stderr=f)
+        f.close()
+    except:
+        sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
+        sys.stderr.write('Chosen MATLAB binary does not seem to work!\n')
+        sys.exit(1)
+else:
+    sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
+    sys.stderr.write('You must set one of plmdca or matlab in localconfig.py!\n')
+    sys.exit(1)
 """
+
 try:
-	f = open(os.devnull, "w") 
-	x  = subprocess.call([matlab, '-h'], stdout=f, stderr=f)
-	f.close()
-except:
-	sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
-	sys.stderr.write('Chosen MATLAB binary does not seem to work!\n')
-	sys.exit(1)
-"""
-try:
-	f = open(os.devnull, "w") 
-	x  = subprocess.call([jackhmmer, '-h'], stdout=f, stderr=f)
-	f.close()
+    f = open(os.devnull, "w") 
+    x  = subprocess.call([jackhmmer, '-h'], stdout=f, stderr=f)
+    f.close()
 except Exception as e:
-	sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
-	sys.stderr.write('Chosen jackhmmer binary does not seem to work!\n')
-	sys.exit(1)
+    sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
+    sys.stderr.write('Chosen jackhmmer binary does not seem to work!\n')
+    sys.exit(1)
 
 try:
-	f = open(os.devnull, "w") 
-	x  = subprocess.call([hhblits, '-h'], stderr=f, stdout=f)
-	f.close()
-	pass
+    f = open(os.devnull, "w") 
+    x  = subprocess.call([hhblits, '-h'], stderr=f, stdout=f)
+    f.close()
+    pass
 except:
-	sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
-	sys.stderr.write('Chosen HHblits binary does not seem to work!\n')
-	sys.exit(1)
+    sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
+    sys.stderr.write('Chosen HHblits binary does not seem to work!\n')
+    sys.exit(1)
 
 
 try:
-	f = open(os.devnull, "w") 
-	x  = subprocess.call([psicov, root + '/extras/psicovtest.fas'], stdout=f, stderr=f)
-	f.close()
+    f = open(os.devnull, "w") 
+    x  = subprocess.call([psicov, root + '/extras/psicovtest.fas'], stdout=f, stderr=f)
+    f.close()
 except Exception as e:
-	sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
-	sys.stderr.write('Chosen PSICOV binary does not seem to work!\n')
-	sys.exit(1)
+    sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
+    sys.stderr.write('Chosen PSICOV binary does not seem to work!\n')
+    sys.exit(1)
 
 if x == 255 and not psicovfail:
-	sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
-	sys.stderr.write('Your version of PSICOV refuses to handle low-complexity alignments.\n')
-	sys.stderr.write('We recommend patching the PSICOV code to allow this. See 00README\n')
-	sys.stderr.write('If you _really_ do not want to do that, please change psicovfail flag in \n')
-	sys.stderr.write(os.path.abspath(sys.argv[0]) + ' to True.\n')
-	sys.stderr.write('This will (most probably) affect the prediction performance.\n')
-	sys.exit(1)
+    sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
+    sys.stderr.write('Your version of PSICOV refuses to handle low-complexity alignments.\n')
+    sys.stderr.write('We recommend patching the PSICOV code to allow this. See 00README\n')
+    sys.stderr.write('If you _really_ do not want to do that, please change psicovfail flag in \n')
+    sys.stderr.write(os.path.abspath(sys.argv[0]) + ' to True.\n')
+    sys.stderr.write('This will (most probably) affect the prediction performance.\n')
+    sys.exit(1)
