@@ -55,23 +55,23 @@ psicovfail = True
 # Path to formatdb formatted sequence database (e.g. Uniref90, nr90 etc.)
 # We recommend UniRef100
 # e.g. jackhmmerdb = '/home/mjs/db/uniref/uniref100.fasta'
-jackhmmerdb = '/home/mircomic/glob/databases/uniref/current_release/uniref90.fasta'
+jackhmmerdb = '/home/x_mirmi/glob/databases/uniref/current_release/uniref90.fasta'
 
 
 # Path to HHblits database
 # e.g. hhblitsdb = '/home/mjs/db/hhpred/new/nr20_12Aug11'
-hhblitsdb = '/home/mircomic/glob/databases/hhsuite_db/uniprot20/uniprot20_2012_10_klust20_dc_2012_12_10'
+hhblitsdb = '/home/x_mirmi/glob/databases/hhsuite_db/uniprot20/uniprot20_2012_10_klust20_dc_2012_12_10'
 
 # Path to MATLAB executable
 # e.g. matlab = '/afs/pdc.kth.se/pdc/vol/matlab/r2012a/bin/matlab'
-matlab = '/bubo/sw/apps/matlab/x86_64/7.13/bin/matlab'
+#matlab = '/bubo/sw/apps/matlab/x86_64/7.13/bin/matlab'
 
 # Path to executable files
-jackhmmer = '/home/mircomic/glob/hmmer-3.0/src/jackhmmer'
-hhblits = '/home/mircomic/glob/hhsuite-2.0.16/bin/hhblits'
-psicov = '/home/mircomic/glob/psicov/psicov'
-netsurf = '/home/mircomic/glob/netsurfp-1.0/netsurfp'
-psipred = '/home/mircomic/glob/psipred/runpsipred'
+jackhmmer = root + 'dependencies/hmmer-3.0/src/jackhmmer'
+hhblits = root + 'dependencies/hhsuite-2.0.16/bin/hhblits'
+psicov = root + 'dependencies/psicov-1.11/psicov'
+netsurf = root + 'dependencies/netsurfp-1.0/netsurfp'
+psipred = root + 'dependencies/psipred/runpsipred'
 
 # These are included. Should not need changing.
 scriptpath = root + 'scripts'
@@ -109,7 +109,7 @@ if not os.path.exists(hhblitsdb+'_a3m_db'):
 	sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
 	sys.stderr.write('HHblits database (' + hhblitsdb + ') DOES NOT EXIST!\n')
 	sys.exit(1)
-
+"""
 try:
 	f = open(os.devnull, "w") 
 	x  = subprocess.call([matlab, '-h'], stdout=f, stderr=f)
@@ -118,7 +118,7 @@ except:
 	sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
 	sys.stderr.write('Chosen MATLAB binary does not seem to work!\n')
 	sys.exit(1)
-
+"""
 try:
 	f = open(os.devnull, "w") 
 	x  = subprocess.call([jackhmmer, '-h'], stdout=f, stderr=f)

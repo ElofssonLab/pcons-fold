@@ -55,7 +55,7 @@ for i in range(4):
     exists_hh_psicov = os.path.exists(seqfile + '.hh' + names[i] + '.psicov')
     exists_hh_plmdca = os.path.exists(seqfile + '.hh' + names[i] + '.plmdca')
 
-    if not exists_jh and not exists_jh_psicov and not exists_jh_plmdca:
+    if not exists_jh and (not exists_jh_psicov or not exists_jh_plmdca):
         sys.stderr.write(str(datetime.now()) + ' jackhmmer ' + names[i] + ': generating alignment\nThis may take quite a few minutes!\n ')
         t = check_output([jackhmmer, '--cpu', str(cores), '-N', '5', '-E', cutoffs[i], '-A', seqfile +'.jh' + names[i] + '.ali', seqfile + '.fasta', jackhmmerdb])
         check_output([reformat, 'sto', 'fas', seqfile + '.jh' + names[i] + '.ali', seqfile + '.jh' + names[i] + '.fas'])
@@ -90,7 +90,7 @@ for i in range(4):
 
     jhpredictionnames.append(seqfile + '.jh' + names[i] + '.plmdca')
 
-    if not exists_hh and not exists_hh_psicov and not exists_hh_plmdca:
+    if not exists_hh and (not exists_hh_psicov or not exists_hh_plmdca):
         sys.stderr.write(str(datetime.now()) + ' HHblits' + names[i] + ': generating alignment\nThis may take quite a few minutes!\n ')
         t = check_output([hhblits, '-all', '-oa3m', seqfile + '.hh' + names[i] + '.a3m', '-e', cutoffs[i], '-cpu', str(cores), '-i', seqfile + '.fasta', '-d', hhblitsdb])
         check_output([reformat, 'a3m', 'fas', seqfile + '.hh' + names[i] + '.a3m', seqfile + '.hh' + names[i] + '.fas'])

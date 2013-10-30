@@ -47,6 +47,26 @@ def parseNetSurfP(f):
         return netSurfdict
 
 
+def parsePSIPREDhoriz(hfile):
+        SS = ''
+        conf = ''
+        SSdict = {}
+        for line in hfile:
+                line_arr = line.strip().split(' ')
+                if line_arr[0] == 'Pred:' and len(line_arr) > 1:
+                        SS += line_arr[1]
+                if line_arr[0] == 'Conf:' and len(line_arr) > 1:
+                        conf += line_arr[1]
+        for i in range(len(conf)):
+                if SS[i] == 'H':
+                        SSdict[i+1] = [int(conf[i]), 0,0]
+                elif SS[i] == 'E':
+                        SSdict[i+1] = [0, int(conf[i]), 0]
+                else:
+                        SSdict[i+1] = [0,0,int(conf[i])]
+        return SSdict
+
+
 def parsePSIPRED(f):
         x = open(f).read().split('\n')
         conf = x[3]
@@ -83,7 +103,8 @@ Y = []
 maxres = -1
 acceptable = []
 accessibility = parseNetSurfP(files[16])
-SSdict = parsePSIPRED(files[17])
+#SSdict = parsePSIPRED(files[17])
+SSdict = parsePSIPREDhoriz(files[17])
 
 for index in range(16):
 	contacts[index] = {}
@@ -175,7 +196,7 @@ for s in sorted(list(selected)):
 #			q.extend([0,0,0,0,0])
 			q.extend([-1])
 
-	outf.write('{:d} {:d} {:6.4f}\n'.format(s[0], s[1], predict(q, forest) ) )
+	outf.write('%d %d %6.4f\n' % (s[0], s[1], predict(q, forest) ) )
 
 outf.close()
 
