@@ -126,7 +126,7 @@ def get_tp_colors(contacts_x, contacts_y, ref_contact_map, atom_seq_ali):
     return tp_colors
  
 
-def plot_map(fasta_filename, c_filename, factor, c2_filename='', psipred_filename='', pdb_filename='', is_heavy=False, chain='', sep=','):  
+def plot_map(fasta_filename, c_filename, factor, c2_filename='', psipred_filename='', pdb_filename='', is_heavy=False, chain='', sep=' '):  
    
     acc = c_filename.split('.')[0]
 
@@ -273,16 +273,17 @@ def plot_map(fasta_filename, c_filename, factor, c2_filename='', psipred_filenam
             sc = ax.scatter(contacts_x[::-1], contacts_y[::-1], marker='o', c=tp_colors[::-1], s=6, alpha=0.75, linewidths=0.0)
             sc = ax.scatter(contacts_y[::-1], contacts_x[::-1], marker='o', c=tp_colors[::-1], s=6, alpha=0.75, linewidths=0.0)
         else:
-            sc = ax.scatter(contacts_x[::-1], contacts_y[::-1], marker='o', c=scores[::-1], s=4, alpha=0.75, cmap=cm.jet, linewidths=0.1)
-            sc = ax.scatter(contacts_y[::-1], contacts_x[::-1], marker='o', c=scores[::-1], s=4, alpha=0.75, cmap=cm.jet, linewidths=0.1)
+            sc = ax.scatter(contacts_x[::-1], contacts_y[::-1], marker='o', c=scores[::-1], s=6, alpha=0.75, cmap=cm.jet, linewidths=0.1)
+            sc = ax.scatter(contacts_y[::-1], contacts_x[::-1], marker='o', c=scores[::-1], s=6, alpha=0.75, cmap=cm.jet, linewidths=0.1)
             plt.colorbar(sc)
 
     plt.gca().set_xlim([0,ref_len])
     plt.gca().set_ylim([0,ref_len])
 
-    pp = PdfPages('%s_ContactMap.pdf' % c_filename)
-    pp.savefig(fig)
-    pp.close()
+    plt.savefig('%s.cm.png' % c_filename, bbox_inches=0)    
+    #pp = PdfPages('%s_ContactMap.pdf' % c_filename)
+    #pp.savefig(fig)
+    #pp.close()
 
 
     

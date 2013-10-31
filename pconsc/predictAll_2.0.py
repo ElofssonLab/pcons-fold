@@ -5,6 +5,8 @@ from datetime import datetime
 import sys, subprocess, os
 import string as s
 
+from plotting.plot_contact_map import plot_map
+
 def check_output(command):
     return subprocess.Popen(command, stdout=subprocess.PIPE).communicate()[0]
 
@@ -174,6 +176,14 @@ l.extend(hhpredictionnames)
 l.extend([netsurfpredictionname, sspredictionname, result_i_name])
 check_output(l)
 
+# plot the top L*2 (!) contacts in a contact map
+# those contacts are later used during protein folding
+if os.path.exists('native.pdb'):
+    plot_map(seqfile, result_i_name, 2.0, pdb_filename='native.pdb')
+else:
+    plot_map(seqfile, result_i_name, 2.0)
+
+
 
 for layer_i in xrange(1, layers + 1):
     sys.stderr.write("Predicting layer %s...\n" % layer_i)
@@ -185,4 +195,13 @@ for layer_i in xrange(1, layers + 1):
     l.extend(hhpredictionnames)
     l.extend([netsurfpredictionname, sspredictionname, prev_result_i_name, result_i_name])
     check_output(l)
+
+    # plot the top L*2 (!) contacts in a contact map
+    # those contacts are later used during protein folding
+    if os.path.exists('native.pdb'):
+        plot_map(seqfile, result_i_name, 2.0, pdb_filename='native.pdb')
+    else:
+        plot_map(seqfile, result_i_name, 2.0)
+
+
 

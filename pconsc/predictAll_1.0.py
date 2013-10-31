@@ -5,6 +5,8 @@ from datetime import datetime
 import sys, subprocess, os
 import string as s
 
+from plotting.plot_contact_map import plot_map
+
 def check_output(command):
     return subprocess.Popen(command, stdout=subprocess.PIPE).communicate()[0]
 
@@ -156,3 +158,12 @@ results = check_output(l)
 f = open(seqfile + '.pconsc.out', 'w')
 f.write(results)
 f.close()
+
+
+# plot the top L*1 contacts in a contact map
+# those contacts are later used during protein folding
+if os.path.exists('native.pdb'):
+    plot_map(seqfile, seqfile + '.pconsc.out', 1.0, pdb_filename='native.pdb')
+else:
+    plot_map(seqfile, seqfile + '.pconsc.out', 1.0)
+
