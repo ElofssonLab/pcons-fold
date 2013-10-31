@@ -73,12 +73,19 @@ psicovfail = True
 # e.g. matlab = '/afs/pdc.kth.se/pdc/vol/matlab/r2012a/bin/matlab'
 matlab = None
 
+### NEW!!!:
+# Path to MATLAB directory 
+# OR path to MATLAB compiler (needed to run compiled version of plmDCA)
+matlabdir = '/software/apps/matlab/R2013a/nsc3/' 
+
 # Path to executable files
 #jackhmmer = 'jackhmmer'
 #hhblits = 'hhblits'
 #psicov = 'psicov'
 ## joel@nsc: Better have a script launcher or similar. This allows you to use e.g. the MCR and not have to use a complete Matlab install.
 #plmdca = 'plmdca'
+## mirco: We now have a MCR compiled version of plmDCA_symmetric
+plmdca = root + 'dependencies/plmDCA_symmetric-standalone/run_plmDCA_symmetric.sh'
 jackhmmer = root + 'dependencies/hmmer-3.0/src/jackhmmer'
 hhblits = root + 'dependencies/hhsuite-2.0.16/bin/hhblits'
 psicov = root + 'dependencies/psicov-1.11/psicov'
