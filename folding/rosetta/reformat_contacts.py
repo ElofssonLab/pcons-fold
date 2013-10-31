@@ -1,9 +1,10 @@
 import sys
 
 
-def reformat(seqfile_name, infile_name, factor, score=15)
+def reformat(seqfile_name, infile_name, factor, score=15):
 
     min_dist = 5
+    factor = float(factor)
 
     # read sequence needed for checking if res = glycine
     # to assign CA/CB
@@ -50,7 +51,6 @@ def reformat(seqfile_name, infile_name, factor, score=15)
             count += 1
         if count > (seq_len * factor):
             break
-
 
     # write rosetta readable constraint file
     outfile_name = '.'.join(infile_name.split('.')[0:-1]) + '-' + str(factor) + '.constraints'
