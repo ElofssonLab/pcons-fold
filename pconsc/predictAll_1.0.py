@@ -162,8 +162,12 @@ f.close()
 
 # plot the top L*1 contacts in a contact map
 # those contacts are later used during protein folding
-if os.path.exists('native.pdb'):
+if os.path.exists('native.pdb') and os.path.exists(seqfile + '.horiz'):
+    plot_map(seqfile, seqfile + '.pconsc.out', 1.0, pdb_filename='native.pdb', psipred_filename=seqfile + '.horiz')
+elif os.path.exists('native.pdb'):
     plot_map(seqfile, seqfile + '.pconsc.out', 1.0, pdb_filename='native.pdb')
+elif os.path.exists(seqfile + '.horiz'):
+    plot_map(seqfile, seqfile + '.pconsc.out', 1.0, psipred_filename=seqfile + '.horiz')
 else:
     plot_map(seqfile, seqfile + '.pconsc.out', 1.0)
 

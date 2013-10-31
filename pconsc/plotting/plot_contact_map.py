@@ -1,8 +1,6 @@
 import sys
 import argparse
 from math import *
-from os.path import expanduser
-home = expanduser("~")
 
 # on UPPMAX only
 #sys.path.append('/bubo/sw/apps/bioinfo/biopython/1.59/tintin/lib/python')
@@ -112,16 +110,16 @@ def get_tp_colors(contacts_x, contacts_y, ref_contact_map, atom_seq_ali):
         c_y = contacts_y[i]
         if atom_seq_ali[c_x] == '-':
             #tp_colors.append('green')
-            tp_colors.append('red')
+            tp_colors.append('#004F9D')
             continue
         if atom_seq_ali[c_y] == '-':
             #tp_colors.append('green')
-            tp_colors.append('red')
+            tp_colors.append('#004F9D')
             continue
         if ref_contact_map[c_x, c_y] > 0:
-            tp_colors.append('blue')
+            tp_colors.append('#38C700')
         else:
-            tp_colors.append('red')
+            tp_colors.append('#D70909')
 
     return tp_colors
  
@@ -162,19 +160,22 @@ def plot_map(fasta_filename, c_filename, factor, c2_filename='', psipred_filenam
  
 
     ### start plotting
-    fig = plt.figure()
+    fig = plt.figure(figsize=(8,8), dpi=100)
     ax = fig.add_subplot(111)
+    #ax = plt.axes([.1, .1, .8, .8], frameon=False)
+    ax.set_xlim(xmin=-1)
+    ax.set_ylim(ymin=-1)
 
     ### plot secondary structure on the diagonal if given
     if psipred_filename:
         ss = parse_psipred.horizontal(open(psipred_filename, 'r'))
         for i in range(len(ss)):
             if ss[i] == 'H':
-                plt.plot(i, i, 'o', c='#8B0043', mec="#8B0043", markersize=2)
+                plt.plot(i, i, 'o', c='#8B0043', mec="#8B0043")#, markersize=8)
             if ss[i] == 'E':
-                plt.plot(i, i, 'D', c='#0080AD', mec="#0080AD", markersize=2)
+                plt.plot(i, i, 'D', c='#0080AD', mec="#0080AD")#, markersize=8)
             if ss[i] == 'C':
-                continue
+                plt.plot(i, i, 'D', c='#CCCCCC', mec="#CCCCCC", markersize=4)
 
     ### plot reference contacts in the background if given
     if pdb_filename:
@@ -222,7 +223,7 @@ def plot_map(fasta_filename, c_filename, factor, c2_filename='', psipred_filenam
    
         print '%s\t%s' % (acc, PPVs[-1])
       
-        ax.scatter(ref_contacts_x, ref_contacts_y, marker='o', c='#CCCCCC', lw=0)
+        ax.scatter(ref_contacts_x, ref_contacts_y, marker='o', c='#DDDDDD', lw=0)
 
 
     ### plot predicted contacts from second contact map if given
@@ -257,36 +258,39 @@ def plot_map(fasta_filename, c_filename, factor, c2_filename='', psipred_filenam
             PPVs2 = get_ppvs(contacts2_x, contacts2_y, ref_contact_map, atom_seq_ali, ref_len, factor)
             tp2_colors = get_tp_colors(contacts2_x, contacts2_y, ref_contact_map, atom_seq_ali)
             print '%s\t%s' % (acc, PPVs2[-1])
-            fig.suptitle('%s\nPPV (upper left) = %.2f | PPV (lower right) = %.2f' % (acc, PPVs[-1], PPVs2[-1]))
-            sc = ax.scatter(contacts2_y[::-1], contacts2_x[::-1], marker='o', c=tp2_colors[::-1], s=6, alpha=0.75, linewidths=0.0)
-            sc = ax.scatter(contacts_x[::-1], contacts_y[::-1], marker='o', c=tp_colors[::-1], s=6, alpha=0.75, linewidths=0.0)
+            fig.suptitle('%s\n%s (upper left) PPV = %.2f | %s (lower right) PPV = %.2f' % (acc, c_filename, PPVs[-1], c2_filename, PPVs2[-1]))
+            sc = ax.scatter(contacts2_y[::-1], contacts2_x[::-1], marker='o', c=tp2_colors[::-1], linewidths=0.0)
+            sc = ax.scatter(contacts_x[::-1], contacts_y[::-1], marker='o', c=tp_colors[::-1], linewidths=0.0)
         else:
-            sc = ax.scatter(contacts2_y[::-1], contacts2_x[::-1], marker='o', c='#D70909', edgecolor='#D70909', s=4, linewidths=0.5)
-            sc = ax.scatter(contacts_x[::-1], contacts_y[::-1], marker='o', c='#004F9D', edgecolor='#004F9D', s=4, linewidths=0.5)
+            fig.suptitle('%s\n%s (upper left) | %s (lower right)' % (acc, c_filename, c2_filename))
+            sc = ax.scatter(contacts2_y[::-1], contacts2_x[::-1], marker='o', c='#D70909', edgecolor='#D70909', s=8, linewidths=0.5)
+            sc = ax.scatter(contacts_x[::-1], contacts_y[::-1], marker='o', c='#004F9D', edgecolor='#004F9D', s=8, linewidths=0.5)
 
 
     ### plot predicted contacts from first contact map on both triangles
     ### if no second contact map given
     else:
         if pdb_filename:
-            fig.suptitle('%s\nPPV = %.2f' % (acc, PPVs[-1]))
-            sc = ax.scatter(contacts_x[::-1], contacts_y[::-1], marker='o', c=tp_colors[::-1], s=6, alpha=0.75, linewidths=0.0)
-            sc = ax.scatter(contacts_y[::-1], contacts_x[::-1], marker='o', c=tp_colors[::-1], s=6, alpha=0.75, linewidths=0.0)
+            fig.suptitle('%s (%s)\nPPV = %.2f' % (acc, c_filename, PPVs[-1]))
+            sc = ax.scatter(contacts_x[::-1], contacts_y[::-1], marker='o', c=tp_colors[::-1], linewidths=0.0)
+            sc = ax.scatter(contacts_y[::-1], contacts_x[::-1], marker='o', c=tp_colors[::-1], linewidths=0.0)
         else:
-            sc = ax.scatter(contacts_x[::-1], contacts_y[::-1], marker='o', c=scores[::-1], s=6, alpha=0.75, cmap=cm.jet, linewidths=0.1)
-            sc = ax.scatter(contacts_y[::-1], contacts_x[::-1], marker='o', c=scores[::-1], s=6, alpha=0.75, cmap=cm.jet, linewidths=0.1)
-            plt.colorbar(sc)
+            fig.suptitle('%s (%s)' % (acc, c_filename))
+            #sc = ax.scatter(contacts_x[::-1], contacts_y[::-1], marker='o', c=scores[::-1], s=6, alpha=0.75, cmap=cm.jet, linewidths=0.5)
+            #sc = ax.scatter(contacts_y[::-1], contacts_x[::-1], marker='o', c=scores[::-1], s=6, alpha=0.75, cmap=cm.jet, linewidths=0.5)
+            sc = ax.scatter(contacts_x[::-1], contacts_y[::-1], marker='o', c='#004F9D', edgecolor='#004F9D', s=8, linewidths=0.5)
+            sc = ax.scatter(contacts_y[::-1], contacts_x[::-1], marker='o', c='#004F9D', edgecolor='#004F9D', s=8, linewidths=0.5)
+            #plt.colorbar(sc)
 
-    plt.gca().set_xlim([0,ref_len])
-    plt.gca().set_ylim([0,ref_len])
+    plt.gca().set_xlim([-1,ref_len])
+    plt.gca().set_ylim([-1,ref_len])
 
-    plt.savefig('%s.cm.png' % c_filename, bbox_inches=0)    
+    plt.savefig('%s.cm.png' % c_filename, bbox_inches=0) 
     #pp = PdfPages('%s_ContactMap.pdf' % c_filename)
     #pp.savefig(fig)
     #pp.close()
 
 
-    
 if __name__ == "__main__":
 
     p = argparse.ArgumentParser(description='Plot protein residue contact maps.')
@@ -315,4 +319,3 @@ if __name__ == "__main__":
         sep = '\t'
     
     plot_map(args['fasta_file'], args['contact_file'], args['factor'], c2_filename=args['c2'], psipred_filename=args['psipred_horiz'], pdb_filename=args['pdb'], is_heavy=args['heavy'], chain=args['chain'], sep=sep)
-

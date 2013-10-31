@@ -179,9 +179,9 @@ check_output(l)
 # plot the top L*2 (!) contacts in a contact map
 # those contacts are later used during protein folding
 if os.path.exists('native.pdb'):
-    plot_map(seqfile, result_i_name, 2.0, pdb_filename='native.pdb')
+    plot_map(seqfile, result_i_name, 2.0, psipred_filename=sspredictionname, pdb_filename='native.pdb')
 else:
-    plot_map(seqfile, result_i_name, 2.0)
+    plot_map(seqfile, result_i_name, 2.0, psipred_filename=sspredictionname)
 
 
 
@@ -199,9 +199,9 @@ for layer_i in xrange(1, layers + 1):
     # plot the top L*2 (!) contacts in a contact map
     # those contacts are later used during protein folding
     if os.path.exists('native.pdb'):
-        plot_map(seqfile, result_i_name, 2.0, pdb_filename='native.pdb')
+        plot_map(seqfile, result_i_name, 2.0, psipred_filename=sspredictionname, pdb_filename='native.pdb')
     else:
-        plot_map(seqfile, result_i_name, 2.0)
+        plot_map(seqfile, result_i_name, 2.0, psipred_filename=sspredictionname)
 
 
 
