@@ -1,7 +1,7 @@
 PconsFold
 ===========
 
-The pipeddne for folding using PconsC version 1 and 2 and Rosetta
+The pipeline for folding using PconsC version 1 and 2 and Rosetta
 
 CNS protocol will be added
 
@@ -9,7 +9,7 @@ CNS protocol will be added
 Instructions:
 ===========
 
-Pipeddne overview:
+Pipeline overview:
 
 <ul>
 <dt>Input:</dt> <dd>fasta file containing one sequence</dd>
@@ -28,25 +28,26 @@ Remark: dependencies are not included in this repository.
 
 <dl>
 <dd>
-<dt>1) & 2)</dt> 
-"python pconsc/predictAll_1.0.py [-c cores] <hhbddts_database> <jackhmmer_database> <sequence_file>" <br>
+<dt>1) & 2)</dt> <dd> 
+python pconsc/predictAll_1.0.py [-c cores] hhblits_database jackhmmer_database sequence_file <br>
 or <br>
-"python pconsc/predictAll_2.0.py [-c cores] <hhbddts_database> <jackhmmer_database> <sequence_file> <layers>" <br>
+python pconsc/predictAll_2.0.py [-c cores] hhblits_database jackhmmer_database sequence_file layers <br>
 Where "layers" is a interger of the interval 1..4, to set the number of layers that are computed during deep learning. We recommend to set it to 4.
 </dd>
 <dd>
-<dt>3)</dt> <dd>"python folding/rosetta/prepare_input.py <sequence_file> <pconsc_output> <factor>"
-Where "pconsc_output" is the contact map as given by PconsC. In case of PconsC 1.0 this is "<sequence_file>.pconsc.out" and in case of PconsC 2.0 it is "<sequence_file>.layer<layers>.out".
+<dt>3)</dt> <dd>python folding/rosetta/prepare_input.py sequence_file pconsc_output factor
+Where "pconsc_output" is the contact map as given by PconsC. In case of PconsC 1.0 this is "(sequence_file).pconsc.out" and in case of PconsC 2.0 it is "(sequence_file).layer(layers).out".
 And "factor" is a float denoting the fraction (with respect to the length of the sequence) of top ranked contacts to use during folding.
-This script generates the file "<pconsc_output>-<factor>.constraints" which is then used by Rosetta in the next step. <br>
+This script generates the file "(pconsc_output)-(factor).constraints" which is then used by Rosetta in the next step. <br>
 </dd>
 <dd>
-<dt>3)</dt> <dd>"python folding/rosetta/fold.py [-c cores] <sequence_file> <rosetta_constraints>" <br>
+<dt>3)</dt> <dd>python folding/rosetta/fold.py [-c cores] sequence_file rosetta_constraints <br>
 Where "rosetta_constraints" is the output from the last step (s.a.).
 </dd>
 <dd>
 <dt>5)</dt>
-<dd>"python folding/rosetta/extract.py [-c cores] <number_of_extracted_structures> <relax_flag>"<br>
+<dd>python folding/rosetta/extract.py [-c cores] number_of_extracted_structures relax_flag<br>
 Where "relax_flag" is either 1 or 0 deciding whether the output structures should be relaxed or not respectively. We recommend to set it to 1.</dd>
 </dd>
 </dl>
+
