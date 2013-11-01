@@ -8,16 +8,17 @@ from subprocess import call
 import parse_rosetta_scores
 import parse_tmscore
 import fix_numbering
+from localconfig import *
 
 # directory containing the rundir
 # there is a rundir for every core rosetta was run on
 # e.g. on Triolith 1 node = 16 cores => there are 16 rundirs (run_1, ..., run_16)
-rootdir = '/home/x_mirmi/pcons-fold/folding/rosetta/test'
+#rootdir = '/home/x_mirmi/pcons-fold/folding/rosetta/test'
 
-rosetta_binary_dir = '/home/x_mirmi/glob/rosetta/rosetta_source/bin'
-rosetta_db_dir = '/home/x_mirmi/glob/rosetta/rosetta_database'
+#rosetta_binary_dir = '/home/x_mirmi/glob/rosetta/rosetta_source/bin'
+#rosetta_db_dir = '/home/x_mirmi/glob/rosetta/rosetta_database'
 
-tmscore_binary = '/home/x_mirmi/pcons-fold/folding/rosetta/dependencies/TMscore/run_TMscore.sh'
+#tmscore_binary = '/home/x_mirmi/pcons-fold/folding/rosetta/dependencies/TMscore/run_TMscore.sh'
 
 
 def get_best_models(num, rundir_i, scorefile):
@@ -35,7 +36,7 @@ def get_best_of_all_runs(num, nruns, rundir, scorefile_name='score.fsc'):
     
     for i in xrange(nruns):
         rundir_i = '%s/run_%d' % (rundir, i+1)
-        scorefile = open('%s/%s/%s' % (rootdir, rundir_i, scorefile_name), 'r')
+        scorefile = open('%s/%s' % (rundir_i, scorefile_name), 'r')
         curr_scores = get_best_models(num, rundir_i, scorefile)
         all_scores += curr_scores
 
@@ -61,7 +62,7 @@ def extract_structures(scores_sorted):
         tag = rundir_tag.split('/')[-1]
         rundir = '/'.join(rundir_tag.split('/')[:-1])
         run = rundir_tag.split('/')[-2]
-        os.chdir('%s/%s/' % (rootdir, rundir))
+        os.chdir('%s/' % rundir)
         if os.path.exists('../%d.%s.%s.pdb' % (i, run, tag)):
             os.chdir(currdir)
             continue 
@@ -81,7 +82,7 @@ def relax_structures(scores_sorted):
         tag = rundir_tag.split('/')[-1]
         rundir = '/'.join(rundir_tag.split('/')[:-1])
         run = rundir_tag.split('/')[-2]
-        os.chdir('%s/%s/' % (rootdir, '/'.join(rundir.split('/')[:-1])))
+        os.chdir('%s/' % '/'.join(rundir.split('/')[:-1]))
         if os.path.exists('%d.%s.%s_0001.pdb' % (i, run, tag)):
             #call(['mv', '%d.%s.%s_0001.pdb' % (i, run, tag), '%d.%s.%s_0001.pdb_backup' % (i, run, tag)])
             os.chdir(currdir)
@@ -145,7 +146,7 @@ def compare_to_native(scores_sorted, relax_flag, rescore_flag):
             configdir = '/'.join(rundir_tag.split('/')[:-2])
             protdir = '/'.join(rundir_tag.split('/')[:-3])
             run = rundir_tag.split('/')[-2]
-        os.chdir('%s/%s/' % (rootdir, configdir))# (rootdir, '/'.join(rundir.split('/')[:-1])))
+        os.chdir('%s/' % configdir)# (rootdir, '/'.join(rundir.split('/')[:-1])))
         #print '%s/%s/' % (rootdir, configdir)
         if relax_flag:
             if rescore_flag:
@@ -193,7 +194,7 @@ if __name__ == '__main__':
     
     num = int(sys.argv[1])
     nruns = int(sys.argv[2])
-    rundir = sys.argv[3]
+    #rundir = sys.argv[3]
     top_scores_filename = sys.argv[4]
     relax_flag = bool(int(sys.argv[5]))
     all_scores_sorted = get_best_of_all_runs(num, nruns, rundir)
