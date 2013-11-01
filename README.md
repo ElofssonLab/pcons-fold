@@ -35,8 +35,8 @@ python pconsc/predictAll_2.0.py [-c cores] hhblits_database jackhmmer_database s
 Where "layers" is a interger of the interval 1..4, to set the number of layers that are computed during deep learning. We recommend to set it to 4.
 </dd>
 <dd>
-<dt>3)</dt> <dd>python folding/rosetta/prepare_input.py sequence_file pconsc_output factor
-Where "pconsc_output" is the contact map as given by PconsC. In case of PconsC 1.0 this is "(sequence_file).pconsc.out" and in case of PconsC 2.0 it is "(sequence_file).layer(layers).out".
+<dt>3)</dt> <dd>python folding/rosetta/prepare_input.py sequence_file pconsc_output factor <br>
+Where "pconsc_output" is the contact map as given by PconsC. In case of PconsC 1.0 this is "(sequence_file).pconsc.out" and in case of PconsC 2.0 it is "(sequence_file).layer(layers).out". <br>
 And "factor" is a float denoting the fraction (with respect to the length of the sequence) of top ranked contacts to use during folding.
 This script generates the file "(pconsc_output)-(factor).constraints" which is then used by Rosetta in the next step. <br>
 </dd>
