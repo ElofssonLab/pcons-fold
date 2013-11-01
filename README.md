@@ -12,13 +12,13 @@ Instructions:
 Pipeline overview:
 
 <ol>
-<li>Input:</li> <dd>fasta file containing one sequence</dd>
-<li>1)</li> <dd>Prepare input for PconsC</dd>
-<li>2)</li> <dd>Contact prediction with PconsC 1.0 or 2.0</dd>
-<li>3)</li> <dd>Prepare input for Rosetta folding</dd>
-<li>4)</li> <dd>Rosetta folding</dd>
-<li>5)</li> <dd>Extract and relax structures with lowest Rosetta energy</dd>
-<li>Output</li> <dd>the predicted contact map (also as a plot) from step 3) and the lowest energy structures from step 5).</dd>
+<li>Input: fasta file containing one sequence</li>
+<li>Prepare input for PconsC</li>
+<li>Contact prediction with PconsC 1.0 or 2.0</li>
+<li>Prepare input for Rosetta folding</li>
+<li>Rosetta folding</li>
+<li>Extract and relax structures with lowest Rosetta energy</li>
+<li>Output: the predicted contact map (also as a plot) from step 3) and the lowest energy structures from step 5).</li>
 </ol>
 
 How to run it:
