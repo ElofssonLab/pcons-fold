@@ -9,10 +9,10 @@
 
 %\title[short Title]{Structure prediction of globular proteins using predicted residue contacts.}
 %\title[short Title]{PconsFold: ab-initio protein folding using Rosetta and predicted residue contacts.}
-\title[short Title]{PconsFold: Protein folding using predicted residue contacts.}
+\title[PconsFold]{PconsFold: Protein folding using predicted residue contacts}
 %\title[short Title]{Advancement in residue contact prediction improves quality of predicted structural models.}
 %\author[Sample \textit{et~al}]{Mirco Michel\,$^{1,2}$, Marcin J. Skwark\,$^{3}$ and Arne Elofsson\,$^{1,2}$\footnote{to whom correspondence should be addressed}}
-\author[Sample \textit{et~al}]{Mirco Michel\,$^{1,2}$ and Arne Elofsson\,$^{1,2}$\footnote{to whom correspondence should be addressed}}
+\author[M.Michel \textit{et~al}]{Mirco Michel\,$^{1,2}$ and Arne Elofsson\,$^{1,2}$\footnote{to whom correspondence should be addressed}}
 \address{$^{1}$Department of Biochemistry and Biophysics, Stockholm University, 10691 Stockholm, Sweden\\
 $^{2}$Science for Life Laboratory, Box 1031, 17121 Solna, Sweden}
 %$^{3}$Department of Information and Computer Science, Helsinki University of Technology TKK, Box 5400, FI-02015 TKK, Finland}
@@ -45,6 +45,12 @@ Predicted contacts are used to constrain folding space / included in energy func
 
 \begin{methods}
 \section{Methods}
+\subsection{Datasets}
+
+\subsection{Residue-residue contact prediction}
+\subsection{Rosetta}
+\subsection{Model quality assessment}
+
 \begin{figure}[!tpb]%figure1
     \centerline{\includegraphics[scale=0.37]{figures/pipeline.png}}
 \caption{PconsFold pipeline.}\label{fig:main}
@@ -55,10 +61,13 @@ Fragfold: Similar approach than Rosetta / stochastic exploration of folding spac
 
 
 \end{methods}
-\section{Results}
-Fig.\ \ref{fig:main}: How many contacts to use? Elucidate differences between the methods \\
-Fig.\ \ref{fig:ros}: How strongly to weight them in Rosetta? \\
-Fig.\ \ref{fig:vs}: How many Rosetta decoys are needed to get close to the native structure? How low can we go without loosing too much accuracy? \\
+\section{Results and Discussion}
+
+\subsection{PconsFold}
+
+Figure \ref{fig:main}: How many contacts to use? Elucidate differences between the methods \\
+Figure \ref{fig:ros}: How strongly to weight them in Rosetta? \\
+Figure \ref{fig:vs}: How many Rosetta decoys are needed to get close to the native structure? How low can we go without loosing too much accuracy? \\
 What can we say about the quality of our Pfam domain models: \\
 
 \begin{figure}[!tpb]%figure1
@@ -71,6 +80,8 @@ What can we say about the quality of our Pfam domain models: \\
 \caption{(a) Average TM-scores. (b) TM-scores against PPV of underlying contact maps.}\label{fig:main}
 \end{figure}
 
+\subsection{Model quality assessment}
+
 \begin{table}[!t]
 \processtable{Average TM-scores for different QA tools\label{tab:qa}}
 {\begin{tabular}{llll}\toprule
@@ -81,6 +92,8 @@ What can we say about the quality of our Pfam domain models: \\
     DOPE    & 0.46  & 0.36     & ~              \\ \botrule
 \end{tabular}}{}
 \end{table}
+
+\subsection{Comparison to EVfold}
 
 \begin{figure}[!tpb]%figure1
     \centerline{\includegraphics[scale=1.0]{figures/vs.png}}
