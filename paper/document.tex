@@ -1,6 +1,6 @@
 \documentclass{bioinfo}
-\copyrightyear{2013}
-\pubyear{2013}
+\copyrightyear{2014}
+\pubyear{2014}
 
 \usepackage{hyperref}
 
@@ -57,46 +57,40 @@ Fragfold: Similar approach than Rosetta / stochastic exploration of folding spac
 \end{methods}
 \section{Results}
 Fig.\ \ref{fig:main}: How many contacts to use? Elucidate differences between the methods \\
-Fig.\ \ref{fig:welldepth}: How strongly to weight them in Rosetta? \\
-Fig.\ \ref{fig:vioplot}: How many Rosetta decoys are needed to get close to the native structure? How low can we go without loosing too much accuracy? \\
+Fig.\ \ref{fig:ros}: How strongly to weight them in Rosetta? \\
+Fig.\ \ref{fig:vs}: How many Rosetta decoys are needed to get close to the native structure? How low can we go without loosing too much accuracy? \\
 What can we say about the quality of our Pfam domain models: \\
 
 \begin{figure}[!tpb]%figure1
-    \centerline{\includegraphics[scale=0.5]{figures/scores_nohoms_avg_tmscore.pdf}}
-\caption{Average TM-scores.}\label{fig:main}
+    \centerline{\includegraphics[scale=1.0]{figures/rosetta.png}}
+\caption{Average TM-scores.}\label{fig:ros}
 \end{figure}
 
 \begin{figure}[!tpb]%figure1
-    \centerline{\includegraphics[scale=0.5]{figures/TMscore_Ros-C_vs_PPV-PconsC1.pdf}}
-\caption{TM-scores against PPV of underlying contact maps.}\label{fig:ppv}
+    \centerline{\includegraphics[scale=1.0]{figures/tmscores.png}}
+\caption{(a) Average TM-scores. (b) TM-scores against PPV of underlying contact maps.}\label{fig:main}
 \end{figure}
 
-\begin{figure}[!tpb]%figure1
-    \centerline{\includegraphics[scale=0.5]{figures/scores_FADE_depth.pdf}}
-\caption{Performance on different well-depths of FADE.}\label{fig:welldepth}
-\end{figure}
+\begin{table}[!t]
+\processtable{Average TM-scores for different QA tools\label{tab:qa}}
+{\begin{tabular}{llll}\toprule
+    Method  & EVfold & PconsFold & Rosetta/plmDCA \\ \midrule
+    Rosetta & --     & 0.55     & 0.5          \\
+    Pcons   & 0.47  & 0.53     & 0.47          \\
+    Proq2   & 0.36  & 0.51     & 0.46          \\
+    DOPE    & 0.46  & 0.36     & ~              \\ \botrule
+\end{tabular}}{}
+\end{table}
 
 \begin{figure}[!tpb]%figure1
-    \centerline{\includegraphics[scale=0.5]{figures/TMscore_Ros-C-new_vs_EVfold-pcons.pdf}}
+    \centerline{\includegraphics[scale=1.0]{figures/vs.png}}
 \caption{PconsFold compared to EVfold.}\label{fig:vs}
 \end{figure}
 
-\begin{table}
-\caption{Average TM-scores for different QA tools.}
-    \begin{tabular}{llll}
-    Method  & EVfold & PconsFold & Rosetta/plmDCA \\ \hline
-    Rosetta & ~      & 0.546     & 0.501          \\
-    Pcons   & 0.469  & 0.527     & 0.473          \\
-    Proq2   & 0.359  & 0.506     & 0.457          \\
-    Pcomb   & 0.463  & 0.529     & 0.485          \\
-    DOPE    & 0.458  & ~         & ~              \\
-    \end{tabular}
-\end{table}
-
-\begin{table}
-\caption{TM-scores for top ranked models. OLD (needs to be redone with selected QA)}
-    \begin{tabular}{cccc}
-    Protein      & EVfold (paper) & EVfold (current) & PconsFold \\ \hline
+\begin{table}[!t]
+\processtable{TM-scores for top ranked models. OLD (needs to be redone with selected QA)\label{tab:evfold}}
+{\begin{tabular}{cccc}\toprule
+    Protein      & EVfold (paper) & EVfold (web) & PconsFold \\ \midrule
     BPT1\_BOVIN  & 0.49   & 0.25           & 0.65      \\
     CADH1\_HUMAN & 0.55   & 0.54           & 0.54      \\
     CD209\_HUMAN & 0.39   & 0.64           & 0.54      \\
@@ -111,8 +105,9 @@ What can we say about the quality of our Pfam domain models: \\
     SPTB2\_HUMAN & 0.37   & 0.51           & 0.6       \\
     THIO\_ALIAC  & 0.55   & 0.56           & 0.76      \\
     TRY2\_RAT    & 0.53*  & 0.78           & 0.83      \\
-    YES\_HUMAN   & 0.35   & 0.31           & 0.55      \\
-    \end{tabular}
+    YES\_HUMAN   & 0.35   & 0.31           & 0.55      \\ \midrule
+    Mean         & 0.48   & 0.55           & 0.59      \\ \botrule
+\end{tabular}}{}
 \end{table}
 
 \section{Conclusion}
