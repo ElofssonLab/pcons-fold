@@ -53,7 +53,7 @@ We also used two different types of Rosetta energy functions, FADE and BOUNDED, 
 \subsection{Model quality assessment}
 
 \begin{figure}[!tpb]%figure1
-    \centerline{\includegraphics[scale=0.37]{figures/pipeline.png}}
+    \centerline{\includegraphics[scale=0.37]{figures/pipeline.eps}}
 \caption{PconsFold pipeline.}\label{fig:main}
 \end{figure}
 Rosetta: Fragment replacement by Markov chain Monte Carlo simulation / starting from extended amino acid chain / iteratively changing backbone dihedrals of parts of the chain according to selected fragment / calculate energy of the new conformation, then keep or dismiss it / works without residue contact information, but very slow convergence and only feasible for very small proteins / dramatic reduction in computational time when including contact information / therefore also applicable to larger proteins and more comprehensive studies possible (e.g. Pfam domain prediction) / \\
@@ -68,7 +68,7 @@ Rosetta: Fragment replacement by Markov chain Monte Carlo simulation / starting 
 For all results in this section, we used the internal Rosetta score to rank all predicted decoys. The top-ranked decoy structure was then selected as a final model. With the {\tt -nohoms} flag during fragment picking we ensured that all homologous structures are excluded. Only fragments from non-homologous protein structures were selected. This was done to simulate a real application case and not to overestimate model quality. If not stated otherwise, we used all 150 proteins of the PSICOV dataset as prediction targets in this section. \\\indent
 Previous studies have shown that 20,000 -- 200,000 decoys are necessary to sample native-like conformations without using spatial constraints \cite[]{rosetta@home, rosetta_folding}. Figure \ref{fig:ros} (a) shows violin plots of the distributions of model quality, measured in TM-score. We reduced the number of decoy structures from 20,000 to 2,000. This corresponds to a 10-fold decrease of folding runtime but also leads to an expected decline in average model quality. The increased bulk at ~0.3 TM-score in the second distribution of Figure \ref{fig:ros} (a) represents an increased number of low quality models. We think the practical advantages of massively shorter Rosetta runs outweight slightly worse predicted models. This parameter is therefore set to a default value of 2,000 but can be specified by the user via a command line argument. All further results in this section are generated with this default setting. \\\indent
 \begin{figure}[!tpb]%figure1
-    \centerline{\includegraphics[scale=0.49]{figures/rosetta.jpg}}
+    \centerline{\includegraphics[scale=0.35]{figures/rosetta.eps}}
 \caption{Average TM-scores.}\label{fig:ros}
 \end{figure}
 We selected the FADE function to incorporate predicted residue contacts into Rosetta's native energy function. We then adjusted the parameter well-depth of FADE on a subset of 14 Proteins (Supplementary Table T2) of the PSICOV dataset. The resulting TM-scores are shown in Figure \ref{fig:ros} (b). The energy term from spatial constraints diminishes with well-depth values of -0.5 and above. This leads to a significant decrease in model quality. Lower values of -5.0 and below put a larger absolute weight on the constraints resulting in higher model qualities. We assume this is due to the small number of decoys we are generating in this experiment. We selected a value of -15.0 to achieve high model quality without outweighting Rosetta's native energy function completely.\\\indent
@@ -78,7 +78,7 @@ There is an optimal number of contacts, specific to the contact prediction metho
 This relation between contact and model quality can also be observed in Figure \ref{fig:main} (b). For each protein in the dataset the PPV of its contact map is plotted against the TM-score of the resulting model. The overall pearson correlation between PPV and TM-score in this dataset is 0.59. Proteins with contact maps of lower quality tend to be modelled less accurate. \\\indent
 Proteins belonging to the {\it mainly alpha} CATH fold class seem to be easier to fold than proteins from the {\it alpha \& beta} fold class and proteins from the {\it mainly beta} fold class seem to be hardest to fold. The fold classes are indicated by the color scheme in Figure \ref{fig:main} (b). Predicted contact maps in mainly $\alpha$-helical proteins (blue) have similar or lower PPV values than those of $\beta$-sheet containing proteins (green and yellow), but the resulting models are more accurate in terms of TM-score.
 \begin{figure}[!tpb]%figure1
-    \centerline{\includegraphics[scale=0.49]{figures/tmscores.jpg}}
+    \centerline{\includegraphics[scale=0.35]{figures/tmscores.eps}}
 \caption{(a) Average TM-scores. (b) TM-scores against PPV of underlying contact maps.}\label{fig:main}
 \end{figure}
 
@@ -98,7 +98,7 @@ Proteins belonging to the {\it mainly alpha} CATH fold class seem to be easier t
 \subsection{Comparison to EVfold}
 
 \begin{figure}[!tpb]%figure1
-    \centerline{\includegraphics[scale=0.49]{figures/vs.jpg}}
+    \centerline{\includegraphics[scale=0.35]{figures/vs.eps}}
 \caption{PconsFold compared to EVfold.}\label{fig:vs}
 \end{figure}
 
