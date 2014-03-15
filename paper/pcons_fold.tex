@@ -14,7 +14,8 @@
 %\author[Sample \textit{et~al}]{Mirco Michel\,$^{1,2}$, Marcin J. Skwark\,$^{3}$ and Arne Elofsson\,$^{1,2}$\footnote{to whom correspondence should be addressed}}
 \author[M.Michel \textit{et~al}]{Mirco Michel\,$^{1,2}$, Sikander Hayat, Marcin Skwark, Debora Marks, and Arne Elofsson\,$^{1,2}$\footnote{to whom correspondence should be addressed}}
 \address{$^{1}$Department of Biochemistry and Biophysics, Stockholm University, 10691 Stockholm, Sweden\\
-$^{2}$Science for Life Laboratory, Box 1031, 17121 Solna, Sweden}
+$^{2}$Science for Life Laboratory, Box 1031, 17121 Solna, Sweden\\
+AFFILIATIONS}
 %$^{3}$Department of Information and Computer Science, Helsinki University of Technology TKK, Box 5400, FI-02015 TKK, Finland}
 
 \history{Received on XXXXX; revised on XXXXX; accepted on XXXXX}
@@ -45,18 +46,35 @@ Predicted contacts are used to constrain folding space / included in energy func
 \begin{methods}
 \section{Methods}
 \subsection{Datasets}
-\cite[]{jones_PSICOV:_2012}
-\subsection{Residue-residue contact prediction}
-For each protein $n = f \cdot l$ top ranked contacts were selected, where $l$ represents the length of the protein sequence and $f$ a factor to scale $n$ relative to the length.
-\subsection{Rosetta}
-We also used two different types of Rosetta energy functions, FADE and BOUNDED, for predicted contacts. Both functions are applied to all residue pairs that are assumed to be in spatial contact. Rosetta then calculates convert predicted contacts into distance based energies. 
-\subsection{Model quality assessment}
-In addition to internal Rosetta scoring we assessed the quality of all predicted models with Pcons, ProQ2, and DOPE. For EVfold, PconsFold and Rosetta/plmDCA all generated decoys were reranked with the respective MQAP. The top-ranked model was then selected and compared to its native PDB structure and the TM-score was calculated. the predicted models for the PSICOV dataset. 
+During the development of PconsFold we used the proteins from \citeauthor{jones_PSICOV:_2012} \citeyear{jones_PSICOV:_2012} (PSICOV dataset). It consists of 150 single domain proteins with sequence lengths between 75 and 275 amino acids. A list of all PDB and Uniprot IDs is given in (Supplementary Table T1). For each protein we chose to use its PDB seqres sequence as input to avoid internal gaps due to missing residues in the crystal structure. \\\indent
+For the final comparison between PconsFold and EVfold we used the set of 15 proteins as in \citeauthor{marks_protein_2011} \citeyear{marks_protein_2011} . PDB and Uniprot IDs are given in Supplementary Table T2.
+\subsection{Contact prediction}
+In case of PconsFold, residue contacts are predicted with PconsC \cite[]{skwark_pconsc:_2013}. The contact predictor plmDCA \cite[]{ekeberg_improved_2013} is used by Rosetta/plmDCA and EVfold. Rosetta/plmDCA utilizes the direct output from plmDCA. In EVfold predicted contacts are further optimized according to \citeauthor{marks_protein_2011} \citeyear{marks_protein_2011} (supplementary information). PSICOV was used in Rosetta/PSICOV. \\\indent  
+For each protein we selected $n = f \cdot l$ top ranked contacts were selected, where $l$ represents the length of the protein sequence and $f$ a factor to scale $n$ relative to the length.
 \begin{figure}[!tpb]%figure1
-    \centerline{\includegraphics[scale=0.37]{figures/pipeline.eps}}
+    \centerline{\includegraphics[scale=0.35]{figures/pipeline.eps}}
 \caption{PconsFold pipeline.}\label{fig:main}
 \end{figure}
-Rosetta: Fragment replacement by Markov chain Monte Carlo simulation / starting from extended amino acid chain / iteratively changing backbone dihedrals of parts of the chain according to selected fragment / calculate energy of the new conformation, then keep or dismiss it / works without residue contact information, but very slow convergence and only feasible for very small proteins / dramatic reduction in computational time when including contact information / therefore also applicable to larger proteins and more comprehensive studies possible (e.g. Pfam domain prediction) / \\
+\subsection{Rosetta}
+Predicted residue contacts are utilized in the Rosetta (version 2013wk42) \cite[]{leaver-fay_rosetta3:_2011} AbinitioRelax folding protocol. The file {\tt folding/rosetta/abinitio.options} in the GitHub repository contains all options we are using with AbinitioRelax. \\\indent 
+We use the function \emph{FADE} to score predicted residue pairs. \emph{FADE} calculates the energy of a given contact as a function of the distance $d$ between its residues as given by the following equation:
+\begin{equation}%\label{eq:fade}
+    \textit{FADE}(d) = \left\{
+    \begin{array}{l l l}\label{eq:fade}
+        %2b_{low}^3 - 3b_{low}^2 + 1 & \quad \textrm{if d $<$ $c_{low}$} \\
+        %2b_{up}^3 - 3b_{up}^2 + 1 & \quad \textrm{if d $>$ $c_{up}$} \\
+        0.0 & \quad \textrm{for $d < lb$ or $d > ub$} \\
+        -2(\frac{d - \textit{lf}}{z})^3 - 3(\frac{d - \textit{lf}}{z})^2 + 1 & \quad \textrm{for $d < \textit{lf}$} \\
+        2(\frac{d - \textit{uf}}{z})^3 - 3(\frac{d - \textit{uf}}{z})^2 + 1 & \quad \textrm{for $d < \textit{uf}$} \\
+        w & \quad \textrm{otherwise.} \\
+    \end{array} \right.
+\end{equation}
+The parameters $lb$ and $ub$ are lower and upper bounds, $z$ represents the fading zone's width, $\textit{lf}$ and $\textit{uf}$ denote the inner boundaries for the fading zone $lb + z$ and $ub - z$, respectively. The well-depth of the interval between both inner boundaries is given by $w$. We set $lb$ to -10 \AA, $ub$ to 19 \AA\ and $z$ to 10 \AA. This defines a contact to be fully formed if the participating residues are within 9 \AA\ of each other. The fading zones allow for a soft margin between formed and non-formed contacts. In terms of energy all non-formed contacts are ignored. In our opinion this accounts best for the fuzzy nature of predicted contacts. The fading zone at the lower bound allows Rosetta to detect and resolve overlapping residues, i.e. when there is a negative distance between two residues.\\\indent
+
+\subsection{Model quality assessment}
+In addition to internal Rosetta scoring we assessed the quality of all predicted models with Pcons \cite{lundstrom_pcons:_2001}, ProQ2, and DOPE. For EVfold, PconsFold and Rosetta/plmDCA all generated decoys were reranked with the respective MQAP. The top-ranked model was then selected and compared to its native PDB structure and the TM-score was calculated. 
+
+
 
 
 \end{methods}
@@ -65,12 +83,12 @@ Rosetta: Fragment replacement by Markov chain Monte Carlo simulation / starting 
 
 \subsection{PconsFold}
 For all results in this section, we used the internal Rosetta score to rank all predicted decoys. The top-ranked decoy structure was then selected as a final model. With the {\tt -nohoms} flag during fragment picking we ensured that all homologous structures are excluded. Only fragments from non-homologous protein structures were selected. This was done to simulate a real application case and not to overestimate model quality. If not stated otherwise, we used all 150 proteins of the PSICOV dataset as prediction targets in this section. \\\indent
-Previous studies have shown that 20,000 -- 200,000 decoys are necessary to sample native-like conformations without using spatial constraints \cite[]{rosetta@home, rosetta_folding}. Figure \ref{fig:ros} (a) shows violin plots of the distributions of model quality, measured in TM-score. We reduced the number of decoy structures from 20,000 to 2,000. This corresponds to a 10-fold decrease of folding runtime but also leads to an expected decline in average model quality. The increased bulk at ~0.3 TM-score in the second distribution of Figure \ref{fig:ros} (a) represents an increased number of low quality models. We think the practical advantages of massively shorter Rosetta runs outweight slightly worse predicted models. This parameter is therefore set to a default value of 2,000 but can be specified by the user via a command line argument. All further results in this section are generated with this default setting. \\\indent
+Previous studies have shown that 20,000 -- 200,000 decoys are necessary to sample native-like conformations without using spatial constraints \cite[]{rosetta@home, rosetta_folding}. Figure \ref{fig:ros} (a) shows the distributions of model quality, measured in TM-score. We reduced the number of decoy structures from 20,000 to 2,000. This corresponds to a 10-fold decrease of runtime during the folding step but also leads to an expected decline in average model quality.  The increased bulk at ~0.3 TM-score in the second distribution of Figure \ref{fig:ros} (a) represents an increased number of low quality models. We think the practical advantages of massively shorter Rosetta runs outweight slightly worse predicted models. This parameter is therefore set to a default value of 2,000 but can be specified by the user via a command line argument. All further results in this section are generated with this default setting. \\\indent
 \begin{figure}[!tpb]%figure1
     \centerline{\includegraphics[scale=0.35]{figures/rosetta.eps}}
 \caption{Average TM-scores.}\label{fig:ros}
 \end{figure}
-We selected the FADE function to incorporate predicted residue contacts into Rosetta's native energy function. We then adjusted the parameter well-depth of FADE on a subset of 14 Proteins (Supplementary Table T2) of the PSICOV dataset. The resulting TM-scores are shown in Figure \ref{fig:ros} (b). The energy term from spatial constraints diminishes with well-depth values of -0.5 and above. This leads to a significant decrease in model quality. Lower values of -5.0 and below put a larger absolute weight on the constraints resulting in higher model qualities. We assume this is due to the small number of decoys we are generating in this experiment. We selected a value of -15.0 to achieve high model quality without outweighting Rosetta's native energy function completely.\\\indent
+We selected the FADE function to incorporate predicted residue contacts into Rosetta's native energy function. We then adjusted the parameter $w$ (well-depth) of FADE (Equation \ref{eq:fade}) on a subset of 14 Proteins (Supplementary Table T3) of the PSICOV dataset. The resulting TM-scores are shown in Figure \ref{fig:ros} (b). The energy term from spatial constraints diminishes with well-depth values of -0.5 and above. This leads to a significant decrease in model quality. Lower values of -5.0 and below put a larger absolute weight on the constraints resulting in higher model qualities. We assume this is due to the small number of decoys we are generating in this experiment. We selected a value of -15.0 to achieve high model quality without outweighting Rosetta's native energy function completely.\\\indent
 With any number of contacts used during structure prediction, the resulting model quality is on average higher than it would be without contact information. Figure \ref{fig:main} (a) shows average TM-scores for varying amounts of constraints. For each protein the number of top ranked contacts was selected relative to its sequence length. A value of 1.0 on the $x$-axis in Figure \ref{fig:main} (a) represents one contact per residue on average. The same Rosetta protocol as in PconsFold (green circles) was also applied to contacts from PSICOV (black squares) and plmDCA (blue triangles). Comparing $x=0.0$ to any other $x$ shows that predicted contacts generally improve model quality, regardless of method or amount of contacts. \\\indent
 Improvements in contact prediction methods also increase the quality of predicted structures. With a maximal average TM-score of 0.55 PconsFold, i.e. using PconsC contacts, provides a 10\% improvement over using PSICOV or plmDCA contacts. This observation is consistent with a direct comparison of contact prediction methods as in \citeauthor{skwark_pconsc:_2013} \citeyear{skwark_pconsc:_2013}. However, the performance difference between PSICOV and plmDCA diminishes when their contacts are used in structure prediction. \\\indent
 There is an optimal number of contacts, specific to the contact prediction method. In Figure \ref{fig:main} (a) the maximal average TM-score is reached at $x=1.0$ for PconsFold. For Rosetta/PSICOV and Rosetta/plmDCA a smaller number of one contact every other residue on average is optimal. This can also be explained by the quality of predicted contacts. A larger number of top ranked contacts is predicted with a higher quality in PconsC compared to plmDCA or PSICOV \cite[]{skwark_pconsc:_2013}. Using more of these contacts during structure prediction leads to improved models. \\\indent
@@ -83,7 +101,7 @@ Proteins belonging to the {\it mainly alpha} CATH fold class seem to be easier t
 
 \subsection{Model quality assessment}
 Table \ref{tab:qa} summarizes the evaluation of different MQAPs on the predictions for the PSICOV dataset. It shows average TM-scores for the top-ranked model after reranking all models with each MQAP. In all cases the cumulative score for the full protein was used. Due to technical reasons, Rosetta's internal scoring function was not applicable to the models generated by EVfold. For PconsFold and Rosetta/plmDCA the internal scoring was able to pick the best model on average. In case of EVfold, Pcons selected the best models on average. Pcons performed slightly worse than the internal scoring function of Rosetta on the models from PconsFold and Rosetta/plmDCA. ProQ2 did not perform well on EVfold models. This might be due to non-optimal side-chain placement as an artifact from CNS (??? can we say that?). ProQ2 performed slightly worse than Pcons on models from PconsFold and Rosetta/plmDCA. We also tested a combination of both, as in \citeauthor{wallner_pcons.net:_2007} \citeyear{wallner_pcons.net:_2007}. However, the results are omitted since they were not significantly different from those of Pcons alone. DOPE scoring of EVfold models worked almost as good as Pcons, but we observe a strong decline in average model quality for PconsFold and Rosetta/plmDCA. \\\indent
-We assume Rosetta scoring worked that well, because predicted contacts are part of the energy function. Models that satisfy predicted contacts most optimally are assigned low energies and thus ranked on top. Figure \ref{fig:qa} shows a typical example of the difference in satisfied constraints between a top- and bottom-ranked model. 
+We assume Rosetta scoring worked that well, because predicted contacts are part of the energy function. Models that satisfy predicted contacts most optimally are assigned low energies and thus ranked on top. Figure \ref{fig:qa} shows a typical example of the difference in satisfied constraints between a top- and bottom-ranked model. Constraints shorter than 8 \AA\ (green lines) are assumed to be correctly formed in the model. Contacts above that distance are not formed (red lines). Apart from overall quality differences, the top-ranked structure clearly contains more correctly modelled residue contacts than the bottom-ranked structure.\\\indent
 
 \begin{table}[!t]
 \processtable{Average TM-scores for different QA tools\label{tab:qa}}
@@ -142,7 +160,7 @@ We assume Rosetta scoring worked that well, because predicted contacts are part 
 %
 %\bibliographystyle{plain}
 %
-\bibliography{document}
+\bibliography{pcons-fold}
 
 
 %\begin{thebibliography}{}
