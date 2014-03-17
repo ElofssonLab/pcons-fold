@@ -25,14 +25,15 @@ AFFILIATIONS}
 \maketitle
 
 \begin{abstract}
-
 \section{Motivation:}
-
+MOTIVATION.
+Here we present PconsFold, a fully automated pipeline for ab-initio protein structure prediction based on evolutionary information. PconsFold is based on PconsC contact prediction and uses a Rosetta folding protocol. Due to its modularity, the contact prediction tool can be easily exchanged. We also use PSICOV and plmDCA contacts to show that improved quality of predicted contacts increases quality and native-likeliness of predicted models.
 \section{Results:}
-Here we show that improved quality of evolutionary constraints increases quality and native-likeliness of predicted models. We also show that 
+Using contacts from PconsC instead of PSICOV or plmDCA increases average model quality, measured in TM-score, by 10\%. PconsFold provides an average increase in TM-score of maximal 17\% compared to EVfold. PconsFold performs best on average and shows significant increase in TM-score in 7 targets on a test dataset of 15 proteins.
 \section{Availability:}
-We provide a fully automated pipeline, PconsFold, for predicting protein structures based on evolutionary information. PconsFold is based on PconsC and Rosetta and freely available at \url{https://www.github.com/ElofssonLab/pcons-fold}.
+The source code of PconsFold is available on GitHub at \url{https://www.github.com/ElofssonLab/pcons-fold}
 \section{Contact:} \href{arne@bioinfo.se}{arne@bioinfo.se}
+\section{Supplementary information:} Supplementary data are available at \emph{Bioinformatics} online.
 \end{abstract}
 
 \section{Introduction}
@@ -53,7 +54,7 @@ For each protein we chose to use its PDB seqres sequence as input and not its at
 For the final comparison between PconsFold and EVfold we used the set of 15 proteins as in \citeauthor{marks_protein_2011} \citeyear{marks_protein_2011} . PDB and Uniprot IDs are given in Supplementary Table T2. Here we used the exact same sequences and native structures as given in the publication.
 
 \subsection{Contact prediction}
-In case of PconsFold, residue contacts are predicted with PconsC \cite[]{skwark_pconsc:_2013}. The contact predictor plmDCA \cite[]{ekeberg_improved_2013} is used by Rosetta/plmDCA and EVfold. Rosetta/plmDCA utilizes the direct output from plmDCA. In EVfold predicted contacts are further optimized according to \citeauthor{marks_protein_2011} \citeyear{marks_protein_2011} (supplementary information). PSICOV was used in Rosetta/PSICOV. \\\indent 
+In case of PconsFold, residue contacts are predicted with PconsC \cite[]{skwark_PconsC:_2013}. The contact predictor plmDCA \cite[]{ekeberg_improved_2013} is used by Rosetta/plmDCA and EVfold. Rosetta/plmDCA utilizes the direct output from plmDCA. In EVfold predicted contacts are further optimized according to \citeauthor{marks_protein_2011} \citeyear{marks_protein_2011} (supplementary information). PSICOV was used in Rosetta/PSICOV. \\\indent 
 Predicted contacts were ranked according to the confidence score assigned by the respective contact prediction method. For each protein we selected $n = f \cdot l$ top-ranked contacts, where $l$ represents the length of the protein sequence and $f$ a factor to scale $n$ relative to sequence length. 
 
 \subsection{Rosetta}
@@ -92,8 +93,8 @@ Previous studies have shown that 20,000 -- 200,000 decoys are necessary to sampl
 \end{figure}
 We selected the FADE function to incorporate predicted residue contacts into Rosetta's native energy function. We then adjusted the parameter $w$ (well-depth) of FADE (Equation \ref{eq:fade}) on a subset of 14 Proteins (Supplementary Table T3) of the PSICOV dataset. The resulting TM-scores are shown in Figure \ref{fig:ros} (b). The energy term from spatial constraints diminishes with well-depth values of -0.5 and above. This leads to a significant decrease in model quality. Lower values of -5.0 and below put a larger absolute weight on the constraints resulting in higher model qualities. We assume this is due to the small number of decoys we are generating in this experiment. We selected a value of -15.0 to achieve high model quality without outweighing Rosetta's native energy function completely.\\\indent
 With any number of contacts used during structure prediction, the resulting model quality is on average higher than it would be without contact information. Figure \ref{fig:main} (a) shows average TM-scores for varying amounts of constraints. For each protein the number of top ranked contacts was selected relative to its sequence length. A value of 1.0 on the $x$-axis in Figure \ref{fig:main} (a) represents one contact per residue on average. The same Rosetta protocol as in PconsFold (green circles) was also applied to contacts from PSICOV (black squares) and plmDCA (blue triangles). Comparing $x=0.0$ to any other $x$ shows that predicted contacts generally improve model quality, regardless of method or amount of contacts. \\\indent
-Improvements in contact prediction methods also increase the quality of predicted structures. With a maximal average TM-score of 0.55 PconsFold, i.e. using PconsC contacts, provides a 10\% improvement over using PSICOV or plmDCA contacts. This observation is consistent with a direct comparison of contact prediction methods as in \citeauthor{skwark_pconsc:_2013} \citeyear{skwark_pconsc:_2013}. However, the performance difference between PSICOV and plmDCA diminishes when their contacts are used in structure prediction. \\\indent
-There is an optimal number of contacts, specific to the contact prediction method. In Figure \ref{fig:main} (a) the maximal average TM-score is reached at $x=1.0$ for PconsFold. For Rosetta/PSICOV and Rosetta/plmDCA a smaller number of one contact every other residue on average is optimal. This can also be explained by the quality of predicted contacts. A larger number of top ranked contacts is predicted with a higher quality in PconsC compared to plmDCA or PSICOV \cite[]{skwark_pconsc:_2013}. Using more of these contacts during structure prediction leads to improved models. \\\indent
+Improvements in contact prediction methods also increase the quality of predicted structures. With a maximal average TM-score of 0.55 PconsFold, i.e. using PconsC contacts, provides a 10\% improvement over using PSICOV or plmDCA contacts. This observation is consistent with a direct comparison of contact prediction methods as in \citeauthor{skwark_PconsC:_2013} \citeyear{skwark_PconsC:_2013}. However, the performance difference between PSICOV and plmDCA diminishes when their contacts are used in structure prediction. \\\indent
+There is an optimal number of contacts, specific to the contact prediction method. In Figure \ref{fig:main} (a) the maximal average TM-score is reached at $x=1.0$ for PconsFold. For Rosetta/PSICOV and Rosetta/plmDCA a smaller number of one contact every other residue on average is optimal. This can also be explained by the quality of predicted contacts. A larger number of top ranked contacts is predicted with a higher quality in PconsC compared to plmDCA or PSICOV \cite[]{skwark_PconsC:_2013}. Using more of these contacts during structure prediction leads to improved models. \\\indent
 This relation between contact and model quality can also be observed in Figure \ref{fig:main} (b). For each protein in the dataset the PPV of its contact map is plotted against the TM-score of the resulting model. The overall Pearson correlation between PPV and TM-score in this dataset is 0.59. Proteins with contact maps of lower quality tend to be modeled less accurate. \\\indent
 Proteins belonging to the {\it mainly alpha} CATH fold class seem to be easier to fold than proteins from the {\it alpha \& beta} fold class and proteins from the {\it mainly beta} fold class seem to be hardest to fold. The fold classes are indicated by the color scheme in Figure \ref{fig:main} (b). Predicted contact maps in mainly $\alpha$-helical proteins (blue) have similar or lower PPV values than those of $\beta$-sheet containing proteins (green and yellow), but the resulting models are more accurate in terms of TM-score.
 \begin{figure}[!tpb]%figure1
@@ -128,22 +129,22 @@ Figure \ref{fig:vs} shows TM-score pairs for each protein in the PSICOV dataset.
 {\begin{tabular}{lllllll}\toprule
 Protein & EVfold (paper) & EVfold (web) & EVfold (Pcons ranking) & PconsFold & PconsFold (Pcons ranking) & PconsFold (20k decoys)\\\midrule
 %~ & (paper) & (web) & (re-ranked) & (2k decoys) & (2k dec., re-ranked) & (20k decoys) \\ \midrule
-BPT1\_BOVIN & 0.49 & 0.25 & 0.5 & 0.44 & 0.28 & ~ \\
-CADH1\_HUMAN & 0.55 & 0.54 & 0.6 & 0.59 & 0.37& ~ \\
-CD209\_HUMAN & 0.39 & 0.64 & 0.62 & 0.48 & 0.4& ~ \\
-CHEY\_ECOLI & 0.65 & 0.66 & 0.74 & 0.82 &  0.81& ~ \\
-ELAV4\_HUMAN & 0.57 & 0.61 & 0.57 & 0.74 & 0.74& ~ \\
-O45418\_CAEEL & 0.48 & 0.62 & 0.62 & 0.62 & 0.64& ~ \\
-OMPR\_ECOLI & 0.35 & 0.44 & 0.47 & 0.59 & 0.59& ~ \\
-OPSD\_BOVIN & 0.5 & 0.55 & 0.58 & 0.47 & 45& ~ \\
-PCB1\_HUMAN & 0.25 & 0.43 & 0.42 & 0.59 & 0.7& ~ \\
-RASH\_HUMAN & 0.7 & 0.62 & 0.6 & 0.56 & 0.61& ~ \\
-RNH\_ECOLI & 0.54 & 0.66 & 0.66 & 0.64 & 0.58& ~ \\
-SPTB2\_HUMAN & 0.37 & 0.51 & 0.5 & 0.7 & 0.72& ~ \\
-THIO\_ALIAC & 0.55 & 0.56 & 0.61 & 0.79 & 0.66& ~ \\
-TRY2\_RAT & 0.53 * & 0.78 & 0.78 & 0.5 & 0.39& ~ \\
-YES\_HUMAN & 0.35 & 0.31 & 0.37 & 0.63 & 0.58& ~ \\ \midrule
-Mean & 0.48 & 0.55 & 0.57 & 0.61 & 0.57& ~ \\ \botrule
+BPT1\_BOVIN & 0.49 & 0.25 & {\bf 0.5} & 0.44 & 0.28 & ~ \\
+CADH1\_HUMAN & 0.55 & 0.54 & {\bf 0.6} & 0.59 & 0.37& ~ \\
+CD209\_HUMAN & 0.39 & {\bf 0.64} & 0.62 & 0.48 & 0.4& ~ \\
+CHEY\_ECOLI & 0.65 & 0.66 & 0.74 & {\bf 0.82} &  0.81& ~ \\
+ELAV4\_HUMAN & 0.57 & 0.61 & 0.57 & {\bf 0.74} & {\bf 0.74}& ~ \\
+O45418\_CAEEL & 0.48 & 0.62 & 0.62 & 0.62 & {\bf 0.64}& ~ \\
+OMPR\_ECOLI & 0.35 & 0.44 & 0.47 & {\bf 0.59} & {\bf 0.59}& ~ \\
+OPSD\_BOVIN & 0.5 & 0.55 & {\bf 0.58} & 0.47 & 0.45 & ~ \\
+PCB1\_HUMAN & 0.25 & 0.43 & 0.42 & 0.59 & {\bf 0.7}& ~ \\
+RASH\_HUMAN & {\bf 0.7} & 0.62 & 0.6 & 0.56 & 0.61& ~ \\
+RNH\_ECOLI & 0.54 & {\bf 0.66} & {\bf 0.66} & 0.64 & 0.58& ~ \\
+SPTB2\_HUMAN & 0.37 & 0.51 & 0.5 & 0.7 & {\bf 0.72}& ~ \\
+THIO\_ALIAC & 0.55 & 0.56 & 0.61 & {\bf 0.79} & 0.66& ~ \\
+TRY2\_RAT & 0.53 * & {\bf 0.78} & {\bf 0.78} & 0.5 & 0.39& ~ \\
+YES\_HUMAN & 0.35 & 0.31 & 0.37 & {\bf 0.63} & 0.58& ~ \\ \midrule
+Mean & 0.48 & 0.55 & 0.57 & {\bf 0.61} & 0.57& ~ \\ \botrule
 \end{tabular}}{* This value needed to be corrected to the TM-score of the top-ranked model. In the original publication it showed the value for the best possible model.}
 \end{table*}
 
