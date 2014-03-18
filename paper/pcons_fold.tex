@@ -34,40 +34,147 @@ $^{5}$Computational Biology Center, Memorial Sloan-Kettering Cancer Center, New 
 \begin{abstract}
 
 \section{Motivation:}
-Recent progress in protein residue-residue contact prediction has led to increasingly accurate contact maps. Predicted contacts are used to facilitate protein structure prediction. However, until now it remained unclear wether there is a direct connection between improvements in contact predictions and resulting model quality.
-Here we present PconsFold, a fully automated pipeline for ab-initio protein structure prediction based on evolutionary information. PconsFold is based on PconsC contact prediction and uses a Rosetta folding protocol. Due to its modularity, the contact prediction tool can be easily exchanged. We also use PSICOV and plmDCA contacts to show that improved quality of predicted contacts increases quality and native-likeliness of predicted models.
+A few years ago it was noted that the quality if protein contact
+predictions could be improved signifcantly if direct and indirect
+information was separated and sufficient number of homologous
+sequences are available. It was shown that the contact
+predictions alone contain sufficient information to predict the
+structure of many proteins. However, since the first reports there has
+been improvements in the contact predictions methods. Further there
+also exist slower, but potentially more accurate methods to model the
+proteins. Here, we ask how much the final models are improved if (i)
+improved contact predictions are used and (ii) if Rosetta is used to
+model the proteins. 
+
+
+
 \section{Results:}
-PconsFold provides an average increase in TM-score of maximal 17\% compared to EVfold. PconsFold performs best on average and shows significant increase in TM-score in 7 targets on a test dataset of 15 proteins. Using contacts from PconsC instead of PSICOV or plmDCA increases average model quality, measured in TM-score, by 10\%. Improved contact maps are thus a major factor to improve model quality in ab-initio structure predictions.
+
+
+We find that on average the quality is improved with about 10\% when
+the improved contacts from plmDCA are used and another 10\% when
+PconsC is used. Using Rosetta instead of EVfold does not significantly
+improve the model accuracy, but the chemical accuracy is improved.
+
+MORE::::
+
 \section{Availability:}
-The source code of PconsFold is available on GitHub at \url{https://www.github.com/ElofssonLab/pcons-fold}
+PconsFold is a fully automated pipeline for ab-initio protein
+structure prediction based on evolutionary information. PconsFold is
+based on PconsC contact prediction and uses the Rosetta folding
+protocol. Due to its modularity, the contact prediction tool can be
+easily exchanged. The source code of PconsFold is available on GitHub
+at \url{https://www.github.com/ElofssonLab/pcons-fold}
 \section{Contact:} \href{arne@bioinfo.se}{arne@bioinfo.se}
 \section{Supplementary information:} Supplementary data are available at \emph{Bioinformatics} online.
 \end{abstract}
 
 \section{Introduction}
-The protein folding problem is one of the longest standing problems in structural biology. Although the problem itself remains unsolved, there has been continuous effort and progress resulting in increased accuracy of predicted models \cite[]{kryshtafovych_CASP10_2013}. \\\indent
-The idea of using predicted residue-residue contacts for protein structure prediction is not new \cite[]{altschuh_correlation_1987}. However, until recently \cite[]{marks_protein_2011} predicted contacts lacked the accuracy to facilitate structure prediction methods significantly. This only became possible due to a new approach to separate direct from indirect contact information \cite[]{burger_disentangling_2010}. Since then there has been continuous effort to improve the quality of predicted contacts \cite[]{morcos_direct-coupling_2011, jones_PSICOV:_2012, ekeberg_improved_2013, skwark_PconsC:_2013} and to apply such contacts in structure prediction of membrane proteins \cite[]{hopf_three-dimensional_2012, nugent_accurate_2012}. Although the utility of current contact prediction methods is limited \cite[]{kamisetty_assessing_2013}, we want to highlight the importance of such information in cases where it is applicable. \\\indent
+The protein folding problem is one of the longest standing problems in
+structural biology. Although the problem itself remains largely unsolved,
+there has been continuous effort and progress resulting in increased
+accuracy of predicted models
+\cite[]{kryshtafovych_CASP10_2013}. 
+
+The idea of using predicted residue-residue contacts for protein
+structure prediction is not new \cite[]{Vendruscolo9377713}. However,
+until recently predicted contacts lacked the accuracy to facilitate
+structure prediction methods significantly
+\cite[]{marks_protein_2011}. This only became possible due to a new
+approach to separate direct from indirect contact information
+\cite[]{Weigt19116270,burger_disentangling_2010}.  Since then there
+has been continuous effort to improve the quality of predicted
+contacts \cite[]{morcos_direct-coupling_2011, jones_PSICOV:_2012,
+  ekeberg_improved_2013, skwark_PconsC:_2013}.  In addition to the
+initial predictions of soluble proteins \cite[]{marks_protein_2011}
+and protein-complexes \cite{Schug20018738} now the predicted contacts
+have also been applied in structure prediction of membrane proteins
+\cite[]{hopf_three-dimensional_2012, nugent_accurate_2012}.
+
+
 \begin{figure}[!tpb]%figure1
 \centerline{\includegraphics[scale=0.35]{figures/pipeline.eps}}
-\caption{PconsFold pipeline. Based on a given protein sequence, amino-acid contacts are predicted with PconsC. These contacts then facilitate protein folding with Rosetta. In the end PconsFold outputs a structural model for the given sequence.}\label{fig:pipeline}
+\caption{PconsFold pipeline. Based on a given protein sequence,
+  amino-acid contacts are predicted with PconsC. These contacts then
+  facilitate protein folding with Rosetta. In the end PconsFold
+  outputs a structural model for the given
+  sequence.}\label{fig:pipeline} 
 \end{figure}
-Here we show that improved quality of predicted contacts increases quality and native-likeliness of predicted structures. We developed PconsFold, a pipeline for ab-initio protein structure prediction of globular single-domain proteins (Figure \ref{fig:pipeline}). PconsFold is based on predicted amino-acid contacts from PconsC. These contacts are utilized within Rosetta to fold a given protein sequence from scratch. We benchmark our method on two datasets and compare it to EVfold \cite[]{marks_protein_2011}, a previous method for contact based protein structure prediction. The source code for PconsFold is available on GitHub (\url{https://www.github.com/ElofssonLab/pcons-fold}) under the MIT license.
+
+To optimize protein structure prediction from predicted contacts we
+developed PconsFold, a pipeline for ab-initio protein structure
+prediction of globular single-domain proteins
+(Figure~\ref{fig:pipeline}). PconsFold is based on predicted
+amino-acid contacts from PconsC. These contacts are utilized within
+Rosetta to fold a given protein sequence from scratch. We benchmark
+our method on two datasets and compare it to EVfold
+\cite[]{marks_protein_2011}, a previous method for contact based
+protein structure prediction. The source code for PconsFold is
+available on GitHub
+(\url{https://www.github.com/ElofssonLab/pcons-fold}) under the MIT
+license. It was found that the improved quality of predicted contacts
+by PconsC~\cite{skwark_PconsC:_2013} increases quality and
+native-likeliness of predicted structures by about 20\% over the
+original EVfold and 10\% over EVfold using the improved contact
+predictions from plmDCA~\cite{ekeberg_improved_2013}.
 
 \begin{methods}
 \section{Methods}
 
 \subsection{Datasets}
-During the development of PconsFold we used the proteins from \citeauthor{jones_PSICOV:_2012} \citeyear{jones_PSICOV:_2012} (PSICOV dataset). It consists of 150 single domain proteins with sequence lengths between 75 and 275 amino acids. A list of all Protein Data Bank (PDB) \cite[]{berman_protein_2000} and corresponding Uniprot \cite[]{magrane_uniprot_2011} IDs is given in (Supplementary Table T1). \\\indent
-For each protein we chose to use its PDB seqres sequence as input and not its atom sequence. This avoids internal gaps due to missing residues in the crystal structure. We chose not to use Uniprot sequences directly due to mutations and other sequential differences to the PDB sequences. This allows direct comparisons between predicted models and native PDB structures. Taking account for structural differences due to diverging sequences is thus not necessary. \\\indent
-For the final comparison between PconsFold and EVfold we used the set of 15 proteins as in \citeauthor{marks_protein_2011} \citeyear{marks_protein_2011} . PDB and Uniprot IDs are given in Supplementary Table T2. Here we used the exact same sequences and native structures as given in the publication.
+During the development of PconsFold we used the proteins from
+\citeauthor{jones_PSICOV:_2012} \citeyear{jones_PSICOV:_2012} (PSICOV
+dataset). It consists of 150 single domain proteins with sequence
+lengths between 75 and 275 amino acids. A list of all Protein Data
+Bank (PDB) \cite[]{berman_protein_2000} and corresponding Uniprot
+\cite[]{magrane_uniprot_2011} IDs is given in (Supplementary Table
+T1). 
+
+
+For each protein we chose to use its PDB seqres sequence as input and
+not its atom sequence. This avoids internal gaps due to missing
+residues in the crystal structure. We chose not to use Uniprot
+sequences directly due to mutations and other sequential differences
+to the PDB sequences. This allows direct comparisons between predicted
+models and native PDB structures. Taking account for structural
+differences due to diverging sequences is thus not necessary. 
+
+
+For the final comparison between PconsFold and EVfold we used the set
+of 15 proteins as in \citeauthor{marks_protein_2011}
+\citeyear{marks_protein_2011} . PDB and Uniprot IDs are given in
+Supplementary Table T2. Here we used the exact same sequences and
+native structures as given in the publication.  
 
 \subsection{Contact prediction}
-In case of PconsFold, residue contacts are predicted with PconsC \cite[]{skwark_PconsC:_2013}. The contact predictor plmDCA \cite[]{ekeberg_improved_2013} is used by Rosetta/plmDCA and EVfold. Rosetta/plmDCA utilizes the direct output from plmDCA. In EVfold predicted contacts are further optimized according to \citeauthor{marks_protein_2011} \citeyear{marks_protein_2011} (supplementary information). PSICOV was used in Rosetta/PSICOV. \\\indent 
-Predicted contacts were ranked according to the confidence score assigned by the respective contact prediction method. For each protein we selected $n = f \cdot l$ top-ranked contacts, where $l$ represents the length of the protein sequence and $f$ a factor to scale $n$ relative to sequence length. 
+In case of PconsFold, residue contacts are predicted with PconsC
+\cite[]{skwark_PconsC:_2013}. The contact predictor plmDCA
+\cite[]{ekeberg_improved_2013} is used by Rosetta/plmDCA and
+EVfold. Rosetta/plmDCA utilizes the direct output from plmDCA. In
+EVfold predicted contacts are further optimized according to
+\citeauthor{marks_protein_2011} \citeyear{marks_protein_2011}
+(supplementary information). PSICOV was used in Rosetta/PSICOV. 
+
+
+Predicted contacts were ranked according to the confidence score
+assigned by the respective contact prediction method. For each protein
+we selected $n = f \cdot l$ top-ranked contacts, where $l$ represents
+the length of the protein sequence and $f$ a factor to scale $n$
+relative to sequence length. 
+
 
 \subsection{Rosetta}
-In PconsFold, Rosetta/plmDCA, and Rosetta/PSICOV we apply the AbinitioRelax folding protocol \cite[]{rohl_protein_2004} of Rosetta in version 2013wk42 \cite[]{leaver-fay_rosetta3:_2011}. The file {\tt abinitio.options} in the folder {\tt folding/rosetta} of the GitHub repository lists all options we are using with AbinitioRelax. \\\indent 
-We employ the function \emph{FADE} to integrate predicted residue contacts into the internal scoring function of Rosetta. \emph{FADE} calculates the energy of a given contact as a function of the distance $d$ between its residues as given by the following equation:
+In PconsFold, Rosetta/plmDCA, and Rosetta/PSICOV we apply the
+AbinitioRelax folding protocol \cite[]{rohl_protein_2004} of Rosetta
+in version 2013wk42 \cite[]{leaver-fay_rosetta3:_2011}. The file {\tt
+  abinitio.options} in the folder {\tt folding/rosetta} of the GitHub
+repository lists all options we are using with AbinitioRelax. 
+
+We employ the function \emph{FADE} to integrate predicted residue
+contacts into the internal scoring function of Rosetta. \emph{FADE}
+calculates the energy of a given contact as a function of the distance
+$d$ between its residues as given by the following equation:
+
 \begin{equation}%\label{eq:fade}
 \textit{FADE}(d) = \left\{
 \begin{array}{l l l}\label{eq:fade}
@@ -79,11 +186,42 @@ We employ the function \emph{FADE} to integrate predicted residue contacts into 
 w & \quad \textrm{otherwise.} \\
 \end{array} \right.
 \end{equation}
-The parameters $lb$ and $ub$ are lower and upper bounds, $z$ represents the fading zone's width, $\textit{lf}$ and $\textit{uf}$ denote the inner boundaries for the fading zone $lb + z$ and $ub - z$, respectively. The well-depth of the interval between both inner boundaries is given by $w$. We set $lb$ to -10 \AA, $ub$ to 19 \AA\ and $z$ to 10 \AA. This defines a contact to be fully formed if the participating residues are within 9 \AA\ of each other. The fading zones allow for a soft margin between formed and non-formed contacts. In terms of energy all non-formed contacts are ignored. In our opinion this accounts best for the fuzzy nature of predicted contacts. The fading zone at the lower bound allows Rosetta to detect and resolve overlapping residues, i.e. when there is a negative distance between two residues.\\\indent
+
+The parameters $lb$ and $ub$ are lower and upper bounds, $z$
+represents the fading zone's width, $\textit{lf}$ and $\textit{uf}$
+denote the inner boundaries for the fading zone $lb + z$ and $ub - z$,
+respectively. The well-depth of the interval between both inner
+boundaries is given by $w$. We set $lb$ to -10 \AA, $ub$ to 19 \AA\
+and $z$ to 10 \AA. This defines a contact to be fully formed if the
+participating residues are within 9 \AA\ of each other. The fading
+zones allow for a soft margin between formed and non-formed
+contacts. In terms of energy all non-formed contacts are ignored. In
+our opinion this accounts best for the fuzzy nature of predicted
+contacts. The fading zone at the lower bound allows Rosetta to detect
+and resolve overlapping residues, i.e. when there is a negative
+distance between two residues. 
 
 \subsection{Model quality assessment}
-In addition to internal Rosetta scoring we assessed the quality of all predicted models with the model quality assessment programs (MQAPs) Pcons \cite[]{lundstrom_pcons:_2001}, ProQ2 \cite[]{ray_improved_2012}, and DOPE from the Modeller software package \cite[]{eswar_comparative_2006}. Pcons uses a comparative approach and ranks all decoys according to pairwise structural similarity between them. ProQ2 and DOPE assess single proteins and evaluate structural features, such as side-chain placement and overall shape. For our ranking we use the global score each MQAP assigns to a predicted structural model (decoy). Residue-wise information about local model quality is not used. \\\indent
-For each structure prediction method all decoys were re-ranked with each MQAP. The top-ranked model was then selected and compared to its native structure. For this comparison we used the TM-score \cite[]{zhang_scoring_2004} as a measure of structural similarity. As native structure we used the PDB structure of each protein without further loop-closing or other refinement. Tags from the seqres sequences, although modeled, are therefore ignored in the structural comparison.
+In addition to internal Rosetta scoring we assessed the quality of all
+predicted models with the model quality assessment programs (MQAPs)
+Pcons \cite[]{lundstrom_pcons:_2001}, ProQ2
+\cite[]{ray_improved_2012}, and DOPE from the Modeller software
+package \cite[]{eswar_comparative_2006}. Pcons uses a comparative
+approach and ranks all decoys according to pairwise structural
+similarity between them. ProQ2 and DOPE assess single proteins and
+evaluate structural features, such as side-chain placement and overall
+shape. For our ranking we use the global score each MQAP assigns to a
+predicted structural model (decoy). Residue-wise information about
+local model quality is not used. 
+
+For each structure prediction method all decoys were re-ranked with
+each MQAP. The top-ranked model was then selected and compared to its
+native structure. For this comparison we used the TM-score
+\cite[]{zhang_scoring_2004} as a measure of structural similarity. As
+native structure we used the PDB structure of each protein without
+further loop-closing or other refinement. Tags from the seqres
+sequences, although modeled, are therefore ignored in the structural
+comparison. 
 
 
 
@@ -95,25 +233,105 @@ For each structure prediction method all decoys were re-ranked with each MQAP. T
 \subsection{PconsFold}
 \begin{figure*}[!tpb]%figure1
 \centerline{\includegraphics[scale=0.7]{figures/rosetta.eps}}
-\caption{Predicted model quality in TM-score for adjustments of two different Rosetta parameters. Reducing the sample size in (a) from 20,000 to 2,000 decoy structures results in reduced native-likeliness of predicted models. However, it also provides a 10-fold speed-up. In (b) we adjust the depth parameter of the FADE function, used to score predicted contacts during folding. A larger absolute value increases the weight of such constraints and results in improved predictions.}\label{fig:ros}
+\caption{Predicted model quality in TM-score for adjustments of two
+  different Rosetta parameters. Reducing the sample size in (a) from
+  20,000 to 2,000 decoy structures results in reduced
+  native-likeliness of predicted models. However, it also provides a
+  10-fold speed-up. In (b) we adjust the depth parameter of the FADE
+  function, used to score predicted contacts during folding. A larger
+  absolute value increases the weight of such constraints and results
+  in improved predictions.}\label{fig:ros} 
 \end{figure*}
-For all results in this section, we used the internal Rosetta score to rank all predicted decoys. The top-ranked decoy structure was then selected as a final model. With the {\tt -nohoms} flag during fragment picking we ensured that all homologous structures are excluded. Only fragments from non-homologous protein structures were selected. This was done to simulate a real application case and not to overestimate model quality. If not stated otherwise, we used all 150 proteins of the PSICOV dataset as prediction targets in this section. \\\indent
-Previous studies have shown that 20,000 -- 200,000 decoys are necessary to sample native-like conformations without using spatial constraints \cite[]{rosetta@home, rosetta_folding}. Figure \ref{fig:ros} (a) shows the distributions of model quality, measured in TM-score. We reduced the number of decoy structures from 20,000 to 2,000. This corresponds to a 10-fold decrease of runtime during the folding step but also leads to an expected decline in average model quality. The increased bulk at ~0.3 TM-score in the second distribution of Figure \ref{fig:ros} (a) represents an increased number of low quality models. We think the practical advantages of massively shorter Rosetta runs outweigh slightly worse predicted models. This parameter is therefore set to a default value of 2,000 but can be specified by the user via a command line argument. All further results in this section are generated with this default setting. \\\indent
-We selected the FADE function to incorporate predicted residue contacts into Rosetta's native energy function. We then adjusted the parameter $w$ (well-depth) of FADE (Equation \ref{eq:fade}) on a subset of 14 Proteins (Supplementary Table T3) of the PSICOV dataset. The resulting TM-scores are shown in Figure \ref{fig:ros} (b). The energy term from spatial constraints diminishes with well-depth values of -0.5 and above. This leads to a significant decrease in model quality. Lower values of -5.0 and below put a larger absolute weight on the constraints resulting in higher model qualities. We assume this is due to the small number of decoys we are generating in this experiment. We selected a value of -15.0 to achieve high model quality without outweighing Rosetta's native energy function completely.\\\indent
+For all results in this section, we used the internal Rosetta score to
+rank all predicted decoys. The top-ranked decoy structure was then
+selected as a final model. With the {\tt -nohoms} flag during fragment
+picking we ensured that all homologous structures are excluded. Only
+fragments from non-homologous protein structures were selected. This
+was done to simulate a real application case and not to overestimate
+model quality. If not stated otherwise, we used all 150 proteins of
+the PSICOV dataset as prediction targets in this section. 
+
+Previous studies have shown that 20,000 -- 200,000 decoys are
+necessary to sample native-like conformations without using spatial
+constraints \cite[]{Simons10526365}. Figure~\ref{fig:ros} (a) shows the distributions of model quality, measured
+in TM-score. We reduced the number of decoy structures from 20,000 to
+2,000. This corresponds to a 10-fold decrease of runtime during the
+folding step but also leads to an expected decline in average model
+quality. The increased bulk at ~0.3 TM-score in the second
+distribution of Figure~\ref{fig:ros} (a) represents an increased
+number of low quality models. We think the practical advantages of
+massively shorter Rosetta runs outweigh slightly worse predicted
+models. This parameter is therefore set to a default value of 2,000
+but can be specified by the user via a command line argument. All
+further results in this section are generated with this default
+setting. 
+
+
+We selected the FADE function to incorporate predicted residue
+contacts into Rosetta's native energy function. We then adjusted the
+parameter $w$ (well-depth) of FADE (Equation \ref{eq:fade}) on a
+subset of 14 Proteins (Supplementary Table T3) of the PSICOV
+dataset. The resulting TM-scores are shown in Figure~\ref{fig:ros}
+(b). The energy term from spatial constraints diminishes with
+well-depth values of -0.5 and above. This leads to a significant
+decrease in model quality. Lower values of -5.0 and below put a larger
+absolute weight on the constraints resulting in higher model
+qualities. We assume this is due to the small number of decoys we are
+generating in this experiment. We selected a value of -15.0 to achieve
+high model quality without outweighing Rosetta's native energy
+function completely.
+
+
 \begin{figure*}[!tpb]%figure1
 \centerline{\includegraphics[scale=0.7]{figures/tmscores.eps}}
 \caption{In (a) the number of contacts used in structure prediction is plotted against average TM-score for three different methods: PconsFold (green circles), Rosetta/plmDCA (blue triangles), and Rosetta/PSICOV (black squares). There is an optimal number of contacts that depends on the contact prediction method. It also shows that increased contact prediction quality improves native-likeliness of predicted models. In (b) TM-scores are compared to the PPV of underlying contact maps for PconsFold (using PconsC). Mainly alpha helical proteins (blue) are easier to fold than alpha/beta or mainly beta sheet containing proteins.}\label{fig:main}
 \end{figure*}
-With any number of contacts used during structure prediction, the resulting model quality is on average higher than it would be without contact information. Figure \ref{fig:main} (a) shows average TM-scores for varying amounts of constraints. For each protein the number of top ranked contacts was selected relative to its sequence length. A value of 1.0 on the $x$-axis in Figure \ref{fig:main} (a) represents one contact per residue on average. The same Rosetta protocol as in PconsFold (green circles) was also applied to contacts from PSICOV (black squares) and plmDCA (blue triangles). Comparing $x=0.0$ to any other $x$ shows that predicted contacts generally improve model quality, regardless of method or amount of contacts. \\\indent
-Improvements in contact prediction methods also increase the quality of predicted structures. With a maximal average TM-score of 0.55 PconsFold, i.e. using PconsC contacts, provides a 10\% improvement over using PSICOV or plmDCA contacts. This observation is consistent with a direct comparison of contact prediction methods as in \citeauthor{skwark_PconsC:_2013} \citeyear{skwark_PconsC:_2013}. However, the performance difference between PSICOV and plmDCA diminishes when their contacts are used in structure prediction. \\\indent
-There is an optimal number of contacts, specific to the contact prediction method. In Figure \ref{fig:main} (a) the maximal average TM-score is reached at $x=1.0$ for PconsFold. For Rosetta/PSICOV and Rosetta/plmDCA a smaller number of one contact every other residue on average is optimal. This can also be explained by the quality of predicted contacts. A larger number of top ranked contacts is predicted with a higher quality in PconsC compared to plmDCA or PSICOV \cite[]{skwark_PconsC:_2013}. Using more of these contacts during structure prediction leads to improved models. \\\indent
+
+With any number of contacts used during structure prediction, the
+resulting model quality is on average higher than it would be without
+contact information. Figure~\ref{fig:main} (a) shows average TM-scores
+for varying amounts of constraints. For each protein the number of top
+ranked contacts was selected relative to its sequence length. A value
+of 1.0 on the $x$-axis in Figure~\ref{fig:main} (a) represents one
+contact per residue on average. The same Rosetta protocol as in
+PconsFold (green circles) was also applied to contacts from PSICOV
+(black squares) and plmDCA (blue triangles). Comparing $x=0.0$ to any
+other $x$ shows that predicted contacts generally improve model
+quality, regardless of method or amount of contacts. 
+
+
+Improvements in contact prediction methods also increase the quality
+of predicted structures. With a maximal average TM-score of 0.55
+PconsFold, i.e. using PconsC contacts, provides a 10\% improvement
+over using PSICOV or plmDCA contacts. This observation is consistent
+with a direct comparison of contact prediction methods as in
+\citeauthor{skwark_PconsC:_2013}
+\citeyear{skwark_PconsC:_2013}. However, the performance difference
+between PSICOV and plmDCA diminishes when their contacts are used in
+structure prediction. 
+
+
+There is an optimal number of contacts, specific to the contact
+prediction method. In Figure~\ref{fig:main} (a) the maximal average
+TM-score is reached at $x=1.0$ for PconsFold. For Rosetta/PSICOV and
+Rosetta/plmDCA a smaller number of one contact every other residue on
+average is optimal. This can also be explained by the quality of
+predicted contacts. A larger number of top ranked contacts is
+predicted with a higher quality in PconsC compared to plmDCA or PSICOV
+\cite[]{skwark_PconsC:_2013}. Using more of these contacts during
+structure prediction leads to improved models. 
+
+
 This relation between contact and model quality can also be observed
 in Figure \ref{fig:main} (b). For each protein in the dataset the PPV
 of its contact map is plotted against the TM-score of the resulting
 model. The overall Pearson correlation between PPV and TM-score in
 this dataset is 0.59. Proteins with contact maps of lower quality tend
-to be modeled less accurate. \\\indent 
-Proteins belonging to the {\it  mainly alpha} CATH fold class seem to be easier to fold than
+to be modeled less accurate. 
+
+
+Proteins belonging to the {\it
+  mainly alpha} CATH fold class seem to be easier to fold than
 proteins from the {\it alpha \& beta} fold class and proteins from the
 {\it mainly beta} fold class seem to be hardest to fold. The fold
 classes are indicated by the color scheme in Figure \ref{fig:main}
@@ -125,8 +343,40 @@ more accurate in terms of TM-score.
 
 
 \subsection{Model quality assessment}
-Table \ref{tab:qa} summarizes the evaluation of different MQAPs on the predictions for the PSICOV dataset. It shows average TM-scores for the top-ranked model after re-ranking all models with each MQAP. In all cases the cumulative score for the full protein was used. Due to technical reasons, Rosetta's internal scoring function was not applicable to the models generated by EVfold. For PconsFold and Rosetta/plmDCA the internal scoring was able to pick the best model on average. In case of EVfold, Pcons selected the best models on average. Pcons performed slightly worse than the internal scoring function of Rosetta on the models from PconsFold and Rosetta/plmDCA. ProQ2 did not perform well on EVfold models. This might be due to non-optimal side-chain placement as an artifact from CNS {\bf(??? can we say that?)}. ProQ2 performed slightly worse than Pcons on models from PconsFold and Rosetta/plmDCA. We also tested a combination of both, as in \citeauthor{wallner_pcons.net:_2007} \citeyear{wallner_pcons.net:_2007}. However, the results are omitted since they were not significantly different from those of Pcons alone. DOPE scoring of EVfold models worked almost as good as Pcons, but we observe a strong decline in average model quality for PconsFold and Rosetta/plmDCA. \\\indent
-We assume Rosetta scoring performs best, because predicted contacts are part of the energy function. Models that satisfy predicted contacts most optimally are assigned low energies and thus ranked on top. \\\indent
+Table \ref{tab:qa} summarizes the evaluation of different MQAPs on the
+predictions for the PSICOV dataset. It shows average TM-scores for the
+top-ranked model after re-ranking all models with each MQAP. In all
+cases the cumulative score for the full protein was used. Due to
+technical reasons, Rosetta's internal scoring function was not
+applicable to the models generated by EVfold. For PconsFold and
+Rosetta/plmDCA the internal scoring was able to pick the best model on
+average. In case of EVfold, Pcons selected the best models on
+average. Pcons performed slightly worse than the internal scoring
+function of Rosetta on the models from PconsFold and
+Rosetta/plmDCA. ProQ2 did not perform well on EVfold models. This
+might be due to non-optimal side-chain placement as an artifact from
+CNS {\bf(??? can we say that?)}. ProQ2 performed slightly worse than
+Pcons on models from PconsFold and Rosetta/plmDCA. We also tested a
+combination of both, as in \citeauthor{wallner_pcons.net:_2007}
+\citeyear{wallner_pcons.net:_2007}. However, the results are omitted
+since they were not significantly different from those of Pcons
+alone. DOPE scoring of EVfold models worked almost as good as Pcons,
+but we observe a strong decline in average model quality for PconsFold
+and Rosetta/plmDCA.  
+
+
+We assume Rosetta scoring worked that well, because predicted contacts
+are part of the energy function. Models that satisfy predicted
+contacts most optimally are assigned low energies and thus ranked on
+top. Figure \ref{fig:qa} shows a typical example of the difference in
+satisfied constraints between a top- and bottom-ranked
+model. Constraints shorter than 8 \AA\ (green lines) are assumed to be
+correctly formed in the model. Contacts above that distance are not
+formed (red lines). Apart from overall quality differences, the
+top-ranked structure clearly contains more correctly modeled residue
+contacts than the bottom-ranked structure.
+
+
 
 \begin{table}[!t]
 \processtable{Average TM-scores for top-ranked models selected by different MQAPs. \label{tab:qa}}
@@ -139,6 +389,10 @@ DOPE & 0.46 & 0.36 & 0.32 \\ \botrule
 \end{tabular}}{}
 \end{table}
 
+\begin{figure*}[!tpb]%figure1
+\centerline{\includegraphics[scale=0.7]{figures/qa.eps}}
+\caption{Predicted contacts in the native structure (a), top-ranked (b) and bottom-ranked (c) model.}\label{fig:vs}
+\end{figure*}
 
 
 \subsection{Comparison to EVfold}
@@ -155,7 +409,7 @@ Table \ref{tab:evfold}
 \end{figure*}
 
 \begin{table*}[!t]
-\processtable{TM-scores for top ranked models comparing EVfold as it was published, current EVfold server (accessed Feb. 2014), EVfold results reranked with Pcons, PconsFold 2,000 decoys, PconsFold 2,000 decoys re-ranked with Pcons, and PconsFold 20,000 decoys. {\bf Add columns for pcons qa and 20k pconsfold}\label{tab:evfold}}
+\processtable{TM-scores for top ranked models comparing EVfold as it was published, current EVfold server (accessed Feb. 2014), EVfold results re-ranked with Pcons, PconsFold 2,000 decoys, PconsFold 2,000 decoys re-ranked with Pcons, and PconsFold 20,000 decoys. {\bf Add columns for pcons qa and 20k pconsfold}\label{tab:evfold}}
 {\begin{tabular}{lllllll}\toprule
 Protein & EVfold (paper) & EVfold (web) & EVfold (Pcons ranking) & PconsFold & PconsFold (Pcons ranking) & PconsFold (20k decoys)\\\midrule
 %~ & (paper) & (web) & (re-ranked) & (2k decoys) & (2k dec., re-ranked) & (20k decoys) \\ \midrule
