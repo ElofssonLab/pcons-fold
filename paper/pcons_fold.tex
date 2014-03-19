@@ -34,7 +34,7 @@ $^{5}$Computational Biology Center, Memorial Sloan-Kettering Cancer Center, New 
 \begin{abstract}
 
 \section{Motivation:}
-A few years ago it was noted that the quality if protein contact
+A few years ago it was noted that the quality of protein contact
 predictions could be improved signifcantly if direct and indirect
 information was separated and sufficient number of homologous
 sequences are available. It was shown that the contact
@@ -50,11 +50,10 @@ model the proteins.
 
 \section{Results:}
 
-
 We find that on average the quality is improved with about 10\% when
 the improved contacts from plmDCA are used and another 10\% when
 PconsC is used. Using Rosetta instead of EVfold does not significantly
-improve the model accuracy, but the chemical accuracy is improved.
+improve global model accuracy.
 
 MORE::::
 
@@ -223,7 +222,16 @@ further loop-closing or other refinement. Tags from the seqres
 sequences, although modeled, are therefore ignored in the structural
 comparison. 
 
-
+We used MolProbity \cite[]{chen_molprobity:_2010} to assess the final 
+model quality. The MolProbity tool {\tt oneline-analysis} was used to 
+detect clashes and to evaluate backbone dihedrals as well as 
+side-chian rotamers. To prepare the structures for this analysis, we 
+first repacked all side-chains with the {\tt fixbb.linuxgccrelease} 
+protocol from Rosetta using the options {\tt -packing:repack\_only}, 
+{\tt -ex1}, {\tt -ex2}, {\tt -extrachi\_cutoff 0}, {\tt -ndruns 10}, 
+and {\tt -minimize\_sidechains}. Hydrogen atoms were then added 
+with the MolProbity tool {\tt reduce-build}. All resulting 
+structures are provided in the Supplementary Material.
 
 
 \end{methods}
@@ -353,9 +361,7 @@ Rosetta/plmDCA the internal scoring was able to pick the best model on
 average. In case of EVfold, Pcons selected the best models on
 average. Pcons performed slightly worse than the internal scoring
 function of Rosetta on the models from PconsFold and
-Rosetta/plmDCA. ProQ2 did not perform well on EVfold models. This
-might be due to non-optimal side-chain placement as an artifact from
-CNS {\bf(??? can we say that?)}. ProQ2 performed slightly worse than
+Rosetta/plmDCA. ProQ2 did not perform well on EVfold models. ProQ2 performed slightly worse than
 Pcons on models from PconsFold and Rosetta/plmDCA. We also tested a
 combination of both, as in \citeauthor{wallner_pcons.net:_2007}
 \citeyear{wallner_pcons.net:_2007}. However, the results are omitted
@@ -365,17 +371,25 @@ but we observe a strong decline in average model quality for PconsFold
 and Rosetta/plmDCA.  
 
 
-We assume Rosetta scoring worked that well, because predicted contacts
-are part of the energy function. Models that satisfy predicted
-contacts most optimally are assigned low energies and thus ranked on
-top. Figure \ref{fig:qa} shows a typical example of the difference in
-satisfied constraints between a top- and bottom-ranked
-model. Constraints shorter than 8 \AA\ (green lines) are assumed to be
-correctly formed in the model. Contacts above that distance are not
-formed (red lines). Apart from overall quality differences, the
-top-ranked structure clearly contains more correctly modeled residue
-contacts than the bottom-ranked structure.
+%We assume Rosetta scoring worked that well, because predicted contacts
+%are part of the energy function. Models that satisfy predicted
+%contacts most optimally are assigned low energies and thus ranked on
+%top. Figure \ref{fig:qa} shows a typical example of the difference in
+%satisfied constraints between a top- and bottom-ranked
+%model. Constraints shorter than 8 \AA\ (green lines) are assumed to be
+%correctly formed in the model. Contacts above that distance are not
+%formed (red lines). Apart from overall quality differences, the
+%top-ranked structure clearly contains more correctly modeled residue
+%contacts than the bottom-ranked structure.
 
+The analysis with MolProbity reveals that the backbone dihedral 
+quality of Rosetta models is higher than for EVfold models. 
+The percentage of Ramachandran outliers is XX \% for PconsFold and 
+XX \% in case of EVfold. This was expected as Rosetta uses fragment
+databases and stochastic fragment replacement to fold a protein.
+However, in the Rosetta models there are still many clashes even 
+after repacking the sidechains. The EVfold models contain only a 
+small number of clashes.
 
 
 \begin{table}[!t]
@@ -389,18 +403,24 @@ DOPE & 0.46 & 0.36 & 0.32 \\ \botrule
 \end{tabular}}{}
 \end{table}
 
-\begin{figure*}[!tpb]%figure1
-\centerline{\includegraphics[scale=0.7]{figures/qa.eps}}
-\caption{Predicted contacts in the native structure (a), top-ranked (b) and bottom-ranked (c) model.}\label{fig:vs}
-\end{figure*}
+%\begin{figure*}[!tpb]%figure1
+%\centerline{\includegraphics[scale=0.7]{figures/qa.eps}}
+%\caption{Predicted contacts in the native structure (a), top-ranked (b) and bottom-ranked (c) model.}\label{fig:vs}
+%\end{figure*}
 
 
 \subsection{Comparison to EVfold}
 
-Figure \ref{fig:vs} shows TM-score pairs for the top-ranked model for each protein in the PSICOV dataset. Pcons was used to rank all models. The TM-score for PconsFold (a) and Rosetta/plmDCA (b) is plotted along the $x$-axis. TM-scores for EVfold are plotted on the $y$-axis. Due to technical reasons there are no models for the protein with TM-score 0.0 for EVfold  (PDB ID: 1JBE). 1JBE was therefore excluded from all avarage TM-score calculations, also in the previous section. \\\indent
-When looking at Figure \ref{fig:vs} (a) the majority of alpha helical proteins (blue) achieved higher TM-scores with PconsFold than with EVfold. On average we see an improvement of 14\% of PconsFold over EVfold on alpha helical proteins. The same improvement can also be observed for Rosetta/plmDCA in (b). Together with Figure \ref{fig:main} (b), this indicates that Rosetta performs better on alpha-helical proteins. Further investigation is needed to see if this trend is merely due to a bias in the undelying dataset. The average performance of PconsFold on alpha \& beta proteins (green) is 15\% higher than for EVfold. However, Rosetta/plmDCA performs equally good as EVfold on average on such targets. The improvement might thus be due to PconsC contact maps, since it is only observable for PconsFold and not for Rosetta/plmdca. \\\indent
-When looking at a level of single proteins we see quite some divergence between the results of EVfold and PconsFold in Figure \ref{fig:vs}. This is especially true for mainly beta (yellow) proteins in (a) and alpha \& beta as well as mainly beta in (b). \\\indent
-Table \ref{tab:evfold}
+Figure \ref{fig:vs} shows TM-score pairs for the top-ranked model for each protein in the PSICOV dataset. Pcons was used to rank all models. The TM-score for PconsFold (a) and Rosetta/plmDCA (b) is plotted along the $x$-axis. TM-scores for EVfold are plotted on the $y$-axis. Due to technical reasons there are no models for the protein with TM-score 0.0 for EVfold  (PDB ID: 1JBE). 1JBE was therefore excluded from all avarage TM-score calculations here and in the previous section.
+
+
+When looking at Figure \ref{fig:vs} (a) the majority of alpha helical proteins (blue) achieved higher TM-scores with PconsFold than with EVfold. On average we see an improvement of 14\% of PconsFold over EVfold on alpha helical proteins. The same improvement can also be observed for Rosetta/plmDCA in (b). Together with Figure \ref{fig:main} (b), this indicates that Rosetta performs better on alpha-helical proteins. Further investigation is needed to see if this trend is merely due to a bias in the undelying dataset. The average performance of PconsFold on alpha \& beta proteins (green) is 15\% higher than for EVfold. However, Rosetta/plmDCA performs equally good as EVfold on average on such targets. The improvement might thus be due to PconsC contact maps, since it is only observable for PconsFold and not for Rosetta/plmdca.
+
+
+When looking at a level of single proteins we see quite some divergence between the results of EVfold and PconsFold in Figure \ref{fig:vs}. This is especially true for mainly beta (yellow) proteins in (a) and alpha \& beta as well as mainly beta in (b). 
+
+
+Table \ref{tab:evfold} 
 
 
 \begin{figure*}[!tpb]%figure1
