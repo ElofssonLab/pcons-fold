@@ -35,7 +35,7 @@ $^{5}$Computational Biology Center, Memorial Sloan-Kettering Cancer Center, New 
 
 \section{Motivation:}
 A few years ago it was noted that the quality of protein contact
-predictions could be improved signifcantly if direct and indirect
+predictions could be improved significantly if direct and indirect
 information was separated and sufficient number of homologous
 sequences are available. It was shown that the contact
 predictions alone contain sufficient information to predict the
@@ -49,13 +49,14 @@ model the proteins.
 
 
 \section{Results:}
-
-We find that on average the quality is improved with about 10\% when
-the improved contacts from plmDCA are used and another 10\% when
+We find that on average the quality is improved with about 15\% when
+the improved contacts from plmDCA are used and another 11\% when
 PconsC is used. Using Rosetta instead of EVfold does not significantly
-improve global model accuracy.
+improve global model accuracy. Models generated with Rosetta contain 
+more side-chain clashes than EVfold models, however backbone 
+dihedrals are improved. Rosetta performs better on alpha-helical 
+proteins.
 
-MORE::::
 
 \section{Availability:}
 PconsFold is a fully automated pipeline for ab-initio protein
@@ -387,9 +388,13 @@ quality of Rosetta models is higher than for EVfold models.
 The percentage of Ramachandran outliers is XX \% for PconsFold and 
 XX \% in case of EVfold. This was expected as Rosetta uses fragment
 databases and stochastic fragment replacement to fold a protein.
+
+
 However, in the Rosetta models there are still many clashes even 
-after repacking the sidechains. The EVfold models contain only a 
-small number of clashes.
+after repacking the side-chains. The EVfold models contain only a 
+small number of clashes. Using the Rosetta protocol 
+{\tt relax.linuxgccrelease} with fixed backbone atoms to repack the 
+side-chains resolves these clashes. 
 
 
 \begin{table}[!t]
@@ -411,16 +416,15 @@ DOPE & 0.46 & 0.36 & 0.32 \\ \botrule
 
 \subsection{Comparison to EVfold}
 
-Figure \ref{fig:vs} shows TM-score pairs for the top-ranked model for each protein in the PSICOV dataset. Pcons was used to rank all models. The TM-score for PconsFold (a) and Rosetta/plmDCA (b) is plotted along the $x$-axis. TM-scores for EVfold are plotted on the $y$-axis. Due to technical reasons there are no models for the protein with TM-score 0.0 for EVfold  (PDB ID: 1JBE). 1JBE was therefore excluded from all avarage TM-score calculations here and in the previous section.
+Figure \ref{fig:vs} shows TM-score pairs for the top-ranked model for each protein in the PSICOV dataset. Pcons was used to rank all models. The TM-score for PconsFold (a) and Rosetta/plmDCA (b) is plotted along the $x$-axis. TM-scores for EVfold are plotted on the $y$-axis. Due to technical reasons there are no models for the protein with TM-score 0.0 for EVfold  (PDB ID: 1JBE). 1JBE was therefore excluded from all average TM-score calculations here and in the previous section.
 
 
-When looking at Figure \ref{fig:vs} (a) the majority of alpha helical proteins (blue) achieved higher TM-scores with PconsFold than with EVfold. On average we see an improvement of 14\% of PconsFold over EVfold on alpha helical proteins. The same improvement can also be observed for Rosetta/plmDCA in (b). Together with Figure \ref{fig:main} (b), this indicates that Rosetta performs better on alpha-helical proteins. Further investigation is needed to see if this trend is merely due to a bias in the undelying dataset. The average performance of PconsFold on alpha \& beta proteins (green) is 15\% higher than for EVfold. However, Rosetta/plmDCA performs equally good as EVfold on average on such targets. The improvement might thus be due to PconsC contact maps, since it is only observable for PconsFold and not for Rosetta/plmdca.
+When looking at Figure \ref{fig:vs} (a) the majority of alpha helical proteins (blue) achieved higher TM-scores with PconsFold than with EVfold. On average we see an improvement of 14\% of PconsFold over EVfold on alpha helical proteins. The same improvement can also be observed for Rosetta/plmDCA in (b). Together with Figure \ref{fig:main} (b), this indicates that Rosetta performs better on alpha-helical proteins. Further investigation is needed to see if this trend is merely due to a bias in the underlying dataset. The average performance of PconsFold on alpha \& beta proteins (green) is 15\% higher than for EVfold. However, Rosetta/plmDCA performs equally good as EVfold on average on such targets. The improvement might thus be due to PconsC contact maps, since it is only observable for PconsFold and not for Rosetta/plmdca. At a level of single proteins we see quite some divergence between the results of EVfold and PconsFold in Figure \ref{fig:vs}. This is especially true for mainly beta (yellow) proteins in (a) and alpha \& beta as well as mainly beta in (b). 
 
 
-When looking at a level of single proteins we see quite some divergence between the results of EVfold and PconsFold in Figure \ref{fig:vs}. This is especially true for mainly beta (yellow) proteins in (a) and alpha \& beta as well as mainly beta in (b). 
+Table \ref{tab:evfold} contains TM-scores for the top-ranked models of each protein in the small test dataset. We compare the EVfold results, as published in \citeauthor{marks_protein_2011} \citeyear{marks_protein_2011}, with results from the current EVfold version (web), EVfold re-ranked with Pcons, PconsFold, PconsFold re-ranked with Pcons, and PconsFold with 20,000 generated decoys. The results for the current version of EVfold were generated using plmDCA instead of DCA as in the published version. With an average TM-score of 0.55 EVfold using plmDCA performs 15 \% better than EVfold with DCA. When using PconsFold there is an additional improvement of 11 \% to an average TM-score of 0.61. This further supports our assumption that improved contact maps improve structure prediction. 
 
-
-Table \ref{tab:evfold} 
+Re-ranking the predicted decoys with Pcons increases the average TM-score for EVfold and decreases it for PconsFold. MORE:::
 
 
 \begin{figure*}[!tpb]%figure1
@@ -429,7 +433,7 @@ Table \ref{tab:evfold}
 \end{figure*}
 
 \begin{table*}[!t]
-\processtable{TM-scores for top ranked models comparing EVfold as it was published, current EVfold server (accessed Feb. 2014), EVfold results re-ranked with Pcons, PconsFold 2,000 decoys, PconsFold 2,000 decoys re-ranked with Pcons, and PconsFold 20,000 decoys. {\bf Add columns for pcons qa and 20k pconsfold}\label{tab:evfold}}
+\processtable{TM-scores for top ranked models comparing EVfold as it was published, current EVfold server (accessed Feb. 2014), EVfold results re-ranked with Pcons, PconsFold 2,000 decoys, PconsFold 2,000 decoys re-ranked with Pcons, and PconsFold 20,000 decoys. {\bf Add columns for 20k pconsfold}\label{tab:evfold}}
 {\begin{tabular}{lllllll}\toprule
 Protein & EVfold (paper) & EVfold (web) & EVfold (Pcons ranking) & PconsFold & PconsFold (Pcons ranking) & PconsFold (20k decoys)\\\midrule
 %~ & (paper) & (web) & (re-ranked) & (2k decoys) & (2k dec., re-ranked) & (20k decoys) \\ \midrule
@@ -453,7 +457,7 @@ Mean & 0.48 & 0.55 & 0.57 & 0.61 & 0.57& ~ \\ \botrule
 \end{table*}
 
 \section{Conclusion}
-MORE... Improved contact maps clearly lead to improvements in protein structure prediction. We therefore strongly encourage further developments in contact prediction.
+MORE::: Improved contact maps clearly lead to improvements in protein structure prediction. We therefore strongly encourage further developments in contact prediction.
 
 \section*{Acknowledgement}
 %Text Text Text Text Text Text Text Text. \citealp{Boffelli03} might want to know about text text text text
@@ -471,36 +475,6 @@ MORE... Improved contact maps clearly lead to improvements in protein structure 
 \bibliography{pcons_fold}
 
 
-%\begin{thebibliography}{}
-%\bibitem[Bofelli {\it et~al}., 2000]{Boffelli03} Bofelli,F., Name2, Name3 (2003) Article title, {\it Journal Name}, {\bf 199}, 133-154.
 
-%\bibitem[Bag {\it et~al}., 2001]{Bag01} Bag,M., Name2, Name3 (2001) Article title, {\it Journal Name}, {\bf 99}, 33-54.
-
-%\bibitem[Yoo \textit{et~al}., 2003]{Yoo03}
-%Yoo,M.S. \textit{et~al}. (2003) Oxidative stress regulated genes
-%in nigral dopaminergic neurnol cell: correlation with the known
-%pathology in Parkinson's disease. \textit{Brain Res. Mol. Brain
-%Res.}, \textbf{110}(Suppl. 1), 76--84.
-
-%\bibitem[Lehmann, 1986]{Leh86}
-%Lehmann,E.L. (1986) Chapter title. \textit{Book Title}. Vol.~1, 2nd edn. Springer-Verlag, New York.
-
-%\bibitem[Crenshaw and Jones, 2003]{Cre03}
-%Crenshaw, B.,III, and Jones, W.B.,Jr (2003) The future of clinical
-%cancer management: one tumor, one chip. \textit{Bioinformatics},
-%doi:10.1093/bioinformatics/btn000.
-
-%\bibitem[Auhtor \textit{et~al}. (2000)]{Aut00}
-%Auhtor,A.B. \textit{et~al}. (2000) Chapter title. In Smith, A.C.
-%(ed.), \textit{Book Title}, 2nd edn. Publisher, Location, Vol. 1, pp.
-%???--???.
-
-%\bibitem[Bardet, 1920]{Bar20}
-%Bardet, G. (1920) Sur un syndrome d'obesite infantile avec
-%polydactylie et retinite pigmentaire (contribution a l'etude des
-%formes cliniques de l'obesite hypophysaire). PhD Thesis, name of
-%institution, Paris, France.
-
-%\end{thebibliography}
 \end{document}
 
