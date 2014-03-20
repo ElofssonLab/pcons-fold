@@ -273,9 +273,9 @@ compute 2,000 decoys for each protein we ran 16 threads in parallel.
 Each of these threads then generates 125 decoys, starting with 
 independent random seeds. With this setting it takes between two 
 hours and nearly one day to generate all decoys for one protein. 
-This is possible since Rosetta runs are independent of each other 
-if independent random seeds are provided. Scaling the number of 
-threads can then simply be used to reduce total runtime or to 
+This simple scaling is possible since Rosetta runs are independent of each other 
+as long as independent random seeds are provided. Increasing the number of 
+threads can then be used to reduce total runtime or to 
 generate more decoys in the same time. 
 
 The increased bulk at ~0.3 TM-score in the second
@@ -436,7 +436,7 @@ When looking at Figure \ref{fig:vs} (a) the majority of alpha helical proteins (
 
 Table \ref{tab:evfold} contains TM-scores for the top-ranked models of each protein in the small test dataset. We compare the EVfold results, as published in \citeauthor{marks_protein_2011} \citeyear{marks_protein_2011}, with results from the current EVfold version (web), EVfold re-ranked with Pcons, PconsFold, PconsFold re-ranked with Pcons, and PconsFold with 20,000 generated decoys. The results for the current version of EVfold were generated using plmDCA instead of DCA as in the published version. With an average TM-score of 0.55 EVfold using plmDCA performs 15 \% better than EVfold with DCA. When using PconsFold there is an additional improvement of 11 \% to an average TM-score of 0.61. This further supports our assumption that improved contact maps improve structure prediction. 
 
-Re-ranking the predicted decoys with Pcons increases the average TM-score for EVfold and decreases it for PconsFold. No significant difference in average TM-score is observable then. Increasing the number of computed decoys to 20,000 improves the results for PconsFold by 5 \%. We suggest to use this setting only if maximum quality is required, due to the 10-fold increase in runtime.
+Re-ranking the predicted decoys with Pcons increases the average TM-score for EVfold and decreases it for PconsFold. No significant difference in average TM-score is observable then. Increasing the number of computed decoys to 20,000 improves the results for PconsFold by 5 \%. Due to the 10-fold increase in runtime, we suggest to use this setting only if maximum quality is required.
 
 
 \begin{figure*}[!tpb]%figure1
