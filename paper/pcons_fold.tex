@@ -55,7 +55,7 @@ PconsC is used. Using Rosetta instead of EVfold does not significantly
 improve global model accuracy. Models generated with Rosetta contain 
 more side-chain clashes than EVfold models, however backbone 
 dihedrals are improved. Rosetta performs 14 \% better on proteins of 
-the CATH fold class mainly alpha and 15 \% better on alpha \&beta.
+the CATH fold class mainly alpha and 15 \% better on alpha \& beta.
 
 
 \section{Availability:}
@@ -223,10 +223,10 @@ further loop-closing or other refinement. Tags from the seqres
 sequences, although modeled, are therefore ignored in the structural
 comparison. 
 
-We used MolProbity \cite[]{chen_molprobity:_2010} to assess the final 
+We used MolProbity \cite[]{chen_molprobity:_2010} to assess the chemical
 model quality. The MolProbity tool {\tt oneline-analysis} was used to 
 detect clashes and to evaluate backbone dihedrals as well as 
-side-chian rotamers. To prepare the structures for this analysis, we 
+side-chain rotamers. To prepare the structures for this analysis, we 
 first repacked all side-chains with the {\tt fixbb.linuxgccrelease} 
 protocol from Rosetta using the options {\tt -packing:repack\_only}, 
 {\tt -ex1}, {\tt -ex2}, {\tt -extrachi\_cutoff 0}, {\tt -ndruns 10}, 
@@ -398,16 +398,10 @@ and Rosetta/plmDCA.
 
 The analysis with MolProbity reveals that the backbone dihedral 
 quality of Rosetta models is higher than for EVfold models. 
-The percentage of Ramachandran outliers is 0.63 \% for PconsFold and 
-12.16 \% in case of EVfold. This was expected as Rosetta uses fragment
-databases and stochastic fragment replacement to fold a protein.
+The percentage of Ramachandran outliers is 1.23 \% for PconsFold and 
+17.26 \% in case of EVfold. This might be explained by the fragment based approach Rosetta is using to fold a protein. However, in the Rosetta models many steric clashes remain repacking the side-chains. MolProbity reports a clash score of 145.89 on average. The EVfold models seem to have a much smaller number of clashes. This is indicated by a lower average clash score of 29.93. 
 
-
-However, in the Rosetta models there are still many clashes even 
-after repacking the side-chains. The EVfold models contain only a 
-small number of clashes. Using the Rosetta protocol 
-{\tt relax.linuxgccrelease} with fixed backbone atoms to repack the 
-side-chains resolves these clashes. 
+An additional relaxation step with the Rosetta protocol {\tt relax.linuxgccrelease} with fixed backbone atoms to repack the side-chains resolves most of these clashes. On the relaxed models MolProbity reports an average clash score of 10.48 for PconsFold and 9.90 for EVfold. The percentage of Ramachandran outliers improves to 0.62 \% for PconsFold and 12.16 \% for EVfold. The average final MolProbity score on the relaxed models is 1.85 for PconsFold and 2.38 for EVfold. This corresponds to an average MolProbity percentile rank of 80.69 for PconsFold and 54.21 for EVfold.
 
 
 \begin{table}[!t]
@@ -432,7 +426,7 @@ DOPE & 0.46 & 0.36 & 0.32 \\ \botrule
 Figure \ref{fig:vs} shows TM-score pairs for the top-ranked model for each protein in the PSICOV dataset. Pcons was used to rank all models. The TM-score for PconsFold (a) and Rosetta/plmDCA (b) is plotted along the $x$-axis. TM-scores for EVfold are plotted on the $y$-axis. Due to technical reasons there are no models for the protein with TM-score 0.0 for EVfold  (PDB ID: 1JBE). 1JBE was therefore excluded from all average TM-score calculations here and in the previous section.
 
 
-When looking at Figure \ref{fig:vs} (a) the majority of alpha helical proteins (blue) achieved higher TM-scores with PconsFold than with EVfold. On average we see an improvement of 14\% of PconsFold over EVfold on alpha helical proteins. The same improvement can also be observed for Rosetta/plmDCA in (b). Together with Figure \ref{fig:main} (b), this indicates that Rosetta performs better on alpha-helical proteins. Further investigation is needed to see if this trend is merely due to a bias in the underlying dataset. The average performance of PconsFold on alpha \& beta proteins (green) is 15\% higher than for EVfold. However, Rosetta/plmDCA performs equally good as EVfold on average on such targets. The improvement might thus be due to PconsC contact maps, since it is only observable for PconsFold and not for Rosetta/plmdca. At a level of single proteins we see quite some divergence between the results of EVfold and PconsFold in Figure \ref{fig:vs}. This is especially true for mainly beta (yellow) proteins in (a) and alpha \& beta as well as mainly beta in (b). 
+When looking at Figure \ref{fig:vs} (a) the majority of alpha helical proteins (blue) achieved higher TM-scores with PconsFold than with EVfold. On average we see an improvement of 14\% of PconsFold over EVfold on alpha helical proteins. The same improvement can also be observed for Rosetta/plmDCA in (b). Together with Figure \ref{fig:main} (b), this indicates that Rosetta performs better on alpha-helical proteins. Further investigation is needed to see if this trend is merely due to a bias in the underlying dataset. The average performance of PconsFold on alpha \& beta proteins (green) is 15\% higher than for EVfold. However, Rosetta/plmDCA performs equally good as EVfold on average on such targets. The improvement might thus be due to PconsC contact maps, since it is only observable for PconsFold and not for Rosetta/plmDCA. At a level of single proteins we see quite some divergence between the results of EVfold and PconsFold in Figure \ref{fig:vs}. This is especially true for mainly beta (yellow) proteins in (a) and alpha \& beta as well as mainly beta in (b). 
 
 
 Table \ref{tab:evfold} contains TM-scores for the top-ranked models of each protein in the small test dataset. We compare the EVfold results, as published in \citeauthor{marks_protein_2011} \citeyear{marks_protein_2011}, with results from the current EVfold version (web), EVfold re-ranked with Pcons, PconsFold, PconsFold re-ranked with Pcons, and PconsFold with 20,000 generated decoys. The results for the current version of EVfold were generated using plmDCA instead of DCA as in the published version. With an average TM-score of 0.55 EVfold using plmDCA performs 15 \% better than EVfold with DCA. When using PconsFold there is an additional improvement of 11 \% to an average TM-score of 0.61. This further supports our assumption that improved contact maps improve structure prediction. 
@@ -442,7 +436,7 @@ Re-ranking the predicted decoys with Pcons increases the average TM-score for EV
 
 \begin{figure*}[!tpb]%figure1
 \centerline{\includegraphics[scale=0.7]{figures/vs.eps}}
-\caption{TM-score comparison for top-ranked models of all proteins in the PSICOV dataset. The decoys for each method were re-ranked using Pcons. In (a) PconsFold is compared to EVfold. Most of the alpha helical proteins (blue) have higher TM-scores for PconsFold. Most of the proteins where EVfold performs better contain beta sheets (green) or are mainly beta (yellow). Rosetts/plmDCA and EVfold are compared in (b). Both methods perform very similar on average, but the results at protein level are diverging.}\label{fig:vs}
+\caption{TM-score comparison for top-ranked models of all proteins in the PSICOV dataset. The decoys for each method were re-ranked using Pcons. In (a) PconsFold is compared to EVfold. Most of the alpha helical proteins (blue) have higher TM-scores for PconsFold. Most of the proteins where EVfold performs better contain beta sheets (green) or are mainly beta (yellow). Rosetta/plmDCA and EVfold are compared in (b). Both methods perform very similar on average, but the results at protein level are diverging.}\label{fig:vs}
 \end{figure*}
 
 \begin{table*}[!t]
@@ -470,7 +464,7 @@ Mean & 0.48 & 0.55 & 0.57 & 0.61 & 0.57& 0.64 \\ \botrule
 \end{table*}
 
 \section{Conclusion}
-MORE::: Improved contact maps clearly lead to improvements in protein structure prediction. We therefore strongly encourage further developments in contact prediction.
+ Improved contact maps clearly lead to improvements in protein structure prediction. We therefore strongly encourage further developments in contact prediction.
 
 \section*{Acknowledgement}
 %Text Text Text Text Text Text Text Text. \citealp{Boffelli03} might want to know about text text text text
