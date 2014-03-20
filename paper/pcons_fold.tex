@@ -401,7 +401,7 @@ side-chains resolves these clashes.
 \processtable{Average TM-scores for top-ranked models selected by different MQAPs. \label{tab:qa}}
 {\begin{tabular}{llll}\toprule
 Method & EVfold & PconsFold & Rosetta/plmDCA \\ \midrule
-Rosetta & -- & 0.55 & 0.5 \\
+Rosetta & -- & 0.55 & 0.50 \\
 Pcons & 0.47 & 0.53 & 0.47 \\
 ProQ2 & 0.36 & 0.51 & 0.46 \\
 DOPE & 0.46 & 0.36 & 0.32 \\ \botrule
@@ -433,26 +433,26 @@ Re-ranking the predicted decoys with Pcons increases the average TM-score for EV
 \end{figure*}
 
 \begin{table*}[!t]
-\processtable{TM-scores for top ranked models comparing EVfold as it was published, current EVfold server (accessed Feb. 2014), EVfold results re-ranked with Pcons, PconsFold 2,000 decoys, PconsFold 2,000 decoys re-ranked with Pcons, and PconsFold 20,000 decoys. {\bf Add columns for 20k pconsfold}\label{tab:evfold}}
+\processtable{TM-scores for top ranked models comparing EVfold as it was published, current EVfold server (accessed Feb. 2014), EVfold results re-ranked with Pcons, PconsFold 2,000 decoys, PconsFold 2,000 decoys re-ranked with Pcons, and PconsFold 20,000 decoys. \label{tab:evfold}}
 {\begin{tabular}{lllllll}\toprule
 Protein & EVfold (paper) & EVfold (web) & EVfold (Pcons ranking) & PconsFold & PconsFold (Pcons ranking) & PconsFold (20k decoys)\\\midrule
 %~ & (paper) & (web) & (re-ranked) & (2k decoys) & (2k dec., re-ranked) & (20k decoys) \\ \midrule
-BPT1\_BOVIN & 0.49 & 0.25 & 0.5 & 0.44 & 0.28 & ~ \\
-CADH1\_HUMAN & 0.55 & 0.54 & 0.6 & 0.59 & 0.37& ~ \\
-CD209\_HUMAN & 0.39 & 0.64 & 0.62 & 0.48 & 0.4& ~ \\
-CHEY\_ECOLI & 0.65 & 0.66 & 0.74 & 0.82 &  0.81& ~ \\
-ELAV4\_HUMAN & 0.57 & 0.61 & 0.57 & 0.74 & 0.74& ~ \\
-O45418\_CAEEL & 0.48 & 0.62 & 0.62 & 0.62 & 0.64& ~ \\
-OMPR\_ECOLI & 0.35 & 0.44 & 0.47 & 0.59 & 0.59& ~ \\
-OPSD\_BOVIN & 0.5 & 0.55 & 0.58 & 0.47 & 0.45& ~ \\
-PCB1\_HUMAN & 0.25 & 0.43 & 0.42 & 0.59 & 0.7& ~ \\
-RASH\_HUMAN & 0.7 & 0.62 & 0.6 & 0.56 & 0.61& ~ \\
-RNH\_ECOLI & 0.54 & 0.66 & 0.66 & 0.64 & 0.58& ~ \\
-SPTB2\_HUMAN & 0.37 & 0.51 & 0.5 & 0.7 & 0.72& ~ \\
-THIO\_ALIAC & 0.55 & 0.56 & 0.61 & 0.79 & 0.66& ~ \\
-TRY2\_RAT & 0.53 * & 0.78 & 0.78 & 0.5 & 0.39& ~ \\
-YES\_HUMAN & 0.35 & 0.31 & 0.37 & 0.63 & 0.58& ~ \\ \midrule
-Mean & 0.48 & 0.55 & 0.57 & 0.61 & 0.57& ~ \\ \botrule
+BPT1\_BOVIN & 0.49 & 0.25 & 0.50 & 0.44 & 0.28 & 0.57 \\
+CADH1\_HUMAN & 0.55 & 0.54 & 0.60 & 0.59 & 0.37 & 0.53 \\
+CD209\_HUMAN & 0.39 & 0.64 & 0.62 & 0.48 & 0.40 & 0.54 \\
+CHEY\_ECOLI & 0.65 & 0.66 & 0.74 & 0.82 &  0.81 & 0.82 \\
+ELAV4\_HUMAN & 0.57 & 0.61 & 0.57 & 0.74 & 0.74 & 0.80 \\
+O45418\_CAEEL & 0.48 & 0.62 & 0.62 & 0.62 & 0.64 & 0.65 \\
+OMPR\_ECOLI & 0.35 & 0.44 & 0.47 & 0.59 & 0.59 & 0.59 \\
+OPSD\_BOVIN & 0.50 & 0.55 & 0.58 & 0.47 & 0.45 & 0.56 \\
+PCB1\_HUMAN & 0.25 & 0.43 & 0.42 & 0.59 & 0.70 & 0.60 \\
+RASH\_HUMAN & 0.70 & 0.62 & 0.60 & 0.56 & 0.61& 0.67 \\
+RNH\_ECOLI & 0.54 & 0.66 & 0.66 & 0.64 & 0.58& 0.61 \\
+SPTB2\_HUMAN & 0.37 & 0.51 & 0.50 & 0.70 & 0.72& 0.74 \\
+THIO\_ALIAC & 0.55 & 0.56 & 0.61 & 0.79 & 0.66& 0.83 \\
+TRY2\_RAT & 0.53 * & 0.78 & 0.78 & 0.50 & 0.39 & 0.54 \\
+YES\_HUMAN & 0.35 & 0.31 & 0.37 & 0.63 & 0.58& 0.57 \\ \midrule
+Mean & 0.48 & 0.55 & 0.57 & 0.61 & 0.57& 0.64 \\ \botrule
 \end{tabular}}{* This value needed to be corrected to the TM-score of the top-ranked model. In the original publication it showed the value for the best possible model.}
 \end{table*}
 
