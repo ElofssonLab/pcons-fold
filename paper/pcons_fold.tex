@@ -18,7 +18,7 @@
   protein models}
 %\title[short Title]{Advancement in residue contact prediction improves quality of predicted structural models.}
 %\author[Sample \textit{et~al}]{Mirco Michel\,$^{1,2}$, Marcin J. Skwark\,$^{3}$ and Arne Elofsson\,$^{1,2}$\footnote{to whom correspondence should be addressed}}
-\author[M.Michel \textit{et~al}]{Mirco Michel\,$^{1,2}$, Sikander Hayat\,$^{3}$, Marcin Skwark\,$^{4}$, Debora Marks\,$^{3}$, Chris Sander\,$^{5}$ and Arne Elofsson\,$^{1,2}$\footnote{to whom correspondence should be addressed}}
+\author[M.Michel \textit{et~al}]{Mirco Michel\,$^{1,2}$, Sikander Hayat\,$^{3}$, Marcin Skwark\,$^{4}$, Debora Marks\,$^{3}$, Chris Sander\,$^{5}$ and Arne Elofsson\,$^{1,2,}$\footnote{to whom correspondence should be addressed}}
 \address{$^{1}$Department of Biochemistry and Biophysics, Stockholm University, 10691 Stockholm, Sweden, 
 $^{2}$Science for Life Laboratory, Box 1031, 17121 Solna, Sweden, 
 $^{3}$Department of Systems Biology, Harvard Medical School, Boston, Massachusetts, USA, 
@@ -54,8 +54,8 @@ the improved contacts from plmDCA are used and another 11\% when
 PconsC is used. Using Rosetta instead of EVfold does not significantly
 improve global model accuracy. Models generated with Rosetta contain 
 more side-chain clashes than EVfold models, however backbone 
-dihedrals are improved. Rosetta performs better on alpha-helical 
-proteins.
+dihedrals are improved. Rosetta performs 14 \% better on proteins of 
+the CATH fold class mainly alpha and 15 \% better on alpha \&beta.
 
 
 \section{Availability:}
@@ -266,7 +266,19 @@ constraints \cite[]{Simons10526365}. Figure~\ref{fig:ros} (a) shows the distribu
 in TM-score. We reduced the number of decoy structures from 20,000 to
 2,000. This corresponds to a 10-fold decrease of runtime during the
 folding step but also leads to an expected decline in average model
-quality. The increased bulk at ~0.3 TM-score in the second
+quality. On one core of an Intel E5-2660 (2.2 GHz Sandybridge), 
+the generation of one decoy takes between 1 and 10 minutes for the 
+shortest and longest protein in the PSICOV dataset respectively. To 
+compute 2,000 decoys for each protein we ran 16 threads in paralel. 
+Each of these threads then generates 125 decoys, starting with 
+independent random seeds. With this setting it takes between two 
+hours and nearly one day to generate all decoys for one protein. 
+This is possible since Rosetta runs are independent of each other 
+if independent random seeds are provided. Scaling the number of 
+threads can then simply be used to reduce total runtime or to 
+generate more decoys in the same time. 
+
+The increased bulk at ~0.3 TM-score in the second
 distribution of Figure~\ref{fig:ros} (a) represents an increased
 number of low quality models. We think the practical advantages of
 massively shorter Rosetta runs outweigh slightly worse predicted
@@ -385,8 +397,8 @@ and Rosetta/plmDCA.
 
 The analysis with MolProbity reveals that the backbone dihedral 
 quality of Rosetta models is higher than for EVfold models. 
-The percentage of Ramachandran outliers is XX \% for PconsFold and 
-XX \% in case of EVfold. This was expected as Rosetta uses fragment
+The percentage of Ramachandran outliers is 0.63 \% for PconsFold and 
+12.16 \% in case of EVfold. This was expected as Rosetta uses fragment
 databases and stochastic fragment replacement to fold a protein.
 
 
@@ -424,7 +436,7 @@ When looking at Figure \ref{fig:vs} (a) the majority of alpha helical proteins (
 
 Table \ref{tab:evfold} contains TM-scores for the top-ranked models of each protein in the small test dataset. We compare the EVfold results, as published in \citeauthor{marks_protein_2011} \citeyear{marks_protein_2011}, with results from the current EVfold version (web), EVfold re-ranked with Pcons, PconsFold, PconsFold re-ranked with Pcons, and PconsFold with 20,000 generated decoys. The results for the current version of EVfold were generated using plmDCA instead of DCA as in the published version. With an average TM-score of 0.55 EVfold using plmDCA performs 15 \% better than EVfold with DCA. When using PconsFold there is an additional improvement of 11 \% to an average TM-score of 0.61. This further supports our assumption that improved contact maps improve structure prediction. 
 
-Re-ranking the predicted decoys with Pcons increases the average TM-score for EVfold and decreases it for PconsFold. MORE:::
+Re-ranking the predicted decoys with Pcons increases the average TM-score for EVfold and decreases it for PconsFold. No significant difference in average TM-score is observable then. Increasing the number of computed decoys to 20,000 improves the results for PconsFold by 5 \%. We suggest to use this setting only if maximum quality is required, due to the 10-fold increase in runtime.
 
 
 \begin{figure*}[!tpb]%figure1
