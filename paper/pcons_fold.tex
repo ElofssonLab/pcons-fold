@@ -51,13 +51,9 @@ model the proteins.
 \section{Results:}
 We find that on average the quality is improved with about 15\% when
 the improved contacts from plmDCA are used and another 11\% when
-PconsC is used. Using Rosetta instead of EVfold does not significantly
-improve global model accuracy. Models generated with Rosetta contain 
-slightly more clashes than EVfold models, however backbone 
-dihedrals are improved in PconsFold. PconsFold performs 14 \% better on proteins of 
-the CATH fold class mainly alpha and 15 \% better on alpha \& beta.
-
-MORE::::
+PconsC is used, as measured by TM-score. Using Rosetta instead of
+EVfold does not significantly improve global model accuracy. However,
+the chemistry of models generated with Rosetta is improved.
 
 \section{Availability:}
 PconsFold is a fully automated pipeline for ab-initio protein
@@ -65,7 +61,8 @@ structure prediction based on evolutionary information. PconsFold is
 based on PconsC contact prediction and uses the Rosetta folding
 protocol. Due to its modularity, the contact prediction tool can be
 easily exchanged. The source code of PconsFold is available on GitHub
-at \url{https://www.github.com/ElofssonLab/pcons-fold}
+at \url{https://www.github.com/ElofssonLab/pcons-fold}  under the MIT
+license.
 \section{Contact:} \href{arne@bioinfo.se}{arne@bioinfo.se}
 \section{Supplementary information:} Supplementary data are available at \emph{Bioinformatics} online.
 \end{abstract}
@@ -73,7 +70,7 @@ at \url{https://www.github.com/ElofssonLab/pcons-fold}
 \section{Introduction}
 The protein folding problem is one of the longest standing problems in
 structural biology. Although the problem itself remains largely unsolved,
-there has been continuous effort and progress resulting in increased
+there have been continuous effort and progress resulting in increased
 accuracy of predicted models
 \cite[]{kryshtafovych_CASP10_2013}. 
 
@@ -110,10 +107,7 @@ amino-acid contacts from PconsC. These contacts are utilized within
 Rosetta to fold a given protein sequence from scratch. We benchmark
 our method on two datasets and compare it to EVfold
 \cite[]{marks_protein_2011}, a previous method for contact based
-protein structure prediction. The source code for PconsFold is
-available on GitHub
-(\url{https://www.github.com/ElofssonLab/pcons-fold}) under the MIT
-license. It was found that the improved quality of predicted contacts
+protein structure prediction. It was found that the improved quality of predicted contacts
 by PconsC~\cite{skwark_PconsC:_2013} increases quality and
 native-likeliness of predicted structures by about 20\% over the
 original EVfold and 10\% over EVfold using the improved contact
@@ -140,8 +134,11 @@ to the PDB sequences. This allows direct comparisons between predicted
 models and native PDB structures. Taking account for structural
 differences due to diverging sequences is thus not necessary. 
 
+Due to technical reasons EVfold did not produce any models for the
+protein 1JBE. 1JBE was therefore excluded from all evaluations.
 
-For the final comparison between PconsFold and EVfold we used the set
+
+As an additional comparison between PconsFold and EVfold we used the set
 of 15 proteins as in \citeauthor{marks_protein_2011}
 \citeyear{marks_protein_2011}. PDB and Uniprot IDs are given in
 Supplementary Table T2. Here we used the exact same sequences and
@@ -202,7 +199,8 @@ contacts. The fading zone at the lower bound allows Rosetta to detect
 and resolve overlapping residues, i.e. when there is a negative
 distance between two residues. 
 
-\subsection{Model quality assessment}
+\subsection{Identification of top ranked model}
+
 In addition to internal Rosetta scoring we assessed the quality of all
 predicted models with the model quality assessment programs (MQAPs)
 Pcons \cite[]{lundstrom_pcons:_2001}, ProQ2
@@ -238,7 +236,24 @@ added with the MolProbity tool {\tt reduce-build}. All resulting
 structures are provided in the Supplementary Material.
 
 
+
+\subsection{Running time}
+A reduction from 20,000 to 2,000 folds corresponds to a 10-fold
+decrease of runtime during the folding step but also leads to an
+expected decline in average model quality. On one core of an Intel
+E5-2660 (2.2 GHz Sandybridge), the generation of one decoy takes
+between 1 and 10 minutes for the shortest and longest protein in the
+PSICOV dataset respectively. To compute 2,000 decoys for each protein
+we ran 16 threads in parallel.  Each of these threads then generates
+125 decoys, starting with independent random seeds. With this setting
+it takes between two hours and nearly one day to generate all decoys
+for one protein.  This simple scaling is possible since Rosetta runs
+are independent of each other as long as independent random seeds are
+provided. Increasing the number of threads can then be used to reduce
+total runtime or to generate more decoys in the same time.
+
 \end{methods}
+
 
 \section{Results and Discussion}
 
@@ -246,10 +261,10 @@ structures are provided in the Supplementary Material.
 \begin{figure*}[!tpb]%figure1
 \centerline{\includegraphics[scale=0.7]{figures/rosetta.eps}}
 \caption{Predicted model quality in TM-score for adjustments of two
-  different Rosetta parameters. Reducing the sample size in (a) from
+  different Rosetta parameters. a) Reducing the sample size in from
   20,000 to 2,000 decoy structures results in reduced
   native-likeliness of predicted models. However, it also provides a
-  10-fold speed-up. In (b) we adjust the depth parameter of the FADE
+  10-fold speed-up. b) Adjusting the depth parameter of the FADE
   function, used to score predicted contacts during folding. A larger
   absolute value increases the weight of such constraints and results
   in improved predictions.}\label{fig:ros} 
@@ -265,24 +280,11 @@ the PSICOV dataset as prediction targets in this section.
 
 Previous studies have shown that 20,000 -- 200,000 decoys are
 necessary to sample native-like conformations without using spatial
-constraints \cite[]{Simons10526365}. Figure~\ref{fig:ros} (a) shows the distributions of model quality, measured
-in TM-score. We reduced the number of decoy structures from 20,000 to
-2,000. This corresponds to a 10-fold decrease of runtime during the
-folding step but also leads to an expected decline in average model
-quality. On one core of an Intel E5-2660 (2.2 GHz Sandybridge), 
-the generation of one decoy takes between 1 and 10 minutes for the 
-shortest and longest protein in the PSICOV dataset respectively. To 
-compute 2,000 decoys for each protein we ran 16 threads in parallel. 
-Each of these threads then generates 125 decoys, starting with 
-independent random seeds. With this setting it takes between two 
-hours and nearly one day to generate all decoys for one protein. 
-This simple scaling is possible since Rosetta runs are independent of each other 
-as long as independent random seeds are provided. Increasing the number of 
-threads can then be used to reduce total runtime or to 
-generate more decoys in the same time. 
-
-The increased bulk at ~0.3 TM-score in the second
-distribution of Figure~\ref{fig:ros} (a) represents an increased
+constraints \cite[]{Simons10526365}. We set out using 20,000 models
+and then reduced the number of decoy structures to
+2,000. Figure~\ref{fig:ros} shows the distributions of model quality,
+measured in TM-score.  The  bulk at ~0.3 TM-score in the second
+distribution of Figure~\ref{fig:ros}  represents an increased
 number of low quality models. We think the practical advantages of
 massively shorter Rosetta runs outweigh slightly worse predicted
 models. This parameter is therefore set to a default value of 2,000
@@ -293,30 +295,39 @@ setting.
 
 We selected the FADE function to incorporate predicted residue
 contacts into Rosetta's native energy function. We then adjusted the
-parameter $w$ (well-depth) of FADE (Equation \ref{eq:fade}) on a
+parameter $w$ (well-depth) of FADE (Equation~\ref{eq:fade}) on a
 subset of 14 Proteins (Supplementary Table T3) of the PSICOV
-dataset. The resulting TM-scores are shown in Figure~\ref{fig:ros}
-(b). The energy term from spatial constraints diminishes with
+dataset. The resulting TM-scores are shown in Figure~\ref{fig:ros}b. The energy term from spatial constraints diminishes with
 well-depth values of -0.5 and above. This leads to a significant
 decrease in model quality. Lower values of -5.0 and below put a larger
 absolute weight on the constraints resulting in higher model
 qualities. We assume this is due to the small number of decoys we are
-generating in this experiment. We selected a value of -15.0 to achieve
+generating in this experiment. At the end we choose to use a value of -15.0 to achieve
 high model quality without outweighing Rosetta's native energy
 function completely.
 
 
 \begin{figure*}[!tpb]%figure1
 \centerline{\includegraphics[scale=0.7]{figures/tmscores.eps}}
-\caption{In (a) the number of contacts used in structure prediction is plotted against average TM-score for three different methods: PconsFold (green circles), Rosetta/plmDCA (blue triangles), and Rosetta/PSICOV (black squares). There is an optimal number of contacts that depends on the contact prediction method. It also shows that increased contact prediction quality improves native-likeliness of predicted models. In (b) TM-scores are compared to the PPV of underlying contact maps for PconsFold (using PconsC). Mainly alpha helical proteins (blue) are easier to fold than alpha/beta or mainly beta sheet containing proteins.}\label{fig:main}
+\caption{a) The number of contacts used in structure prediction is
+  plotted against average TM-score for three different methods:
+  PconsFold (green circles), Rosetta/plmDCA (blue triangles), and
+  Rosetta/PSICOV (black squares). There is an optimal number of
+  contacts that depends on the contact prediction method. It also
+  shows that increased contact prediction quality improves
+  native-likeliness of predicted models. b) TM-scores are compared
+  to the PPV of underlying contact maps for PconsFold (using
+  PconsC). Mainly alpha helical proteins (blue) are easier to fold
+  than alpha/beta or mainly beta sheet containing
+  proteins.}\label{fig:main}
 \end{figure*}
 
 With any number of contacts used during structure prediction, the
 resulting model quality is on average higher than it would be without
-contact information. Figure~\ref{fig:main} (a) shows average TM-scores
+contact information. Figure~\ref{fig:main} shows average TM-scores
 for varying amounts of constraints. For each protein the number of top
 ranked contacts was selected relative to its sequence length. A value
-of 1.0 on the $x$-axis in Figure~\ref{fig:main} (a) represents one
+of 1.0 on the $x$-axis in Figure~\ref{fig:main} represents one
 contact per residue on average. The same Rosetta protocol as in
 PconsFold (green circles) was also applied to contacts from PSICOV
 (black squares) and plmDCA (blue triangles). Comparing $x=0.0$ to any
@@ -326,7 +337,7 @@ quality, regardless of method or amount of contacts.
 
 Improvements in contact prediction methods also increase the quality
 of predicted structures. With a maximal average TM-score of 0.55
-PconsFold, i.e. using PconsC contacts, provides a 10\% improvement
+PconsFold, i.e. using PconsC contacts provides a 10\% improvement
 over using PSICOV or plmDCA contacts. This observation is consistent
 with a direct comparison of contact prediction methods as in
 \citeauthor{skwark_PconsC:_2013}
@@ -336,10 +347,10 @@ structure prediction.
 
 
 There is an optimal number of contacts, specific to the contact
-prediction method. In Figure~\ref{fig:main} (a) the maximal average
+prediction method. In Figure~\ref{fig:main}  the maximal average
 TM-score is reached at $x=1.0$ for PconsFold. For Rosetta/PSICOV and
-Rosetta/plmDCA a smaller number of one contact every other residue on
-average is optimal. This can also be explained by the quality of
+Rosetta/plmDCA a smaller number than one contact for every residue 
+is optimal. This can also be explained by the quality of
 predicted contacts. A larger number of top ranked contacts is
 predicted with a higher quality in PconsC compared to plmDCA or PSICOV
 \cite[]{skwark_PconsC:_2013}. Using more of these contacts during
@@ -347,7 +358,7 @@ structure prediction leads to improved models.
 
 
 This relation between contact and model quality can also be observed
-in Figure \ref{fig:main} (b). For each protein in the dataset the PPV
+in Figure~\ref{fig:main}. For each protein in the dataset the PPV
 of its contact map is plotted against the TM-score of the resulting
 model. The overall Pearson correlation between PPV and TM-score in
 this dataset is 0.59. Proteins with contact maps of lower quality tend
@@ -358,8 +369,7 @@ Proteins belonging to the {\it
   mainly alpha} CATH fold class seem to be easier to fold than
 proteins from the {\it alpha \& beta} fold class and proteins from the
 {\it mainly beta} fold class seem to be hardest to fold. The fold
-classes are indicated by the color scheme in Figure \ref{fig:main}
-(b). Predicted contact maps in mainly $\alpha$-helical proteins (blue)
+classes are indicated by the color scheme in Figure~\ref{fig:main}. Predicted contact maps in mainly $\alpha$-helical proteins (blue)
 have similar or lower PPV values than those of $\beta$-sheet
 containing proteins (green and yellow), but the resulting models are
 more accurate in terms of TM-score.
@@ -368,7 +378,7 @@ more accurate in terms of TM-score.
 
 
 \subsection{Model quality assessment}
-Table \ref{tab:qa} summarizes the evaluation of different MQAPs on the
+Table~\ref{tab:qa} summarizes the evaluation of different MQAPs on the
 predictions for the PSICOV dataset. It shows average TM-scores for the
 top-ranked model after re-ranking all models with each MQAP. In all
 cases the cumulative score for the full protein was used. Due to
@@ -402,15 +412,26 @@ DOPE & 0.46 & 0.36 & 0.32 \\ \botrule
 
 \begin{figure*}[!tpb]%figure1
 \centerline{\includegraphics[scale=0.7]{figures/qa.eps}}
-\caption{(a) PPV of the predicted contacts when using the native structures against the PPV in the top-ranked models. The color scheme represents TM-scores. (b) shows predicted contacts in the native structure of 1JWQ and (c) in the top-ranked model.}\label{fig:qa}
+\caption{a) PPV of the predicted contacts when using the native
+  structures against the PPV in the top-ranked models. The color
+  scheme represents TM-scores. A) Predicted contacts in the native structure of 1JWQ and (c) in the top-ranked model.}\label{fig:qa}
 \end{figure*}
 
-In Figure \ref{fig:qa} (a) PPV values for PconsC contacts on native structures ($x$-axis) are plotted against PPVs on the top-ranked models from PconsFold ($y$-axis). The colors represent the TM-score of the models against the native structures. With an average of 0.55 the PPV is higher for native structures than for the models, which have an average PPV of 0.47. The larger amount of points in the lower right triangle in Figure \ref{fig:qa} (a) indicates room for further improvement of the folding process. If the folding would use the contact information optimally, we would expect the majority of points being placed closer to the diagonal. In the region around PPV 0.4 and below, some models satisfy the constraints better than the native structures. This indicates that the folding protocol overfits the given constraints, resulting in low TM-scores (red color). 
+In Figure~\ref{fig:qa} PPV values for PconsC contacts on native
+structures ($x$-axis) are plotted against PPVs on the top-ranked
+models from PconsFold ($y$-axis). The colors represent the TM-score of
+the models against the native structures. With an average of 0.55 the
+PPV is higher for native structures than for the models, which have an
+average PPV of 0.47. The points in the lower right
+triangle in Figure~\ref{fig:qa} indicates room for further improvement
+of the folding process. In the region around PPV 0.4 and below,
+some models satisfy the constraints better than the native
+structures. 
 
-In Figure \ref{fig:qa} (b) and (c) we examine one example of non-optimal folding more closely. Figure \ref{fig:qa} (b) shows the native structure of the protein indicated by the arrow in (a) (PDB ID: 1JWQ). We selected 1JWQ since it represents the worst-case scenario where the difference between native and model PPV is largest. The lines represent predicted contacts, colored according to the distance between their C$^{\beta}$ atoms. In case of glycine C$^{\alpha}$ atoms are used instead. The color gradient indicates distances ranging from 4 \AA\ in green over yellow at 10 \AA\ up to red for 20 \AA\ and above. With a PPV of above 0.8 most of the contacts were predicted correctly for this protein. This results in mainly green colored contacts in the native structure in (b). Looking at the contacts in (c) reveals that the helix at the bottom was not optimally packed in the model. Contacts colored in orange and red show that the distance constraints were not sufficiently satisfied by Rosetta. The overall PPV decreased below 0.5 for this model.
+In Figure~\ref{fig:qa} (b) and (c) we examine one example of
+non-optimal folding more closely. Figure~\ref{fig:qa} (b) shows the
+native structure of the protein indicated by the arrow in Figure~\ref{fig:qa} (a) (PDB ID: 1JWQ). We selected 1JWQ since it represents the worst-case scenario where the difference between native and model PPV is largest. The lines represent predicted contacts, colored according to the distance between their C$^{\beta}$ atoms. In case of glycine C$^{\alpha}$ atoms are used instead. The color gradient indicates distances ranging from 4 \AA\ in green over yellow at 10 \AA\ up to red for 20 \AA\ and above. With a PPV of above 0.8 most of the contacts were predicted correctly for this protein. This results in mainly green colored contacts in the native structure in (b). Looking at the contacts in (c) reveals that the helix at the bottom was not optimally packed in the model. Contacts colored in orange and red show that the distance constraints were not sufficiently satisfied by Rosetta. The overall PPV decreased below 0.5 for this model.
 
-The analysis with MolProbity reveals that the backbone dihedral 
-quality of Rosetta models is higher than for EVfold models. The percentage of Ramachandran outliers is 0.62 \% for PconsFold and 12.16 \% for EVfold. MolProbity further reports an average clash score of 10.48 for PconsFold and 9.90 for EVfold. The EVfold models have slightly less clashes than the models from PconsFold. The average final MolProbity score is with 1.85 better for PconsFold then 2.38 for EVfold. This corresponds to a better average MolProbity percentile rank of 80.69 for PconsFold than the rank of 54.21 for EVfold.
 
 
 
@@ -419,54 +440,109 @@ quality of Rosetta models is higher than for EVfold models. The percentage of Ra
 
 \subsection{Comparison to EVfold}
 
-Figure \ref{fig:vs} shows TM-score pairs for the top-ranked model for each protein in the PSICOV dataset. Pcons was used to rank all models. The TM-score for PconsFold (a) and Rosetta/plmDCA (b) is plotted along the $x$-axis. TM-scores for EVfold are plotted on the $y$-axis. Due to technical reasons there are no models for the protein with TM-score 0.0 for EVfold  (PDB ID: 1JBE). 1JBE was therefore excluded from all average TM-score calculations here and in the previous section.
+Figure~\ref{fig:vs} shows TM-score pairs for the top-ranked model for each protein in the PSICOV dataset. Pcons was used to rank all models. The TM-score for PconsFold  and Rosetta/plmDCA  is plotted along the $x$-axis. TM-scores for EVfold are plotted on the $y$-axis. 
+
+When looking at Figure~\ref{fig:vs} the majority of alpha helical
+proteins (blue) achieved higher TM-scores with PconsFold than with
+EVfold. On average we see an improvement of 14\% of PconsFold over
+EVfold on alpha helical proteins. The same improvement can also be
+observed for Rosetta/plmDCA . Together with Figure~\ref{fig:main},
+this indicates that Rosetta performs better on alpha-helical
+proteins. Further investigation is needed to see if this trend is
+merely due to a bias in the underlying dataset. The average
+performance of PconsFold on alpha \& beta proteins (green) is 15\%
+higher than for EVfold. However, Rosetta/plmDCA performs equally good
+as EVfold on average on such targets. The improvement might thus be
+due to PconsC contact maps, since it is only observable for PconsFold
+and not for Rosetta/plmDCA. At a level of single proteins we see quite
+some divergence between the results of EVfold and PconsFold in
+Figure~\ref{fig:vs}. This is especially true for ``mainly beta''
+proteins and ``alpha \& beta'' as well as ``mainly beta''.
 
 
-When looking at Figure \ref{fig:vs} (a) the majority of alpha helical proteins (blue) achieved higher TM-scores with PconsFold than with EVfold. On average we see an improvement of 14\% of PconsFold over EVfold on alpha helical proteins. The same improvement can also be observed for Rosetta/plmDCA in (b). Together with Figure \ref{fig:main} (b), this indicates that Rosetta performs better on alpha-helical proteins. Further investigation is needed to see if this trend is merely due to a bias in the underlying dataset. The average performance of PconsFold on alpha \& beta proteins (green) is 15\% higher than for EVfold. However, Rosetta/plmDCA performs equally good as EVfold on average on such targets. The improvement might thus be due to PconsC contact maps, since it is only observable for PconsFold and not for Rosetta/plmDCA. At a level of single proteins we see quite some divergence between the results of EVfold and PconsFold in Figure \ref{fig:vs}. This is especially true for mainly beta (yellow) proteins in (a) and alpha \& beta as well as mainly beta in (b). 
+Table~\ref{tab:evfold} contains TM-scores for the top-ranked models of
+each protein in the small test dataset. We compare the EVfold results,
+as published in \citeauthor{marks_protein_2011}
+\citeyear{marks_protein_2011}, with results from the current EVfold
+version (web), EVfold re-ranked with Pcons, PconsFold, PconsFold
+re-ranked with Pcons, and PconsFold with 20,000 generated decoys. The
+results for the current version of EVfold were generated using plmDCA
+instead of DCA as in the published version. With an average TM-score
+of 0.55 EVfold using plmDCA performs 15 \% better than EVfold with
+DCA. When using PconsFold there is an additional improvement of 11 \%
+to an average TM-score of 0.61. This further supports our assumption
+that improved contact maps improve structure prediction.
 
+Re-ranking the predicted decoys with Pcons increases the average
+TM-score for EVfold and decreases it for PconsFold. No significant
+difference in average TM-score is observable then. Increasing the
+number of computed decoys to 20,000 improves the results for PconsFold
+by 5 \%. Due to the 10-fold increase in runtime, we suggest to use
+this setting only if maximum quality is required.
 
-Table \ref{tab:evfold} contains TM-scores for the top-ranked models of each protein in the small test dataset. We compare the EVfold results, as published in \citeauthor{marks_protein_2011} \citeyear{marks_protein_2011}, with results from the current EVfold version (web), EVfold re-ranked with Pcons, PconsFold, PconsFold re-ranked with Pcons, and PconsFold with 20,000 generated decoys. The results for the current version of EVfold were generated using plmDCA instead of DCA as in the published version. With an average TM-score of 0.55 EVfold using plmDCA performs 15 \% better than EVfold with DCA. When using PconsFold there is an additional improvement of 11 \% to an average TM-score of 0.61. This further supports our assumption that improved contact maps improve structure prediction. 
-
-Re-ranking the predicted decoys with Pcons increases the average TM-score for EVfold and decreases it for PconsFold. No significant difference in average TM-score is observable then. Increasing the number of computed decoys to 20,000 improves the results for PconsFold by 5 \%. Due to the 10-fold increase in runtime, we suggest to use this setting only if maximum quality is required.
+The analysis with MolProbity reveals that the backbone dihedral
+quality of Rosetta models is higher than for EVfold models. The
+percentage of Ramachandran outliers is 0.62 \% for PconsFold and 12.16
+\% for EVfold. MolProbity further reports an average clash score of
+10.48 for PconsFold and 9.90 for EVfold. The EVfold models have
+slightly less clashes than the models from PconsFold. The average
+final MolProbity score is with 1.85 better for PconsFold then 2.38 for
+EVfold. This corresponds to a better average MolProbity percentile
+rank of 80.69 for PconsFold than the rank of 54.21 for EVfold.
 
 
 \begin{figure*}[!tpb]%figure1
 \centerline{\includegraphics[scale=0.7]{figures/vs.eps}}
-\caption{TM-score comparison for top-ranked models of all proteins in the PSICOV dataset. The decoys for each method were re-ranked using Pcons. In (a) PconsFold is compared to EVfold. Most of the alpha helical proteins (blue) have higher TM-scores for PconsFold. Most of the proteins where EVfold performs better contain beta sheets (green) or are mainly beta (yellow). Rosetta/plmDCA and EVfold are compared in (b). Both methods perform very similar on average, but the results at protein level are diverging.}\label{fig:vs}
+\caption{TM-score comparison for top-ranked models of all proteins in
+  the PSICOV dataset. The decoys for each method were re-ranked using
+  Pcons. a) PconsFold is compared to EVfold. Most of the alpha helical
+  proteins (blue) have higher TM-scores for PconsFold. Most of the
+  proteins where EVfold performs better contain beta sheets (green) or
+  are mainly beta (yellow). b) Rosetta/plmDCA and EVfold are
+  compared. Both methods perform very similar on average, but the
+  results at protein level are diverging.}\label{fig:vs}
 \end{figure*}
 
-\begin{table*}[!t]
+\begin{table}[!t]
 \processtable{TM-scores for top ranked models comparing EVfold as it was published, current EVfold server (accessed Feb. 2014), EVfold results re-ranked with Pcons, PconsFold 2,000 decoys, PconsFold 2,000 decoys re-ranked with Pcons, and PconsFold 20,000 decoys. \label{tab:evfold}}
-{\begin{tabular}{lllllll}\toprule
-Protein & EVfold (paper) & EVfold (web) & EVfold (Pcons ranking) & PconsFold & PconsFold (Pcons ranking) & PconsFold (20k decoys)\\\midrule
+{\begin{tabular}{lp{1.5cm}p{1.5cm}p{1.5cm}p{1.5cm}}\toprule
+Protein & EVfold (paper) & EVfold (web)   & PconsFold (20k decoys)\\\midrule
 %~ & (paper) & (web) & (re-ranked) & (2k decoys) & (2k dec., re-ranked) & (20k decoys) \\ \midrule
-BPT1\_BOVIN & 0.49 & 0.25 & 0.50 & 0.44 & 0.28 & 0.57 \\
-CADH1\_HUMAN & 0.55 & 0.54 & 0.60 & 0.59 & 0.37 & 0.53 \\
-CD209\_HUMAN & 0.39 & 0.64 & 0.62 & 0.48 & 0.40 & 0.54 \\
-CHEY\_ECOLI & 0.65 & 0.66 & 0.74 & 0.82 &  0.81 & 0.82 \\
-ELAV4\_HUMAN & 0.57 & 0.61 & 0.57 & 0.74 & 0.74 & 0.80 \\
-O45418\_CAEEL & 0.48 & 0.62 & 0.62 & 0.62 & 0.64 & 0.65 \\
-OMPR\_ECOLI & 0.35 & 0.44 & 0.47 & 0.59 & 0.59 & 0.59 \\
-OPSD\_BOVIN & 0.50 & 0.55 & 0.58 & 0.47 & 0.45 & 0.56 \\
-PCB1\_HUMAN & 0.25 & 0.43 & 0.42 & 0.59 & 0.70 & 0.60 \\
-RASH\_HUMAN & 0.70 & 0.62 & 0.60 & 0.56 & 0.61& 0.67 \\
-RNH\_ECOLI & 0.54 & 0.66 & 0.66 & 0.64 & 0.58& 0.61 \\
-SPTB2\_HUMAN & 0.37 & 0.51 & 0.50 & 0.70 & 0.72& 0.74 \\
-THIO\_ALIAC & 0.55 & 0.56 & 0.61 & 0.79 & 0.66& 0.83 \\
-TRY2\_RAT & 0.53 * & 0.78 & 0.78 & 0.50 & 0.39 & 0.54 \\
-YES\_HUMAN & 0.35 & 0.31 & 0.37 & 0.63 & 0.58& 0.57 \\ \midrule
-Mean & 0.48 & 0.55 & 0.57 & 0.61 & 0.57& 0.64 \\ \botrule
+BPT1\_BOVIN & 0.49 & 0.25    & 0.57 \\
+CADH1\_HUMAN & 0.55 & 0.54    & 0.53 \\
+CD209\_HUMAN & 0.39 & 0.64    & 0.54 \\
+CHEY\_ECOLI & 0.65 & 0.66   & 0.82 \\
+ELAV4\_HUMAN & 0.57 & 0.61    & 0.80 \\
+O45418\_CAEEL & 0.48 & 0.62   & 0.65 \\
+OMPR\_ECOLI & 0.35 & 0.44    & 0.59 \\
+OPSD\_BOVIN & 0.50 & 0.55    & 0.56 \\
+PCB1\_HUMAN & 0.25 & 0.43    & 0.60 \\
+RASH\_HUMAN & 0.70 & 0.62   & 0.67 \\
+RNH\_ECOLI & 0.54 & 0.66   & 0.61 \\
+SPTB2\_HUMAN & 0.37 & 0.51  & 0.74 \\
+THIO\_ALIAC & 0.55 & 0.56   & 0.83 \\
+TRY2\_RAT & 0.53 * & 0.78    & 0.54 \\
+YES\_HUMAN & 0.35 & 0.31   & 0.57 \\ \midrule
+Mean & 0.48 & 0.55   & 0.64 \\ \botrule
 \end{tabular}}{* This value needed to be corrected to the TM-score of the top-ranked model. In the original publication it showed the value for the best possible model.}
-\end{table*}
+\end{table}
 
 \section{Conclusion}
-Improved contact maps clearly lead to improvements in protein structure prediction. We therefore strongly encourage further developments in contact prediction.
 
-Rosetta itself provides no gain in model native-likeliness. According to MolProbity Rosetta structures are slightly more accurate.
 
-When comparing PPVs we see that there is still room for improvement in the folding protocol.
-
-We propose to use model-PPV as a measure of model quality, or as a stopping criterium for decoy generation. If the native PPV is reached, we can't gain more information from the contact map. Then structural refinement needs to be used to get closer to native conformations. 
+Here, we show that improved contact predictions from
+PconsC~\cite{skwark_PconsC:_2013} actually lead to improvements in
+protein structure prediction. Further, it is clear that for proteins
+with better-predicted contacts the generated models are of higher
+quality, i.e. future improvements in contact predictions will result
+in higher quality models. A comparison between using Rosetta and
+EVfold indicate that using similar contact predictions generate
+similar quality models, but that the Rosetta models are chemically
+more correct. Finally, it is also clear that in many top ranked models
+the contacts are less well satisfied than in the native structures,
+i.e. an improved folding protocol would improve the models.  One
+option would be to use model-PPV as a measure of model quality, or as
+a stopping criterium for decoy generation.
 
 
 
@@ -476,6 +552,9 @@ We propose to use model-PPV as a measure of model quality, or as a stopping crit
 
 \section*{Acknowledgement}
 %Text Text Text Text Text Text Text Text. \citealp{Boffelli03} might want to know about text text text text
+This work was supported by grants from the Swedish
+Research Council (VR-NT 2012-5046, VR-M 2010-3555) and SeRC the
+Swedish E-science Research Center.
 
 \paragraph{Funding\textcolon} %Text Text Text Text Text Text Text Text.
 

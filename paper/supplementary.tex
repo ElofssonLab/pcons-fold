@@ -1,0 +1,63 @@
+\documentclass{bioinfo}
+\copyrightyear{2014}
+\pubyear{2014}
+%\firstpage{1}
+%
+
+
+\usepackage{hyperref}
+
+
+
+\begin{document}
+\firstpage{1}
+
+%\title[short Title]{Structure prediction of globular proteins using predicted residue contacts.}
+%\title[short Title]{PconsFold: ab-initio protein folding using Rosetta and predicted residue contacts.}
+\title[PconsFold]{PconsFold: Improved contact predictions improve
+  protein models}
+%\title[short Title]{Advancement in residue contact prediction improves quality of predicted structural models.}
+%\author[Sample \textit{et~al}]{Mirco Michel\,$^{1,2}$, Marcin J. Skwark\,$^{3}$ and Arne Elofsson\,$^{1,2}$\footnote{to whom correspondence should be addressed}}
+\author[M.Michel \textit{et~al}]{Mirco Michel\,$^{1,2}$, Sikander Hayat\,$^{3}$, Marcin Skwark\,$^{4}$, Debora Marks\,$^{3}$, Chris Sander\,$^{5}$ and Arne Elofsson\,$^{1,2,}$\footnote{to whom correspondence should be addressed}}
+\address{$^{1}$Department of Biochemistry and Biophysics, Stockholm University, 10691 Stockholm, Sweden, 
+$^{2}$Science for Life Laboratory, Box 1031, 17121 Solna, Sweden, 
+$^{3}$Department of Systems Biology, Harvard Medical School, Boston, Massachusetts, USA, 
+$^{4}$Department of Information and Computer Science, Aalto University, PO Box 15400, FI-00076 Aalto, Finland, and
+$^{5}$Computational Biology Center, Memorial Sloan-Kettering Cancer Center, New York, New York, USA}
+
+\history{Received on XXXXX; revised on XXXXX; accepted on XXXXX}
+
+\editor{Associate Editor: XXXXXXX}
+
+\maketitle
+
+\section{Supplementary material}
+
+\begin{table*}[!t]
+\processtable{TM-scores for top ranked models comparing EVfold as it was published, current EVfold server (accessed Feb. 2014), EVfold results re-ranked with Pcons, PconsFold 2,000 decoys, PconsFold 2,000 decoys re-ranked with Pcons, and PconsFold 20,000 decoys. \label{tab:evfold}}
+{\begin{tabular}{lllllll}\toprule
+Protein & EVfold (paper) & EVfold (web) & EVfold (Pcons ranking) & PconsFold & PconsFold (Pcons ranking) & PconsFold (20k decoys)\\\midrule
+%~ & (paper) & (web) & (re-ranked) & (2k decoys) & (2k dec., re-ranked) & (20k decoys) \\ \midrule
+BPT1\_BOVIN & 0.49 & 0.25 & 0.50 & 0.44 & 0.28 & 0.57 \\
+CADH1\_HUMAN & 0.55 & 0.54 & 0.60 & 0.59 & 0.37 & 0.53 \\
+CD209\_HUMAN & 0.39 & 0.64 & 0.62 & 0.48 & 0.40 & 0.54 \\
+CHEY\_ECOLI & 0.65 & 0.66 & 0.74 & 0.82 &  0.81 & 0.82 \\
+ELAV4\_HUMAN & 0.57 & 0.61 & 0.57 & 0.74 & 0.74 & 0.80 \\
+O45418\_CAEEL & 0.48 & 0.62 & 0.62 & 0.62 & 0.64 & 0.65 \\
+OMPR\_ECOLI & 0.35 & 0.44 & 0.47 & 0.59 & 0.59 & 0.59 \\
+OPSD\_BOVIN & 0.50 & 0.55 & 0.58 & 0.47 & 0.45 & 0.56 \\
+PCB1\_HUMAN & 0.25 & 0.43 & 0.42 & 0.59 & 0.70 & 0.60 \\
+RASH\_HUMAN & 0.70 & 0.62 & 0.60 & 0.56 & 0.61& 0.67 \\
+RNH\_ECOLI & 0.54 & 0.66 & 0.66 & 0.64 & 0.58& 0.61 \\
+SPTB2\_HUMAN & 0.37 & 0.51 & 0.50 & 0.70 & 0.72& 0.74 \\
+THIO\_ALIAC & 0.55 & 0.56 & 0.61 & 0.79 & 0.66& 0.83 \\
+TRY2\_RAT & 0.53 * & 0.78 & 0.78 & 0.50 & 0.39 & 0.54 \\
+YES\_HUMAN & 0.35 & 0.31 & 0.37 & 0.63 & 0.58& 0.57 \\ \midrule
+Mean & 0.48 & 0.55 & 0.57 & 0.61 & 0.57& 0.64 \\ \botrule
+\end{tabular}}{* This value needed to be corrected to the TM-score of the top-ranked model. In the original publication it showed the value for the best possible model.}
+\end{table*}
+
+
+
+\end{document}
+
