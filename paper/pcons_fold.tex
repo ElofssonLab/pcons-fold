@@ -53,8 +53,8 @@ We find that on average the quality is improved with about 15\% when
 the improved contacts from plmDCA are used and another 11\% when
 PconsC is used. Using Rosetta instead of EVfold does not significantly
 improve global model accuracy. Models generated with Rosetta contain 
-more side-chain clashes than EVfold models, however backbone 
-dihedrals are improved. Rosetta performs 14 \% better on proteins of 
+slightly more clashes than EVfold models, however backbone 
+dihedrals are improved in PconsFold. PconsFold performs 14 \% better on proteins of 
 the CATH fold class mainly alpha and 15 \% better on alpha \& beta.
 
 MORE::::
@@ -229,14 +229,11 @@ The positive predictive value (PPV) was calculated to assess the quality of pred
 We used MolProbity \cite[]{chen_molprobity:_2010} to assess the chemical
 model quality. The MolProbity tool {\tt oneline-analysis} was used to 
 detect clashes and to evaluate backbone dihedrals as well as 
-side-chain rotamers. To prepare the structures for this analysis, we 
-first repacked all side-chains with the {\tt fixbb.linuxgccrelease} 
-protocol from Rosetta using the options {\tt -packing:repack\_only}, 
-{\tt -ex1}, {\tt -ex2}, {\tt -extrachi\_cutoff 0}, {\tt -ndruns 10}, 
-and {\tt -minimize\_sidechains}. The Rosetta protocol 
-{\tt relax.linuxgccrelease} was used to relax the structures with fixed backbone. The flags 
+side-chain rotamers. To prepare all structures for this analysis, we 
+first relaxed them with fixed backbone atoms.
+The Rosetta protocol {\tt relax.linuxgccrelease} was used to with the flags 
 {\tt -relax:quick} {\tt -in:file:fullatom} {\tt 
--constrain\_relax\_to\_start\_coords} were set. Hydrogen atoms were then 
+-constrain\_relax\_to\_start\_coords} set. Hydrogen atoms were then 
 added with the MolProbity tool {\tt reduce-build}. All resulting 
 structures are provided in the Supplementary Material.
 
@@ -413,11 +410,7 @@ In Figure \ref{fig:qa} (a) PPV values for PconsC contacts on native structures (
 In Figure \ref{fig:qa} (b) and (c) we examine one example of non-optimal folding more closely. Figure \ref{fig:qa} (b) shows the native structure of the protein indicated by the arrow in (a) (PDB ID: 1JWQ). We selected 1JWQ since it represents the worst-case scenario where the difference between native and model PPV is largest. The lines represent predicted contacts, colored according to the distance between their C$^{\beta}$ atoms. In case of glycine C$^{\alpha}$ atoms are used instead. The color gradient indicates distances ranging from 4 \AA\ in green over yellow at 10 \AA\ up to red for 20 \AA\ and above. With a PPV of above 0.8 most of the contacts were predicted correctly for this protein. This results in mainly green colored contacts in the native structure in (b). Looking at the contacts in (c) reveals that the helix at the bottom was not optimally packed in the model. Contacts colored in orange and red show that the distance constraints were not sufficiently satisfied by Rosetta. The overall PPV decreased below 0.5 for this model.
 
 The analysis with MolProbity reveals that the backbone dihedral 
-quality of Rosetta models is higher than for EVfold models. 
-The percentage of Ramachandran outliers is 1.23 \% for PconsFold and 
-17.26 \% in case of EVfold. This might be explained by the fragment based approach Rosetta is using to fold a protein. However, in the Rosetta models many steric clashes remain repacking the side-chains. MolProbity reports a clash score of 145.89 on average. The EVfold models seem to have a much smaller number of clashes. This is indicated by a lower average clash score of 29.93. 
-
-An additional relaxation step with the Rosetta protocol {\tt relax.linuxgccrelease} with fixed backbone atoms to repack the side-chains resolves most of these clashes. On the relaxed models MolProbity reports an average clash score of 10.48 for PconsFold and 9.90 for EVfold. The percentage of Ramachandran outliers improves to 0.62 \% for PconsFold and 12.16 \% for EVfold. The average final MolProbity score on the relaxed models is 1.85 for PconsFold and 2.38 for EVfold. This corresponds to an average MolProbity percentile rank of 80.69 for PconsFold and 54.21 for EVfold.
+quality of Rosetta models is higher than for EVfold models. The percentage of Ramachandran outliers is 0.62 \% for PconsFold and 12.16 \% for EVfold. MolProbity further reports an average clash score of 10.48 for PconsFold and 9.90 for EVfold. The EVfold models have slightly less clashes than the models from PconsFold. The average final MolProbity score is with 1.85 better for PconsFold then 2.38 for EVfold. This corresponds to a better average MolProbity percentile rank of 80.69 for PconsFold than the rank of 54.21 for EVfold.
 
 
 
