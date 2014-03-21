@@ -49,9 +49,11 @@ model the proteins.
 
 
 \section{Results:}
+Using the same 12 proteins as in the original publication of EVfold
+the TM-score of the top ranked models are improved by on average 33\%.
 We find that on average the quality is improved with about 15\% when
-the improved contacts from plmDCA are used and another 11\% when
-PconsC is used, as measured by TM-score. Using Rosetta instead of
+the improved contacts from plmDCA are used and another 16\% when
+PconsC is used. Using Rosetta instead of
 EVfold does not significantly improve global model accuracy. However,
 the chemistry of models generated with Rosetta is improved.
 
@@ -224,6 +226,9 @@ comparison.
 
 The positive predictive value (PPV) was calculated to assess the quality of predicted models. It indicates how well a given contact map fits a given structure. All PPV values were calculated by using the C$^{\beta}$ (C$^{\alpha}$ in case of glycine) distances in the structure (native or model) with a cutoff at 8 \AA\ as reference contacts.
 
+
+\subsection{Model quality assessment}
+
 We used MolProbity \cite[]{chen_molprobity:_2010} to assess the chemical
 model quality. The MolProbity tool {\tt oneline-analysis} was used to 
 detect clashes and to evaluate backbone dihedrals as well as 
@@ -377,7 +382,7 @@ more accurate in terms of TM-score.
 
 
 
-\subsection{Model quality assessment}
+\subsection{Identification of top ranked model}
 Table~\ref{tab:qa} summarizes the evaluation of different MQAPs on the
 predictions for the PSICOV dataset. It shows average TM-scores for the
 top-ranked model after re-ranking all models with each MQAP. In all
@@ -428,6 +433,7 @@ of the folding process. In the region around PPV 0.4 and below,
 some models satisfy the constraints better than the native
 structures. 
 
+
 In Figure~\ref{fig:qa} (b) and (c) we examine one example of
 non-optimal folding more closely. Figure~\ref{fig:qa} (b) shows the
 native structure of the protein indicated by the arrow in Figure~\ref{fig:qa} (a) (PDB ID: 1JWQ). We selected 1JWQ since it represents the worst-case scenario where the difference between native and model PPV is largest. The lines represent predicted contacts, colored according to the distance between their C$^{\beta}$ atoms. In case of glycine C$^{\alpha}$ atoms are used instead. The color gradient indicates distances ranging from 4 \AA\ in green over yellow at 10 \AA\ up to red for 20 \AA\ and above. With a PPV of above 0.8 most of the contacts were predicted correctly for this protein. This results in mainly green colored contacts in the native structure in (b). Looking at the contacts in (c) reveals that the helix at the bottom was not optimally packed in the model. Contacts colored in orange and red show that the distance constraints were not sufficiently satisfied by Rosetta. The overall PPV decreased below 0.5 for this model.
@@ -446,7 +452,7 @@ When looking at Figure~\ref{fig:vs} the majority of alpha helical
 proteins (blue) achieved higher TM-scores with PconsFold than with
 EVfold. On average we see an improvement of 14\% of PconsFold over
 EVfold on alpha helical proteins. The same improvement can also be
-observed for Rosetta/plmDCA . Together with Figure~\ref{fig:main},
+observed for Rosetta/plmDCA. Together with Figure~\ref{fig:main},
 this indicates that Rosetta performs better on alpha-helical
 proteins. Further investigation is needed to see if this trend is
 merely due to a bias in the underlying dataset. The average
@@ -461,13 +467,13 @@ proteins and ``alpha \& beta'' as well as ``mainly beta''.
 
 The analysis with MolProbity reveals that the backbone dihedral
 quality of Rosetta models is higher than for EVfold models. The
-percentage of Ramachandran outliers is 0.62 \% for PconsFold and 12.16
-\% for EVfold. MolProbity further reports an average clash score of
+percentage of Ramachandran outliers is 0.62\% for PconsFold and 12.16\% for EVfold. MolProbity further reports an average clash score of
 10.48 for PconsFold and 9.90 for EVfold. The EVfold models have
 slightly less clashes than the models from PconsFold. The average
 final MolProbity score is with 1.85 better for PconsFold then 2.38 for
 EVfold. This corresponds to a better average MolProbity percentile
 rank of 80.69 for PconsFold than the rank of 54.21 for EVfold.
+
 
 Table~\ref{tab:evfold} contains TM-scores for the top-ranked models of
 each protein in the small test dataset. We compare the EVfold results,
@@ -476,9 +482,9 @@ as published in \citeauthor{marks_protein_2011}
 version (web) and PconsFold with 20,000 generated decoys. The results
 for the current version of EVfold were generated using plmDCA instead
 of DCA as in the published version. With an average TM-score of 0.55
-EVfold using plmDCA performs 15 \% better than EVfold with DCA,
+EVfold using plmDCA performs 15\% better than EVfold with DCA,
 showing the importance of improved contact prediction. When using
-PconsFold there is an additional improvement of 14 \% to an average
+PconsFold there is an additional improvement of 16\% to an average
 TM-score of 0.64. This further supports our assumption that improved
 contact maps improve structure prediction.
 
@@ -518,7 +524,7 @@ THIO\_ALIAC & 0.55 & 0.56   & 0.83 \\
 TRY2\_RAT & 0.53 * & 0.78    & 0.54 \\
 YES\_HUMAN & 0.35 & 0.31   & 0.57 \\ \midrule
 Mean & 0.48 & 0.55   & 0.64 \\ \botrule
-\end{tabular}}{* This value needed to be corrected to the TM-score of the top-ranked model. In the original publication it showed the value for the best possible model.}
+\end{tabular}}{* This value was corrected as in the original publication it showed the value for the best possible model.}
 \end{table}
 
 \section{Conclusion}
