@@ -459,27 +459,6 @@ some divergence between the results of EVfold and PconsFold in
 Figure~\ref{fig:vs}. This is especially true for ``mainly beta''
 proteins and ``alpha \& beta'' as well as ``mainly beta''.
 
-
-Table~\ref{tab:evfold} contains TM-scores for the top-ranked models of
-each protein in the small test dataset. We compare the EVfold results,
-as published in \citeauthor{marks_protein_2011}
-\citeyear{marks_protein_2011}, with results from the current EVfold
-version (web), EVfold re-ranked with Pcons, PconsFold, PconsFold
-re-ranked with Pcons, and PconsFold with 20,000 generated decoys. The
-results for the current version of EVfold were generated using plmDCA
-instead of DCA as in the published version. With an average TM-score
-of 0.55 EVfold using plmDCA performs 15 \% better than EVfold with
-DCA. When using PconsFold there is an additional improvement of 11 \%
-to an average TM-score of 0.61. This further supports our assumption
-that improved contact maps improve structure prediction.
-
-Re-ranking the predicted decoys with Pcons increases the average
-TM-score for EVfold and decreases it for PconsFold. No significant
-difference in average TM-score is observable then. Increasing the
-number of computed decoys to 20,000 improves the results for PconsFold
-by 5 \%. Due to the 10-fold increase in runtime, we suggest to use
-this setting only if maximum quality is required.
-
 The analysis with MolProbity reveals that the backbone dihedral
 quality of Rosetta models is higher than for EVfold models. The
 percentage of Ramachandran outliers is 0.62 \% for PconsFold and 12.16
@@ -489,6 +468,20 @@ slightly less clashes than the models from PconsFold. The average
 final MolProbity score is with 1.85 better for PconsFold then 2.38 for
 EVfold. This corresponds to a better average MolProbity percentile
 rank of 80.69 for PconsFold than the rank of 54.21 for EVfold.
+
+Table~\ref{tab:evfold} contains TM-scores for the top-ranked models of
+each protein in the small test dataset. We compare the EVfold results,
+as published in \citeauthor{marks_protein_2011}
+\citeyear{marks_protein_2011}, with results from the current EVfold
+version (web) and PconsFold with 20,000 generated decoys. The results
+for the current version of EVfold were generated using plmDCA instead
+of DCA as in the published version. With an average TM-score of 0.55
+EVfold using plmDCA performs 15 \% better than EVfold with DCA,
+showing the importance of improved contact prediction. When using
+PconsFold there is an additional improvement of 14 \% to an average
+TM-score of 0.64. This further supports our assumption that improved
+contact maps improve structure prediction.
+
 
 
 \begin{figure*}[!tpb]%figure1
@@ -504,9 +497,11 @@ rank of 80.69 for PconsFold than the rank of 54.21 for EVfold.
 \end{figure*}
 
 \begin{table}[!t]
-\processtable{TM-scores for top ranked models comparing EVfold as it was published, current EVfold server (accessed Feb. 2014), EVfold results re-ranked with Pcons, PconsFold 2,000 decoys, PconsFold 2,000 decoys re-ranked with Pcons, and PconsFold 20,000 decoys. \label{tab:evfold}}
+\processtable{TM-scores for top ranked models comparing EVfold as it
+  was published, current EVfold server (accessed Feb. 2014), and
+  PconsFold with 20,000 decoys. \label{tab:evfold}}
 {\begin{tabular}{lp{1.5cm}p{1.5cm}p{1.5cm}p{1.5cm}}\toprule
-Protein & EVfold (paper) & EVfold (web)   & PconsFold (20k decoys)\\\midrule
+Protein & EVfold (paper) & EVfold (web)   & PconsFold\\\midrule
 %~ & (paper) & (web) & (re-ranked) & (2k decoys) & (2k dec., re-ranked) & (20k decoys) \\ \midrule
 BPT1\_BOVIN & 0.49 & 0.25    & 0.57 \\
 CADH1\_HUMAN & 0.55 & 0.54    & 0.53 \\
@@ -552,11 +547,12 @@ a stopping criterium for decoy generation.
 
 \section*{Acknowledgement}
 %Text Text Text Text Text Text Text Text. \citealp{Boffelli03} might want to know about text text text text
-This work was supported by grants from the Swedish
-Research Council (VR-NT 2012-5046, VR-M 2010-3555) and SeRC the
-Swedish E-science Research Center.
 
 \paragraph{Funding\textcolon} %Text Text Text Text Text Text Text Text.
+This work was supported by grants from the Swedish
+Research Council (VR-NT 2012-5046, VR-M 2010-3555), SSF (the Foundation for
+Strategic Research) and Vinnova through the Vinnova-JSP program,  and SeRC the
+Swedish E-science Research Center.
 
 \bibliographystyle{natbib}
 %\bibliographystyle{achemnat}
