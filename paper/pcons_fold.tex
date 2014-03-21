@@ -125,7 +125,7 @@ predictions from plmDCA~\cite{ekeberg_improved_2013}.
 \subsection{Datasets}
 During the development of PconsFold we used the proteins from
 \citeauthor{jones_PSICOV:_2012} \citeyear{jones_PSICOV:_2012} (PSICOV
-dataset). It consists of 150 single domain proteins with sequence
+dataset). The dataset consists of 150 single domain proteins with sequence
 lengths between 75 and 275 amino acids. A list of all Protein Data
 Bank (PDB) \cite[]{berman_protein_2000} and corresponding Uniprot
 \cite[]{magrane_uniprot_2011} IDs is given in (Supplementary Table
@@ -143,7 +143,7 @@ differences due to diverging sequences is thus not necessary.
 
 For the final comparison between PconsFold and EVfold we used the set
 of 15 proteins as in \citeauthor{marks_protein_2011}
-\citeyear{marks_protein_2011} . PDB and Uniprot IDs are given in
+\citeyear{marks_protein_2011}. PDB and Uniprot IDs are given in
 Supplementary Table T2. Here we used the exact same sequences and
 native structures as given in the publication.  
 
@@ -460,7 +460,19 @@ Mean & 0.48 & 0.55 & 0.57 & 0.61 & 0.57& 0.64 \\ \botrule
 \end{table*}
 
 \section{Conclusion}
- Improved contact maps clearly lead to improvements in protein structure prediction. We therefore strongly encourage further developments in contact prediction.
+Improved contact maps clearly lead to improvements in protein structure prediction. We therefore strongly encourage further developments in contact prediction.
+
+Rosetta itself provides no gain in model native-likeliness. According to MolProbity Rosetta structures are slightly more accurate.
+
+When comparing PPVs we see that there is still room for improvement in the folding protocol.
+
+We propose to use model-PPV as a measure of model quality, or as a stopping criterium for decoy generation. If the native PPV is reached, we can't gain more information from the contact map. Then structural refinement needs to be used to get closer to native conformations. 
+
+
+
+
+
+
 
 \section*{Acknowledgement}
 %Text Text Text Text Text Text Text Text. \citealp{Boffelli03} might want to know about text text text text
