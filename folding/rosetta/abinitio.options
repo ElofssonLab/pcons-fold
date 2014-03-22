@@ -1,0 +1,8 @@
+-in:file:fasta /bubo/home/h9/mircomic/2013-04-22_folding_performance/data/${ID}\:A/${ID}A.fasta 
+-in:file:frag3 /bubo/home/h9/mircomic/2013-04-22_folding_performance/data/${ID}\:A/filtered_vall/aa${ID}A03_05.200_v1_3 
+-in:file:frag9 /bubo/home/h9/mircomic/2013-04-22_folding_performance/data/${ID}\:A/filtered_vall/aa${ID}A09_05.200_v1_3 
+-use_filters true 
+-constraints:cst_file /bubo/home/h9/mircomic/2013-04-22_folding_performance/data/${ID}\:A/${ID}A.pconse-${factor}.constraints 
+-database /bubo/home/h9/mircomic/glob/rosetta/rosetta_database/ 
+-psipred_ss2 /bubo/home/h9/mircomic/2013-04-22_folding_performance/data/${ID}\:A/${ID}A.psipred_ss2 
+-out:nstruct 250
