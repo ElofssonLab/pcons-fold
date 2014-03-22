@@ -16,7 +16,7 @@ Pipeline overview:
 4. Prepare input for Rosetta folding
 5. Rosetta folding
 6. Extract and relax structures with lowest Rosetta energy
-7. Output: the predicted contact map (also as a plot) from step 3. and the lowest energy structure from step 5.
+7. Output: the predicted contact map (also as a plot) and the lowest energy structure.
 
 
 How to run it:
