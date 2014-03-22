@@ -76,7 +76,7 @@ matlab = None
 ### NEW!!!:
 # Path to MATLAB directory 
 # OR path to MATLAB compiler (needed to run compiled version of plmDCA)
-matlabdir = '/software/apps/matlab/R2013a/nsc3/' 
+matlabdir = '/software/apps/mcr/2012b/build01/v80/' 
 
 # Path to executable files
 #jackhmmer = 'jackhmmer'
@@ -85,9 +85,11 @@ matlabdir = '/software/apps/matlab/R2013a/nsc3/'
 ## joel@nsc: Better have a script launcher or similar. This allows you to use e.g. the MCR and not have to use a complete Matlab install.
 #plmdca = 'plmdca'
 ## mirco: We now have a MCR compiled version of plmDCA_symmetric
-plmdca = root + 'dependencies/plmDCA_symmetric-standalone/run_plmDCA_symmetric.sh'
+#plmdca = root + 'dependencies/plmDCA_symmetric-standalone/run_plmDCA_symmetric.sh'
+plmdca = "dependencies/plmdca/2012/build01/bin/plmdca"
 jackhmmer = root + 'dependencies/hmmer-3.0/src/jackhmmer'
 hhblits = root + 'dependencies/hhsuite-2.0.16/bin/hhblits'
+#hhblits = '/home/x_mirmi/glob/hhsuite-2.0.16/bin/hhblits'
 psicov = root + 'dependencies/psicov-1.11/psicov'
 netsurf = root + 'dependencies/netsurfp-1.0/netsurfp'
 psipred = root + 'dependencies/psipred/runpsipred'
@@ -166,7 +168,7 @@ except Exception as e:
     sys.exit(1)
 
 try:
-    f = open(os.devnull, "w") 
+    f = open(os.devnull, "w")
     x  = subprocess.call([hhblits, '-h'], stderr=f, stdout=f)
     f.close()
     pass

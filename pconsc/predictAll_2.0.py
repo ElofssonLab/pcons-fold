@@ -26,6 +26,11 @@ hhblitsdb = sys.argv[1]
 jackhmmerdb = sys.argv[2]
 seqfile = sys.argv[3]
 
+# Joel Hedlund @ NSC: Normally, runpsipred sets the sequence db in source, 
+# but the installation used in this standalone has been edited to instead 
+# take this environment variable.
+os.environ.setdefault('PSIPRED_DB', jackhmmerdb)
+
 # number of layers to compute (deep learning)
 # must be between 0 and 4 as there are no further models given (layerX.forest)
 layers = int(sys.argv[4])
@@ -93,7 +98,9 @@ for i in range(4):
         t = ''
         sys.stderr.write(str(datetime.now()) + ' jackhmmer ' + names[i] + ': running PSICOV\nThis may take more than an hour.\n')
         try:
-            t = check_output([psicov, seqfile + '.jh' + names[i] + '.jones'])
+            # Joel @ NSC: Added -o flag, in case the psicov binary has not
+            # been compiled with MINEFSEQS=0.
+            t = check_output([psicov, '-o', seqfile + '.jh' + names[i] + '.jones'])
         except:
             t = ''
         f = open(seqfile + '.jh' + names[i] + '.psicov', 'w')
@@ -110,7 +117,8 @@ for i in range(4):
 
         sys.stderr.write(str(datetime.now()) + ' jackhmmer ' + names[i] + ': running plmDCA\nThis may take more than an hour.\n')
         if plmdca:
-            t = check_output([plmdca, matlabdir, seqfile + '.jh' + names[i] + ".trimmed", seqfile + '.jh' + names[i] + ".plmdca", "0.01", "0.01", "0.1", str(cores)])
+            #t = check_output([plmdca, matlabdir, seqfile + '.jh' + names[i] + ".trimmed", seqfile + '.jh' + names[i] + ".plmdca", "0.01", "0.01", "0.1", str(cores)])
+            t = check_output([plmdca, seqfile + '.jh' + names[i] + ".trimmed", seqfile + '.jh' + names[i] + ".plmdca", "0.01", "0.01", "0.1", str(cores)])
         else:
             t = check_output([matlab, '-nodesktop', '-nosplash', '-r', "path(path, '" + scriptpath + "/plmDCA_symmetric_v2'); path(path, '" + scriptpath + "/plmDCA_symmetric_v2/functions'); path(path, '" + scriptpath + "/plmDCA_symmetric_v2/3rd_party_code/minFunc/'); plmDCA_symmetric ( '" + seqfile + '.jh' + names[i] + ".trimmed', '" + seqfile + '.jh' + names[i] + ".plmdca', 0.01, 0.01, 0.1, " + str(cores) + "); exit"])
 
@@ -131,7 +139,9 @@ for i in range(4):
         sys.stderr.write(str(datetime.now()) + ' HHblits ' + names[i] + ': running PSICOV\nThis may take more than an hour.\n')
         t = ''
         try:
-            t = check_output([psicov, seqfile + '.hh' + names[i] + '.jones'])
+            # Joel @ NSC: Added -o flag, in case the psicov binary has not
+            # been compiled with MINEFSEQS=0.
+            t = check_output([psicov, '-o', seqfile + '.hh' + names[i] + '.jones'])
         except:
             t = ''
         f = open(seqfile + '.hh' + names[i] + '.psicov', 'w')
@@ -148,7 +158,8 @@ for i in range(4):
 
         sys.stderr.write(str(datetime.now()) + ' HHblits ' + names[i] + ': running plmDCA\nThis may take more than an hour.\n')
         if plmdca:
-            t = check_output([plmdca, matlabdir, seqfile + '.hh' + names[i] + ".trimmed", seqfile + '.hh' + names[i] + ".plmdca", "0.01", "0.01", "0.1", str(cores)])
+            #t = check_output([plmdca, matlabdir, seqfile + '.hh' + names[i] + ".trimmed", seqfile + '.hh' + names[i] + ".plmdca", "0.01", "0.01", "0.1", str(cores)])
+            t = check_output([plmdca, seqfile + '.hh' + names[i] + ".trimmed", seqfile + '.hh' + names[i] + ".plmdca", "0.01", "0.01", "0.1", str(cores)])
         else:
             t = check_output([matlab, '-nodesktop', '-nosplash', '-r', "path(path, '" + scriptpath + "/plmDCA_symmetric_v2'); path(path, '" + scriptpath + "/plmDCA_symmetric_v2/functions'); path(path, '" + scriptpath + "/plmDCA_symmetric_v2/3rd_party_code/minFunc/'); plmDCA_symmetric ( '" + seqfile + '.hh' + names[i] + ".trimmed', '" + seqfile + '.hh' + names[i] + ".plmdca', 0.01, 0.01, 0.1, " + str(cores) + "); exit"])
     hhpredictionnames.append(seqfile + '.hh' + names[i] + '.plmdca')

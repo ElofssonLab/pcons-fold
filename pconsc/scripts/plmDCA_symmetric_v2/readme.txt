@@ -1,47 +1,107 @@
-This is a MATLAB-implementation of the symmetric version of plmDCA.
-The program uses 'minFunc' by Mark Schmidt (contained in the folder '3rd_party_code'), which can be found at http://www.di.ens.fr/~mschmidt/Software/minFunc.html.
- 
-Inputs to plmDCA: 
-	fastafile:
-	Alignment file in FASTA format. Inserts, which should be represented by '.' and lower-case letters (as is standard in the Pfam download), are removed automatically by the program.
+MATLAB Compiler
 
-	outputfile:
-	This becomes a file with N(N-1)/2 rows (N=domain length), each with three entries: residue i, residue j, and interaction score for the pair (i,j).
+1. Prerequisites for Deployment 
 
-	lambda_h:
-	Field-regularization strength (typical value: 0.01).
+. Verify the MATLAB Compiler Runtime (MCR) is installed and ensure you    
+  have installed version 8.1 (R2013a).   
 
-	lambda_J:
-	Coupling-regularization strength (typical value: 0.01 - this is tested for N in the range 50-100 or so, and the optimal value may be different for longer domains).
+. If the MCR is not installed, do the following:
+  (1) enter
+  
+      >>mcrinstaller
+      
+      at MATLAB prompt. The MCRINSTALLER command displays the 
+      location of the MCR Installer.
 
-	reweighting_threshold:
-	Required fraction of nonidentical AA for two sequences to be counted as independent (typical values: 0.1-0.3).
-	Note that this is not the threshold 'x' as defined in the paper, but 1-x.
- 	
-	nr_of_cores:
-	The number of processors to use on the local machine. 
-	If this argument is >1, the program calls functions from MATLAB's Parallel Computing Toolbox.
+  (2) run the MCR Installer.
 
+Or download the Linux 64-bit version of the MCR for R2013a 
+from the MathWorks Web site by navigating to
 
-Typical call (on a quad-core machine):
-	plmDCA_symmetric('PF00014_full.txt','PF00014_scores.txt',0.01,0.01,0.1,4)
-
+   http://www.mathworks.com/products/compiler/mcr/index.html
+   
+   
+For more information about the MCR and the MCR Installer, see 
+Distribution to End Users in the MATLAB Compiler documentation  
+in the MathWorks Documentation Center.    
 
 
+2. Files to Deploy and Package
 
----------------------------------------------
-Copyright conditions for plmDCA:
-	Copyright 2012 - by Magnus Ekeberg (magnus.ekeberg@gmail.com)
-	All rights reserved
+Files to package for Standalone 
+================================
+-plmDCA_symmetric 
+-run_plmDCA_symmetric.sh (shell script for temporarily setting environment variables and 
+                          executing the application)
+   -to run the shell script, type
+   
+       ./run_plmDCA_symmetric.sh <mcr_directory> <argument_list>
+       
+    at Linux or Mac command prompt. <mcr_directory> is the directory 
+    where version 8.1 of MCR is installed or the directory where 
+    MATLAB is installed on the machine. <argument_list> is all the 
+    arguments you want to pass to your application. For example, 
 
-	Permission is granted for anyone to copy, use, or modify this
-	software for any uncommercial purposes, provided this copyright 
-	notice is retained, and note is made of any changes that have 
-	been made. This software is distributed without any warranty, 
-	express or implied. In no event shall the author or contributors be 
-	liable for any damage arising out of the use of this software.
+    If you have version 8.1 of the MCR installed in 
+    /mathworks/home/application/v81, run the shell script as:
+    
+       ./run_plmDCA_symmetric.sh /mathworks/home/application/v81
+       
+    If you have MATLAB installed in /mathworks/devel/application/matlab, 
+    run the shell script as:
+    
+       ./run_plmDCA_symmetric.sh /mathworks/devel/application/matlab
+-MCRInstaller.zip
+   -if end users are unable to download the MCR using the above  
+    link, include it when building your component by clicking 
+    the "Add MCR" link in the Deployment Tool
+-This readme file 
 
-	The publication of research using this software, modified or not, must include an 
-	appropriate citation to:
-	M. Ekeberg, C. Lövkvist, Y. Lan, M. Weigt, E. Aurell, Improved contact prediction
-	in proteins: Using pseudolikelihoods to infer Potts models, Phys. Rev. E 87, 012707 (2013)
+3. Definitions
+
+For information on deployment terminology, go to 
+http://www.mathworks.com/help. Select MATLAB Compiler >   
+Getting Started > About Application Deployment > 
+Application Deployment Terms in the MathWorks Documentation 
+Center.
+
+
+4. Appendix 
+
+A. Linux x86-64 systems:
+   On the target machine, add the MCR directory to the environment variable 
+   LD_LIBRARY_PATH by issuing the following commands:
+
+        NOTE: <mcr_root> is the directory where MCR is installed
+              on the target machine.         
+
+            setenv LD_LIBRARY_PATH
+                $LD_LIBRARY_PATH:
+                <mcr_root>/v81/runtime/glnxa64:
+                <mcr_root>/v81/bin/glnxa64:
+                <mcr_root>/v81/sys/os/glnxa64:
+                <mcr_root>/v81/sys/java/jre/glnxa64/jre/lib/amd64/native_threads:
+                <mcr_root>/v81/sys/java/jre/glnxa64/jre/lib/amd64/server:
+                <mcr_root>/v81/sys/java/jre/glnxa64/jre/lib/amd64 
+            setenv XAPPLRESDIR <mcr_root>/v81/X11/app-defaults
+
+   For more detail information about setting MCR paths, see Distribution to End Users in 
+   the MATLAB Compiler documentation in the MathWorks Documentation Center.
+
+
+     
+        NOTE: To make these changes persistent after logout on Linux 
+              or Mac machines, modify the .cshrc file to include this  
+              setenv command.
+        NOTE: The environment variable syntax utilizes forward 
+              slashes (/), delimited by colons (:).  
+        NOTE: When deploying standalone applications, it is possible 
+              to run the shell script file run_plmDCA_symmetric.sh 
+              instead of setting environment variables. See 
+              section 2 "Files to Deploy and Package".    
+
+
+
+
+
+
