@@ -86,7 +86,7 @@ matlabdir = '/software/apps/mcr/2012b/build01/v80/'
 #plmdca = 'plmdca'
 ## mirco: We now have a MCR compiled version of plmDCA_symmetric
 #plmdca = root + 'dependencies/plmDCA_symmetric-standalone/run_plmDCA_symmetric.sh'
-plmdca = "dependencies/plmdca/2012/build01/bin/plmdca"
+plmdca = root + 'dependencies/plmdca/2012/build01/bin/plmdca'
 jackhmmer = root + 'dependencies/hmmer-3.0/src/jackhmmer'
 hhblits = root + 'dependencies/hhsuite-2.0.16/bin/hhblits'
 #hhblits = '/home/x_mirmi/glob/hhsuite-2.0.16/bin/hhblits'
