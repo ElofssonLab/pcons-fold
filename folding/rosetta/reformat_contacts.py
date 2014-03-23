@@ -47,7 +47,7 @@ def reformat(seqfile_name, infile_name, factor, score=15):
             atm2 = 'CB'
             if seq[res2 - 1] == 'G':
                 atm2 = 'CA'
-            rosetta_lines.append('AtomPair %s %d %s %d FADE -10 19 10 %.2f' % (atm1, res1, atm2, res2, round((float(score) * -1.0) , 2)))
+            rosetta_lines.append('AtomPair %s %d %s %d FADE -10 19 10 %.2f 0' % (atm1, res1, atm2, res2, round((float(score) * -1.0) , 2)))
             count += 1
         if count > (seq_len * factor):
             break
