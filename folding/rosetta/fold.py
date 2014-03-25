@@ -40,7 +40,7 @@ ros_cfile = os.path.abspath(sys.argv[2])
 decoys_per_core = int(math.ceil(float(n_decoys) / n_cores))
 
 
-### 1..n_cores folders containing run 1..n_cores
+### n_cores folders containing run 1..n_cores
 plist = []
 for core in range(1, n_cores + 1):
     optionstr = ''

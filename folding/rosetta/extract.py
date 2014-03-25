@@ -4,20 +4,28 @@ import evaluate_scores as ev
 
 from localconfig import *
 
-### default value for one triolith node
+### default value = detected number of cores
 cores = 16
+### default value = relax top-ranked structures
+relax_flag = True
 
-### change it if other value given
-if sys.argv[1] == '-c':
+### parse parameters
+if '-c' in sys.argv:
+    idx = sys.argv.index('-c')
     try:
-        cores = int(sys.argv[2])
+        n_cores = int(sys.argv[idx+1])
     except:
-        print 'Number of cores -c must be an integer number, %r is not. Default is %s.' % (sys.argv[2], cores)
+        print 'Number of cores -c must be an integer, %r is not. Default is %s.' % (sys.argv[idx+1], n_cores)
         sys.exit(1)
-    del sys.argv[1:3]
+    del sys.argv[idx]
+    del sys.argv[idx+1]
+
+if '--norelax' in sys.argv:
+    idx = sys.argv.index('--norelax')
+    relax_flag = False
+    del sys.argv[idx]
 
 num = int(sys.argv[1])
-relax_flag = bool(int(sys.argv[2]))
 
 ### determine IDs of top scoring decoys
 all_scores_sorted = ev.get_best_of_all_runs(num, cores, rundir)
