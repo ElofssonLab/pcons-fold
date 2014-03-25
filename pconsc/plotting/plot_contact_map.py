@@ -3,8 +3,7 @@ import argparse
 from math import *
 
 # on UPPMAX only
-#sys.path.append('/bubo/sw/apps/bioinfo/biopython/1.59/tintin/lib/python')
-import Bio.PDB
+sys.path.append('/bubo/sw/apps/bioinfo/biopython/1.59/tintin/lib/python')
 from Bio import pairwise2
 
 import numpy as np

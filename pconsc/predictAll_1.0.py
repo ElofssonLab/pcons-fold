@@ -66,10 +66,10 @@ failed = []
 
 for i in range(4):
     
-    exists_jh = os.path.exists(seqfile + '.jh' + names[i] + '.fas')
+    exists_jh = os.path.exists(seqfile + '.jh' + names[i] + '.a3m')
     exists_jh_psicov = os.path.exists(seqfile + '.jh' + names[i] + '.psicov')
     exists_jh_plmdca = os.path.exists(seqfile + '.jh' + names[i] + '.plmdca')
-    exists_hh = os.path.exists(seqfile + '.hh' + names[i] + '.fas')
+    exists_hh = os.path.exists(seqfile + '.hh' + names[i] + '.a3m')
     exists_hh_psicov = os.path.exists(seqfile + '.hh' + names[i] + '.psicov')
     exists_hh_plmdca = os.path.exists(seqfile + '.hh' + names[i] + '.plmdca')
 
@@ -77,11 +77,12 @@ for i in range(4):
     if not exists_jh and (not exists_jh_psicov or not exists_jh_plmdca):
         sys.stderr.write(str(datetime.now()) + ' jackhmmer ' + names[i] + ': generating alignment\nThis may take quite a few minutes!\n ')
         t = check_output([jackhmmer, '--cpu', str(cores), '-N', '5', '-E', cutoffs[i], '-A', seqfile +'.jh' + names[i] + '.ali', seqfile + '.fasta', jackhmmerdb])
-        check_output([reformat, 'sto', 'fas', seqfile + '.jh' + names[i] + '.ali', seqfile + '.jh' + names[i] + '.fas'])
+        check_output([reformat, 'sto', 'a3m', seqfile + '.jh' + names[i] + '.ali', seqfile + '.jh' + names[i] + '.a3m'])
         check_output(['rm', seqfile + '.jh' + names[i] + '.ali'])
 
     if not exists_jh_psicov:
-        t = check_output([trim, seqfile + '.jh' + names[i] + '.fas'])
+        #t = check_output([trim, seqfile + '.jh' + names[i] + '.fas'])
+        t = check_output([trim2jones, seqfile + '.jh' + names[i] + '.a3m'])
         f = open(seqfile + '.jh' + names[i] + '.jones', 'w')
         f.write(t)
         f.close()
@@ -101,7 +102,7 @@ for i in range(4):
     jhpredictionnames.append(seqfile + '.jh' + names[i] + '.psicov')
     
     if not exists_jh_plmdca:
-        t = check_output([trim2, seqfile + '.jh' + names[i] + '.fas'])
+        t = check_output([trim2trimmed, seqfile + '.jh' + names[i] + '.a3m'])
         f = open(seqfile + '.jh' + names[i] + '.trimmed', 'w')
         f.write(t)
         f.close()
@@ -111,7 +112,7 @@ for i in range(4):
             #t = check_output([plmdca, matlabdir, seqfile + '.jh' + names[i] + ".trimmed", seqfile + '.jh' + names[i] + ".plmdca", "0.01", "0.01", "0.1", str(cores)])
             t = check_output([plmdca, seqfile + '.jh' + names[i] + ".trimmed", seqfile + '.jh' + names[i] + ".plmdca", "0.01", "0.01", "0.1", str(cores)])
         else:
-            t = check_output([matlab, '-nodesktop', '-nosplash', '-r', "path(path, '" + scriptpath + "/plmDCA_symmetric_v2'); path(path, '" + scriptpath + "/plmDCA_symmetric_v2/functions'); path(path, '" + scriptpath + "/plmDCA_symmetric_v2/3rd_party_code/minFunc/'); plmDCA_symmetric ( '" + seqfile + '.jh' + names[i] + ".trimmed', '" + seqfile + '.jh' + names[i] + ".plmdca', 0.01, 0.01, 0.1, " + str(cores) + "); exit"])
+            t = check_output([matlab, '-nodesktop', '-nosplash', '-r', "path(path, '" + plmdcapath + "'); path(path, '" + plmdcapath + "/functions'); path(path, '" + plmdcapath + "/3rd_party_code/minFunc/'); plmDCA_symmetric ( '" + seqfile + '.jh' + names[i] + ".trimmed', '" + seqfile + '.jh' + names[i] + ".plmdca', 0.01, 0.01, 0.1, " + str(cores) + "); exit"])
 
     jhpredictionnames.append(seqfile + '.jh' + names[i] + '.plmdca')
 
@@ -119,10 +120,11 @@ for i in range(4):
     if not exists_hh and (not exists_hh_psicov or not exists_hh_plmdca):
         sys.stderr.write(str(datetime.now()) + ' HHblits' + names[i] + ': generating alignment\nThis may take quite a few minutes!\n ')
         t = check_output([hhblits, '-all', '-oa3m', seqfile + '.hh' + names[i] + '.a3m', '-e', cutoffs[i], '-cpu', str(cores), '-i', seqfile + '.fasta', '-d', hhblitsdb])
-        check_output([reformat, 'a3m', 'fas', seqfile + '.hh' + names[i] + '.a3m', seqfile + '.hh' + names[i] + '.fas'])
+        #check_output([reformat, 'a3m', 'fas', seqfile + '.hh' + names[i] + '.a3m', seqfile + '.hh' + names[i] + '.fas'])
     
     if not exists_hh_psicov:
-        t = check_output([trim, seqfile + '.hh' + names[i] + '.fas'])
+        #t = check_output([trim, seqfile + '.hh' + names[i] + '.fas'])
+        t = check_output([trim2jones, seqfile + '.hh' + names[i] + '.a3m'])
         f = open(seqfile + '.hh' + names[i] + '.jones', 'w')
         f.write(t)
         f.close()
@@ -142,7 +144,8 @@ for i in range(4):
     hhpredictionnames.append(seqfile + '.hh' + names[i] + '.psicov')
     
     if not exists_hh_plmdca:
-        t = check_output([trim2, seqfile + '.hh' + names[i] + '.fas'])
+        #t = check_output([trim2, seqfile + '.hh' + names[i] + '.fas'])
+        t = check_output([trim2trimmed, seqfile + '.hh' + names[i] + '.a3m'])
         f = open(seqfile + '.hh' + names[i] + '.trimmed', 'w')
         f.write(t)
         f.close()
@@ -152,7 +155,7 @@ for i in range(4):
             #t = check_output([plmdca, matlabdir, seqfile + '.hh' + names[i] + ".trimmed", seqfile + '.hh' + names[i] + ".plmdca", "0.01", "0.01", "0.1", str(cores)])
             t = check_output([plmdca, seqfile + '.hh' + names[i] + ".trimmed", seqfile + '.hh' + names[i] + ".plmdca", "0.01", "0.01", "0.1", str(cores)])
         else:
-            t = check_output([matlab, '-nodesktop', '-nosplash', '-r', "path(path, '" + scriptpath + "/plmDCA_symmetric_v2'); path(path, '" + scriptpath + "/plmDCA_symmetric_v2/functions'); path(path, '" + scriptpath + "/plmDCA_symmetric_v2/3rd_party_code/minFunc/'); plmDCA_symmetric ( '" + seqfile + '.hh' + names[i] + ".trimmed', '" + seqfile + '.hh' + names[i] + ".plmdca', 0.01, 0.01, 0.1, " + str(cores) + "); exit"])
+            t = check_output([matlab, '-nodesktop', '-nosplash', '-r', "path(path, '" + plmdcapath + "'); path(path, '" + plmdcapath + "/functions'); path(path, '" + plmdcapath + "/3rd_party_code/minFunc/'); plmDCA_symmetric ( '" + seqfile + '.hh' + names[i] + ".trimmed', '" + seqfile + '.hh' + names[i] + ".plmdca', 0.01, 0.01, 0.1, " + str(cores) + "); exit"])
     hhpredictionnames.append(seqfile + '.hh' + names[i] + '.plmdca')
 
 sys.stderr.write("Predicting...\n")

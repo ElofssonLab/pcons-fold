@@ -71,11 +71,14 @@ psicovfail = True
 
 # Path to MATLAB executable
 # e.g. matlab = '/afs/pdc.kth.se/pdc/vol/matlab/r2012a/bin/matlab'
-matlab = None
+# If you don't have access to matlab you can use the compiled version
+# of plmDCA. Then leave this variable at None.
+#matlab = None
+matlab = '/sw/apps/matlab/x86_64/8.1/bin/matlab'
+
 
 ### NEW!!!:
-# Path to MATLAB directory 
-# OR path to MATLAB compiler (needed to run compiled version of plmDCA)
+# Path to MATLAB compiler (needed to run compiled version of plmDCA)
 matlabdir = '/software/apps/mcr/2012b/build01/v80/' 
 
 # Path to executable files
@@ -86,18 +89,22 @@ matlabdir = '/software/apps/mcr/2012b/build01/v80/'
 #plmdca = 'plmdca'
 ## mirco: We now have a MCR compiled version of plmDCA_symmetric
 #plmdca = root + 'dependencies/plmDCA_symmetric-standalone/run_plmDCA_symmetric.sh'
-plmdca = "dependencies/plmdca/2012/build01/bin/plmdca"
+if matlab:
+    plmdca = None # matlab licence present: do not use compiled version
+    plmdcapath = root + 'dependencies/plmDCA_symmetric_v2'
+else:
+    plmdca = root + 'dependencies/plmdca/2012/build01/bin/plmdca'
+    plmdcapath = None
 jackhmmer = root + 'dependencies/hmmer-3.0/src/jackhmmer'
 hhblits = root + 'dependencies/hhsuite-2.0.16/bin/hhblits'
-#hhblits = '/home/x_mirmi/glob/hhsuite-2.0.16/bin/hhblits'
 psicov = root + 'dependencies/psicov-1.11/psicov'
-netsurf = root + 'dependencies/netsurfp-1.0/netsurfp'
 psipred = root + 'dependencies/psipred/runpsipred'
 
 # These are included. Should not need changing.
-scriptpath = root + 'scripts'
-trim = root + 'scripts/trim.py'
-trim2 = root + 'scripts/trimToFasta.py'
+trim2jones = root + 'scripts/a3mToJones.py'
+trim2trimmed = root + 'scripts/a3mToTrimmed.py'
+#trim = root + 'scripts/trim.py'
+#trim2 = root + 'scripts/trimToFasta.py'
 
 # Reformat script scavenged from HHsuite. Please cite the HHblits paper!
 reformat = root + 'scripts/reformat.pl'
