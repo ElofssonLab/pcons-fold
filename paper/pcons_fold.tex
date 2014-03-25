@@ -111,8 +111,8 @@ our method on two datasets and compare it to EVfold
 \cite[]{marks_protein_2011}, a previous method for contact based
 protein structure prediction. It was found that the improved quality of predicted contacts
 by PconsC~\cite{skwark_PconsC:_2013} increases quality and
-native-likeliness of predicted structures by about 20\% over the
-original EVfold and 10\% over EVfold using the improved contact
+native-likeliness of predicted structures by about 33\% over the
+original EVfold and 16\% over EVfold using the improved contact
 predictions from plmDCA~\cite{ekeberg_improved_2013}.
 
 \begin{methods}
@@ -143,8 +143,9 @@ protein 1JBE. 1JBE was therefore excluded from all evaluations.
 As an additional comparison between PconsFold and EVfold we used the set
 of 15 proteins as in \citeauthor{marks_protein_2011}
 \citeyear{marks_protein_2011}. PDB and Uniprot IDs are given in
-Supplementary Table 2. Here we used the exact same sequences and
-native structures as given in the publication.  
+Supplementary Table 2. According to the Uniprot IDs we extracted the sequences from the
+Pfam alignment that was used in the publication. These sequences were
+submitted to the EVfold server and used as input for PconsFold.
 
 \subsection{Contact prediction}
 In case of PconsFold, residue contacts are predicted with PconsC
@@ -510,21 +511,21 @@ contact maps improve structure prediction.
 Protein & EVfold (paper) & EVfold (web)   & PconsFold\\\midrule
 BPT1\_BOVIN & 0.49 & 0.25    & 0.57 \\
 CADH1\_HUMAN & 0.55 & 0.54    & 0.53 \\
-CD209\_HUMAN & 0.39 & 0.64    & 0.54 \\
+CD209\_HUMAN * & 0.39 & 0.64    & 0.54 \\
 CHEY\_ECOLI & 0.65 & 0.66   & 0.82 \\
 ELAV4\_HUMAN & 0.57 & 0.61    & 0.80 \\
 O45418\_CAEEL & 0.48 & 0.62   & 0.65 \\
 OMPR\_ECOLI & 0.35 & 0.44    & 0.59 \\
 OPSD\_BOVIN & 0.50 & 0.55    & 0.56 \\
-PCB1\_HUMAN & 0.25 & 0.43    & 0.60 \\
+PCBP1\_HUMAN & 0.25 & 0.43    & 0.60 \\
 RASH\_HUMAN & 0.70 & 0.62   & 0.67 \\
 RNH\_ECOLI & 0.54 & 0.66   & 0.61 \\
 SPTB2\_HUMAN & 0.37 & 0.51  & 0.74 \\
 THIO\_ALIAC & 0.55 & 0.56   & 0.83 \\
-TRY2\_RAT & 0.53 * & 0.78    & 0.54 \\
+TRY2\_RAT & 0.53 ** & 0.78    & 0.54 \\
 YES\_HUMAN & 0.35 & 0.31   & 0.57 \\ \midrule
 Mean & 0.48 & 0.55   & 0.64 \\ \botrule
-\end{tabular}}{* This value was corrected as in the original publication it showed the value for the best possible model.}
+\end{tabular}}{* The Uniprot entry A8MVQ9\_HUMAN of the EVfoold publication was renamed into CD209\_HUMAN. ** This value was corrected as in the original publication it showed the value for the best possible model.}
 \end{table}
 
 \section{Conclusion}
