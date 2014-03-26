@@ -161,7 +161,8 @@ Predicted contacts were ranked according to the confidence score
 assigned by the respective contact prediction method. For each protein
 we selected $n = f \cdot l$ top-ranked contacts, where $l$ represents
 the length of the protein sequence and $f$ a factor to scale $n$
-relative to sequence length. 
+relative to sequence length.
+
 
 
 \subsection{Rosetta}
@@ -201,6 +202,11 @@ our opinion this accounts best for the fuzzy nature of predicted
 contacts. The fading zone at the lower bound allows Rosetta to detect
 and resolve overlapping residues, i.e. when there is a negative
 distance between two residues. 
+
+\subsection{EVfold}
+On the PSCOV dataset EVfold was run in a standalone version. The alignment E-value cutoff was fixed to $10^{-4}$. The parameter $m$ was set to 0.9. This defines a threshold to exclude sequences from the alignment that consist of more than 90\% of gaps.
+
+The current webserver version of EVfold was run with default parameters on the small test set. We ensured that it uses plmDCA instead of DCA for contact prediction.
 
 \subsection{Identification of top ranked model}
 
