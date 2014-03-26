@@ -15,7 +15,7 @@
 %\title[short Title]{Structure prediction of globular proteins using predicted residue contacts.}
 %\title[short Title]{PconsFold: ab-initio protein folding using Rosetta and predicted residue contacts.}
 \title[PconsFold]{PconsFold: Improved contact predictions improve
-  protein models}
+ protein models}
 %\title[short Title]{Advancement in residue contact prediction improves quality of predicted structural models.}
 %\author[Sample \textit{et~al}]{Mirco Michel\,$^{1,2}$, Marcin J. Skwark\,$^{3}$ and Arne Elofsson\,$^{1,2}$\footnote{to whom correspondence should be addressed}}
 \author[M.Michel \textit{et~al}]{Mirco Michel\,$^{1,2}$, Sikander Hayat\,$^{3}$, Marcin Skwark\,$^{4}$, Debora Marks\,$^{3}$, Chris Sander\,$^{5}$ and Arne Elofsson\,$^{1,2,}$\footnote{to whom correspondence should be addressed}}
@@ -63,7 +63,7 @@ structure prediction based on evolutionary information. PconsFold is
 based on PconsC contact prediction and uses the Rosetta folding
 protocol. Due to its modularity, the contact prediction tool can be
 easily exchanged. The source code of PconsFold is available on GitHub
-at \url{https://www.github.com/ElofssonLab/pcons-fold}  under the MIT
+at \url{https://www.github.com/ElofssonLab/pcons-fold} under the MIT
 license.
 \section{Contact:} \href{arne@bioinfo.se}{arne@bioinfo.se}
 \section{Supplementary information:} Supplementary data are available at \emph{Bioinformatics} online.
@@ -82,10 +82,10 @@ until recently predicted contacts lacked the accuracy to facilitate
 structure prediction methods significantly
 \cite[]{marks_protein_2011}. This only became possible due to a new
 approach to separate direct from indirect contact information
-\cite[]{Weigt19116270,burger_disentangling_2010}.  Since then there
+\cite[]{Weigt19116270,burger_disentangling_2010}. Since then there
 has been continuous effort to improve the quality of predicted
 contacts \cite[]{morcos_direct-coupling_2011, jones_PSICOV:_2012,
-  ekeberg_improved_2013, skwark_PconsC:_2013}.  In addition to the
+ ekeberg_improved_2013, skwark_PconsC:_2013}. In addition to the
 initial predictions of soluble proteins \cite[]{marks_protein_2011}
 and protein-complexes \cite{Schug20018738} now the predicted contacts
 have also been applied in structure prediction of membrane proteins
@@ -95,10 +95,10 @@ have also been applied in structure prediction of membrane proteins
 \begin{figure}[!tpb]%figure1
 \centerline{\includegraphics[scale=0.35]{figures/pipeline.eps}}
 \caption{PconsFold pipeline. Based on a given protein sequence,
-  amino-acid contacts are predicted with PconsC. These contacts then
-  facilitate protein folding with Rosetta. In the end PconsFold
-  outputs a structural model for the given
-  sequence.}\label{fig:pipeline} 
+ amino-acid contacts are predicted with PconsC. These contacts then
+ facilitate protein folding with Rosetta. In the end PconsFold
+ outputs a structural model for the given
+ sequence.}\label{fig:pipeline} 
 \end{figure}
 
 To optimize protein structure prediction from predicted contacts we
@@ -169,7 +169,7 @@ relative to sequence length.
 In PconsFold, Rosetta/plmDCA, and Rosetta/PSICOV we apply the
 AbinitioRelax folding protocol \cite[]{rohl_protein_2004} of Rosetta
 in version 2013wk42 \cite[]{leaver-fay_rosetta3:_2011}. The file {\tt
-  abinitio.options\_tmpl} in the folder {\tt pcons-fold/folding/rosetta} of the GitHub
+ abinitio.options\_tmpl} in the folder {\tt pcons-fold/folding/rosetta} of the GitHub
 repository lists all options we are using with AbinitioRelax. 
 
 We employ the function \emph{FADE} to integrate predicted residue
@@ -204,7 +204,7 @@ and resolve overlapping residues, i.e. when there is a negative
 distance between two residues. 
 
 \subsection{EVfold}
-On the PSCOV dataset EVfold was run in a standalone version. The alignment E-value cutoff was fixed to $10^{-4}$. The parameter $m$ was set to 0.9. This defines a threshold to exclude sequences from the alignment that consist of more than 90\% of gaps.
+On the PSCOV dataset EVfold was run in a standalone version. The alignment E-value cutoff was fixed to $10^{-4}$. The parameter $m$ was set to 0.9. This defines a threshold to exclude sequences from the alignment that consist of more than 90\% of gaps. This was done to ensure comparison with other methods possible. In general EVfold choses E-value based on sequence coverage and number of sequences found.
 
 The current webserver version of EVfold was run with default parameters on the small test set. We ensured that it uses plmDCA instead of DCA for contact prediction.
 
@@ -273,17 +273,17 @@ overall runtime or to generate more decoys in the same time.
 \begin{figure*}[!tpb]%figure1
 \centerline{\includegraphics[scale=0.7]{figures/rosetta.eps}}
 \caption{Model quality in TM-score for adjustments of two
-  different Rosetta parameters. (a) Performance distributions 
-  for two different sample sizes of 20,000 (left) and 2,000 (right) 
-  decoy structures. The black boxes indicate upper and lower 
-  quartile and white dots the median of the distributions. For each 
-  protein in the full PSICOV dataset the top 
-  ranked model was selected from the decoys by its Rosetta score and 
-  compared to the native structure. (b) Effects of adjustments to 
-  the well-depth parameter of the FADE function. A low absolute 
-  well-depth (left side) puts low weight on predicted constraints. 
-  Constraints are stronger weighted by higher absolute values of 
-  well-depth (right side). A subset of 14 proteins of the PSICOV dataset was used here.}\label{fig:ros} 
+ different Rosetta parameters. (a) Performance distributions 
+ for two different sample sizes of 20,000 (left) and 2,000 (right) 
+ decoy structures. The black boxes indicate upper and lower 
+ quartile and white dots the median of the distributions. For each 
+ protein in the full PSICOV dataset the top 
+ ranked model was selected from the decoys by its Rosetta score and 
+ compared to the native structure. (b) Effects of adjustments to 
+ the well-depth parameter of the FADE function. A low absolute 
+ well-depth (left side) puts low weight on predicted constraints. 
+ Constraints are stronger weighted by higher absolute values of 
+ well-depth (right side). A subset of 14 proteins of the PSICOV dataset was used here.}\label{fig:ros} 
 \end{figure*}
 For all results in this section, we used the internal Rosetta score to
 rank all predicted decoys. The top-ranked decoy structure was then
@@ -298,7 +298,7 @@ Previous studies have shown that 20,000 -- 200,000 decoys are
 necessary to sample native-like conformations without using spatial
 constraints \cite[]{Simons10526365}. We set out using 20,000 models
 and then reduced the number of decoy structures to
-2,000. The  bulk at \~0.3 TM-score in the second
+2,000. The bulk at \~0.3 TM-score in the second
 distribution of Figure~\ref{fig:ros}(a) represents an increased
 number of low quality models. We think the practical advantages of
 massively shorter Rosetta runs outweigh slightly worse predicted
@@ -325,16 +325,16 @@ function completely.
 \begin{figure*}[!tpb]%figure1
 \centerline{\includegraphics[scale=0.7]{figures/tmscores.eps}}
 \caption{Folding performance on the full PSICOV dataset. (a) The 
-  number of contacts used in structure prediction is
-  plotted against average TM-score for three different methods:
-  PconsFold (green circles), Rosetta/plmDCA (blue triangles), and
-  Rosetta/PSICOV (black squares). For each protein the number of top
-  ranked contacts was selected relative to its sequence length. A value
-  of 1.0 on the $x$-axis represents one
-  contact per residue on average. b) TM-scores are compared
-  to the PPV of underlying contact maps for PconsFold (using
-  PconsC). The colors represent all four CATH fold classes. Lines 
-  are fitted to the data to illustrate performance differences.}\label{fig:main}
+ number of contacts used in structure prediction is
+ plotted against average TM-score for three different methods:
+ PconsFold (green circles), Rosetta/plmDCA (blue triangles), and
+ Rosetta/PSICOV (black squares). For each protein the number of top
+ ranked contacts was selected relative to its sequence length. A value
+ of 1.0 on the $x$-axis represents one
+ contact per residue on average. b) TM-scores are compared
+ to the PPV of underlying contact maps for PconsFold (using
+ PconsC). The colors represent all four CATH fold classes. Lines 
+ are fitted to the data to illustrate performance differences.}\label{fig:main}
 \end{figure*}
 
 With any number of contacts used during structure prediction, the
@@ -373,7 +373,7 @@ to be modeled less accurate.
 
 
 Proteins belonging to the {\it
-  mainly alpha} CATH fold class seem to be easier to fold than
+ mainly alpha} CATH fold class seem to be easier to fold than
 proteins from the {\it alpha \& beta} fold class and proteins from the
 {\it mainly beta} fold class seem to be hardest to fold. The fold
 classes are indicated by the color scheme in Figure~\ref{fig:main}. Predicted contact maps in mainly $\alpha$-helical proteins (blue)
@@ -514,36 +514,36 @@ contact maps improve structure prediction.
 \begin{figure*}[!tpb]%figure1
 \centerline{\includegraphics[scale=0.7]{figures/vs.eps}}
 \caption{TM-score comparison for top-ranked models of the proteins in
-  the PSICOV dataset. The decoys for each method were re-ranked using
-  Pcons to assess the performance of the structure prediction process
-  independent of the model ranking scheme. The colors represent all
-  four CATH fold classes. (a) PconsFold compared to EVfold. (b)
-  Rosetta/plmDCA compared to EVfold.}\label{fig:vs}
+ the PSICOV dataset. The decoys for each method were re-ranked using
+ Pcons to assess the performance of the structure prediction process
+ independent of the model ranking scheme. The colors represent all
+ four CATH fold classes. (a) PconsFold compared to EVfold. (b)
+ Rosetta/plmDCA compared to EVfold.}\label{fig:vs}
 \end{figure*}
 
 \begin{table}[!t]
 \processtable{TM-scores for top ranked models comparing EVfold as it
-  was published, current EVfold server (accessed Feb. 2014), and
-  PconsFold with 20,000 decoys. \label{tab:evfold}}
+ was published, current EVfold server (accessed Feb. 2014), and
+ PconsFold with 20,000 decoys. \label{tab:evfold}}
 {\begin{tabular}{lp{1.5cm}p{1.5cm}p{1.5cm}p{1.5cm}}\toprule
-Protein & EVfold (paper) & EVfold (web)   & PconsFold\\\midrule
-BPT1\_BOVIN & 0.49 & 0.25    & 0.57 \\
-CADH1\_HUMAN & 0.55 & 0.54    & 0.53 \\
-CD209\_HUMAN * & 0.39 & 0.64    & 0.54 \\
-CHEY\_ECOLI & 0.65 & 0.66   & 0.82 \\
-ELAV4\_HUMAN & 0.57 & 0.61    & 0.80 \\
-O45418\_CAEEL & 0.48 & 0.62   & 0.65 \\
-OMPR\_ECOLI & 0.35 & 0.44    & 0.59 \\
-OPSD\_BOVIN & 0.50 & 0.55    & 0.56 \\
-PCBP1\_HUMAN & 0.25 & 0.43    & 0.60 \\
-RASH\_HUMAN & 0.70 & 0.62   & 0.67 \\
-RNH\_ECOLI & 0.54 & 0.66   & 0.61 \\
-SPTB2\_HUMAN & 0.37 & 0.51  & 0.74 \\
-THIO\_ALIAC & 0.55 & 0.56   & 0.83 \\
-TRY2\_RAT & 0.53 ** & 0.78    & 0.54 \\
-YES\_HUMAN & 0.35 & 0.31   & 0.57 \\ \midrule
-Mean & 0.48 & 0.55   & 0.64 \\ \botrule
-\end{tabular}}{* The Uniprot entry A8MVQ9\_HUMAN of the EVfoold publication was renamed into CD209\_HUMAN. ** This value was corrected as in the original publication it showed the value for the best possible model.}
+Protein & EVfold (paper) & EVfold (web)  & PconsFold\\\midrule
+BPT1\_BOVIN & 0.49 & 0.25  & 0.57 \\
+CADH1\_HUMAN & 0.55 & 0.54  & 0.53 \\
+CD209\_HUMAN * & 0.39 & 0.64  & 0.54 \\
+CHEY\_ECOLI & 0.65 & 0.66  & 0.82 \\
+ELAV4\_HUMAN & 0.57 & 0.61  & 0.80 \\
+O45418\_CAEEL & 0.48 & 0.62  & 0.65 \\
+OMPR\_ECOLI & 0.35 & 0.44  & 0.59 \\
+OPSD\_BOVIN & 0.50 & 0.55  & 0.56 \\
+PCBP1\_HUMAN & 0.25 & 0.43  & 0.60 \\
+RASH\_HUMAN & 0.70 & 0.62  & 0.67 \\
+RNH\_ECOLI & 0.54 & 0.66  & 0.61 \\
+SPTB2\_HUMAN & 0.37 & 0.51 & 0.74 \\
+THIO\_ALIAC & 0.55 & 0.56  & 0.83 \\
+TRY2\_RAT & 0.53 ** & 0.78  & 0.54 \\
+YES\_HUMAN & 0.35 & 0.31  & 0.57 \\ \midrule
+Mean & 0.48 & 0.55  & 0.64 \\ \botrule
+\end{tabular}}{* The Uniprot entry A8MVQ9\_HUMAN of the EVfold publication was renamed into CD209\_HUMAN. ** This value was corrected as in the original publication it showed the value for the best possible model.}
 \end{table}
 
 \section{Conclusion}
@@ -559,7 +559,7 @@ EVfold indicate that using similar contact predictions generate
 similar quality models, but that the Rosetta models are chemically
 more correct. Finally, it is also clear that in many top ranked models
 the contacts are less well satisfied than in the native structures,
-i.e. an improved folding protocol would improve the models.  One
+i.e. an improved folding protocol would improve the models. One
 option would be to use model-PPV as a measure of model quality, or as
 a stopping criterium for decoy generation.
 
@@ -575,7 +575,7 @@ a stopping criterium for decoy generation.
 \paragraph{Funding\textcolon} %Text Text Text Text Text Text Text Text.
 This work was supported by grants from the Swedish
 Research Council (VR-NT 2012-5046, VR-M 2010-3555), SSF (the Foundation for
-Strategic Research) and Vinnova through the Vinnova-JSP program,  and SeRC the
+Strategic Research) and Vinnova through the Vinnova-JSP program, and SeRC the
 Swedish E-science Research Center.
 
 \bibliographystyle{natbib}
