@@ -1,14 +1,15 @@
 PconsFold
-===========
+=========
 
 A pipeline for protein folding using predicted contacts from PconsC and a  Rosetta folding protocol.
 
 
 Instructions:
-===========
+-------------
 
 Pipeline overview:
 
+![PconsFold pipeline][pipeline_horiz.png]
 
 1. Input: fasta file containing one sequence
 2. Prepare input for PconsC
