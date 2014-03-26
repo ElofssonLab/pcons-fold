@@ -1,7 +1,7 @@
 import sys
 
 
-def reformat(seqfile_name, infile_name, factor, score=15):
+def reformat(seqfile_name, infile_name, factor, outfile_name='', score=15):
 
     min_dist = 5
     factor = float(factor)
@@ -53,7 +53,8 @@ def reformat(seqfile_name, infile_name, factor, score=15):
             break
 
     # write rosetta readable constraint file
-    outfile_name = '.'.join(infile_name.split('.')[0:-1]) + '-' + str(factor) + '.constraints'
+    if not outfile_name:
+        outfile_name = infile_name + '-' + str(factor) + '.constraints'
     outfile = open(outfile_name, 'w')
     for line in rosetta_lines:
         outfile.write('%s\n' % line)
