@@ -7,7 +7,6 @@ from subprocess import Popen
 from localconfig import *
 
 ### default value
-n_cores = 16
 n_decoys = 2000
 
 ### parse parameters
@@ -34,12 +33,15 @@ if '-n' in sys.argv:
 seqfile = os.path.abspath(sys.argv[1])
 ros_cfile = os.path.abspath(sys.argv[2])
 
+saved_path = os.getcwd()
+rundir = os.path.dirname(os.path.abspath(seqfile)) + '/'
+
 ### The number of decoy structures produced in a single run depends on the 
 ### of cores. In total it should be at least 2000 to get native-like structures.
 ### (see PconsFold paper)
 decoys_per_core = int(math.ceil(float(n_decoys) / n_cores))
 
-os.chdir('rosetta')
+os.chdir(rundir + 'rosetta')
 
 ### n_cores folders containing run 1..n_cores
 plist = []
@@ -68,4 +70,4 @@ for core in range(1, n_cores + 1):
 for p in plist:
     p.wait()
 
-os.chdir('..')
+os.chdir(saved_path)

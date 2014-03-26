@@ -1,11 +1,11 @@
 import sys
 import os
+from subprocess import call
+
 import evaluate_scores as ev
 
 from localconfig import *
 
-### default value = detected number of cores
-n_cores = 16
 ### default value = relax top-ranked structures
 relax_flag = True
 
@@ -25,10 +25,13 @@ if '--norelax' in sys.argv:
     relax_flag = False
     del sys.argv[idx]
 
-num = int(sys.argv[1])
+seqfile = os.path.abspath(sys.argv[1])
+num = int(sys.argv[2])
+
+rundir = os.path.dirname(os.path.abspath(seqfile)) + '/'
 
 ### determine IDs of top scoring decoys
-all_scores_sorted = ev.get_best_of_all_runs(num, n_cores, 'rosetta')
+all_scores_sorted = ev.get_best_of_all_runs(num, n_cores, rundir + 'rosetta')
 
 ### extract given IDs
 ev.extract_structures(all_scores_sorted)
@@ -39,12 +42,16 @@ if relax_flag:
 
 ### calculate similarity scores to native structure, if given
 ### and store them in "TMscores.txt"
-if os.path.exists('native.pdb'):
+if os.path.exists(rundir + 'native.pdb'):
     scorestr = ev.compare_to_native(all_scores_sorted, relax_flag, False)
-    scorefile = open('rosetta/TMscores.txt', 'w')
+    scorefile = open(rundir + 'rosetta/TMscores.txt', 'w')
     scorefile.write(scorestr)
     scorefile.close()
  
+### collect the results in seperate folder
+call(['mkdir', rundir + 'rosetta_results'])
+call('mv %s/rosetta/*.run_*.*.pdb %s/rosetta_results' % (rundir, rundir), shell=True)
 
-
+if os.path.exists(rundir + 'native.pdb'):
+    call(['mv', rundir + 'rosetta/TMscores.txt', rundir + 'rosetta_results'])
 
