@@ -5,26 +5,39 @@ from datetime import datetime
 import sys, subprocess, os
 import string as s
 
-from plotting.plot_contact_map import plot_map
+plot_flag = False
+try:
+    from plotting.plot_contact_map import plot_map
+    plot_flag = True
+except:
+    sys.stderr.write('\nWARNING:\nBiopython not available, skip contact map plotting.\n')
+    pass
+
 
 def check_output(command):
     return subprocess.Popen(command, stdout=subprocess.PIPE).communicate()[0]
 
-if sys.argv[1] == '-c':
-    try:
-        cores = int(sys.argv[2])
-    except:
-        print 'Number of cores -c must be an integer number, %r is not. Default is %s.' % (sys.argv[2], cores)
-        sys.exit(1)
-    del sys.argv[1:3]
 
-if len(sys.argv) != 4:
+### parse parameters
+
+if len(sys.argv) < 4:
     print sys.argv[0], '[-c n_cores] <hhblits db> <jackhmmer db> <sequence file>'
     sys.exit(0)
+
+if '-c' in sys.argv:
+    idx = sys.argv.index('-c')
+    try:
+        n_cores = int(sys.argv[idx+1])
+    except:
+        print 'Number of cores -c must be an integer, %r is not. Default is %s.' % (sys.argv[idx+1], n_cores)
+        sys.exit(1)
+    del sys.argv[idx +1]
+    del sys.argv[idx]
 
 hhblitsdb = sys.argv[1]
 jackhmmerdb = sys.argv[2]
 seqfile = sys.argv[3]
+
 
 rundir = seqfile.rfind('/')
 if rundir < 0:
@@ -33,13 +46,13 @@ else:
     rundir = seqfile[:rundir]
 
 if not os.path.exists(hhblitsdb + '_a3m_db'):
-    print hhblitsdb + '_a3m_db', 'does not exist'
+    sys.stderr.write('\n' + hhblitsdb + '_a3m_db', 'does not exist\n')
     sys.exit(1)
 if not os.path.exists(jackhmmerdb):
-    print jackhmmerdb, 'does not exist'
+    sys.stderr.write('\n' + jackhmmerdb, 'does not exist\n')
     sys.exit(1)
 if not os.path.exists(seqfile):
-    print seqfile, 'does not exist'
+    sys.stderr.write('\n' + seqfile, 'does not exist\n')
     sys.exit(0)
 
 f = open(seqfile).read()
@@ -171,12 +184,13 @@ f.close()
 
 # plot the top L*1 contacts in a contact map
 # those contacts are later used during protein folding
-if os.path.exists('native.pdb') and os.path.exists(seqfile + '.horiz'):
-    plot_map(seqfile, seqfile + '.pconsc.out', 1.0, pdb_filename='native.pdb', psipred_filename=seqfile + '.horiz')
-elif os.path.exists('native.pdb'):
-    plot_map(seqfile, seqfile + '.pconsc.out', 1.0, pdb_filename='native.pdb')
-elif os.path.exists(seqfile + '.horiz'):
-    plot_map(seqfile, seqfile + '.pconsc.out', 1.0, psipred_filename=seqfile + '.horiz')
-else:
-    plot_map(seqfile, seqfile + '.pconsc.out', 1.0)
+if plot_flag:
+    if os.path.exists('native.pdb') and os.path.exists(seqfile + '.horiz'):
+        plot_map(seqfile, seqfile + '.pconsc.out', 1.0, pdb_filename='native.pdb', psipred_filename=seqfile + '.horiz')
+    elif os.path.exists('native.pdb'):
+        plot_map(seqfile, seqfile + '.pconsc.out', 1.0, pdb_filename='native.pdb')
+    elif os.path.exists(seqfile + '.horiz'):
+        plot_map(seqfile, seqfile + '.pconsc.out', 1.0, psipred_filename=seqfile + '.horiz')
+    else:
+        plot_map(seqfile, seqfile + '.pconsc.out', 1.0)
 
