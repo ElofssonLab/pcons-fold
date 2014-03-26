@@ -1,8 +1,6 @@
 \documentclass{bioinfo}
 \copyrightyear{2014}
 \pubyear{2014}
-%\firstpage{1}
-%
 
 
 \usepackage{hyperref}
@@ -12,12 +10,8 @@
 \begin{document}
 \firstpage{1}
 
-%\title[short Title]{Structure prediction of globular proteins using predicted residue contacts.}
-%\title[short Title]{PconsFold: ab-initio protein folding using Rosetta and predicted residue contacts.}
 \title[PconsFold]{PconsFold: Improved contact predictions improve
  protein models}
-%\title[short Title]{Advancement in residue contact prediction improves quality of predicted structural models.}
-%\author[Sample \textit{et~al}]{Mirco Michel\,$^{1,2}$, Marcin J. Skwark\,$^{3}$ and Arne Elofsson\,$^{1,2}$\footnote{to whom correspondence should be addressed}}
 \author[M.Michel \textit{et~al}]{Mirco Michel\,$^{1,2}$, Sikander
   Hayat\,$^{3}$, Marcin Skwark\,$^{4}$, Chris Sander\,$^{5}$, Debora Marks\,$^{3}$,  and Arne Elofsson\,$^{1,2,}$\footnote{to whom correspondence should be addressed}}
 \address{$^{1}$Department of Biochemistry and Biophysics, Stockholm University, 10691 Stockholm, Sweden, 
@@ -510,8 +504,6 @@ PconsFold there is an additional improvement of 16\% to an average
 TM-score of 0.64. This further supports our assumption that improved
 contact maps improve structure prediction.
 
-
-
 \begin{figure*}[!tpb]%figure1
 \centerline{\includegraphics[scale=0.7]{figures/vs.eps}}
 \caption{TM-score comparison for top-ranked models of the proteins in
@@ -547,8 +539,8 @@ Mean & 0.48 & 0.55  & 0.64 \\ \botrule
 \end{tabular}}{* The Uniprot entry A8MVQ9\_HUMAN of the EVfold publication was renamed into CD209\_HUMAN. ** This value was corrected as in the original publication it showed the value for the best possible model.}
 \end{table}
 
-\section{Conclusion}
 
+\section{Conclusion}
 
 Here, we show that improved contact predictions from
 PconsC~\cite{skwark_PconsC:_2013} actually lead to improvements in
@@ -566,14 +558,13 @@ a stopping criterium for decoy generation.
 
 
 
-
-
-
-
 \section*{Acknowledgement}
-%Text Text Text Text Text Text Text Text. \citealp{Boffelli03} might want to know about text text text text
+Joel Hedlund is acknowledged for technical advice and valuable contributions to the code. 
 
-\paragraph{Funding\textcolon} %Text Text Text Text Text Text Text Text.
+\paragraph{Computational resources\textcolon}
+The computations were performed on resources  at PDC Centre for High Performance Computing (PDC-HPC) and on resources provided by SNIC through Uppsala Multidisciplinary Center for Advanced Computational Science (UPPMAX) and National Supercomputer (NSC) Centre in Linköping, Sweden. 
+
+\paragraph{Funding\textcolon}
 This work was supported by grants from the Swedish
 Research Council (VR-NT 2012-5046, VR-M 2010-3555), SSF (the Foundation for
 Strategic Research) and Vinnova through the Vinnova-JSP program, and SeRC the
