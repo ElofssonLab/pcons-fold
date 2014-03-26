@@ -18,8 +18,8 @@ if '-c' in sys.argv:
     except:
         print 'Number of cores -c must be an integer, %r is not. Default is %s.' % (sys.argv[idx+1], n_cores)
         sys.exit(1)
+    del sys.argv[idx +1]
     del sys.argv[idx]
-    del sys.argv[idx+1]
 
 if '-n' in sys.argv:
     idx = sys.argv.index('-n')    
@@ -28,8 +28,8 @@ if '-n' in sys.argv:
     except:
         print 'Number of decoys -n must be an integer, %r is not. Default is %s.' % (sys.argv[idx+1], n_decoys)
         sys.exit(1)
+    del sys.argv[idx +1]
     del sys.argv[idx]
-    del sys.argv[idx+1]
 
 seqfile = os.path.abspath(sys.argv[1])
 ros_cfile = os.path.abspath(sys.argv[2])
@@ -39,18 +39,19 @@ ros_cfile = os.path.abspath(sys.argv[2])
 ### (see PconsFold paper)
 decoys_per_core = int(math.ceil(float(n_decoys) / n_cores))
 
+os.chdir('rosetta')
 
 ### n_cores folders containing run 1..n_cores
 plist = []
 for core in range(1, n_cores + 1):
     optionstr = ''
-    optionstr += '-in:file:fasta ' + seqfile + '\n'
-    optionstr += '-in:file:frag3 ' + rundir + '/aa1xxxx03_05.200_v1_3\n'
-    optionstr += '-in:file:frag9 ' + rundir + '/aa1xxxx09_05.200_v1_3\n'
-    optionstr += '-use_filters true\n'
-    optionstr += '-constraints:cst_file ' + ros_cfile + '\n'
-    optionstr += '-database ' + rosettadir + '/rosetta_database/\n'
-    optionstr += '-psipred_ss2 ' + seqfile + '.ss2/\n'
+    optionstr += '-in:file:fasta ' + os.path.abspath(seqfile) + '\n'
+    optionstr += '-in:file:frag3 ' + os.path.abspath('t001_.200.3mers') + '\n'
+    optionstr += '-in:file:frag9 ' + os.path.abspath('t001_.200.9mers') + '\n'
+    optionstr += '-abinitio:use_filters true\n'
+    optionstr += '-constraints:cst_file ' + os.path.abspath(ros_cfile) + '\n'
+    optionstr += '-database ' + rosetta_db_dir + '\n'
+    optionstr += '-psipred_ss2 ' + os.path.abspath('t001_.psipred_ss2') + '\n'
     optionstr += '-out:nstruct ' + str(decoys_per_core) + '\n'
     optionstr += '-seed_offset ' + str(core) + '\n'
 
@@ -66,3 +67,5 @@ for core in range(1, n_cores + 1):
 
 for p in plist:
     p.wait()
+
+os.chdir('..')

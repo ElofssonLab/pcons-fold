@@ -89,7 +89,7 @@ trim2trimmed = root + 'scripts/a3mToTrimmed.py'
 reformat = root + 'scripts/reformat.pl'
 
 # Maximum amount of cores to use per default
-cores = multiprocessing.cpu_count()
+n_cores = multiprocessing.cpu_count()
 
 # Enable work-around for PSICOV not handling low complexity alignments
 psicovfail = True
