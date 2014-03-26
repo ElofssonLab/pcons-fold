@@ -9,7 +9,7 @@ Instructions:
 
 Pipeline overview:
 
-![PconsFold pipeline][pipeline_horiz.png]
+![PconsFold pipeline](https://github.com/ElofssonLab/pcons-fold/blob/release-1.0/pipeline_horiz.png)
 
 1. Input: fasta file containing one sequence
 2. Prepare input for PconsC
