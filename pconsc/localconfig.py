@@ -24,6 +24,12 @@ please cite the following publication:
 # Directory where the distributable package is located
 root = os.path.dirname(os.path.abspath(sys.argv[0])) + '/'
 
+# Look if PconsC or Rosetta dependencies need to be checked
+rosetta_flag = False
+if 'rosetta' in root:
+    rosetta_flag = True
+    root = '/'.join(root.split('/')[:-3]) + '/pconsc/'
+
 
 
 ########################################################
@@ -101,137 +107,136 @@ else:
 
 sys.stderr.write('\nTesting dependencies...\n')
 
+if rosetta_flag:
 
-### Check Jackhmmer ###
-try:
-    f = open(os.devnull, "w") 
-    x  = subprocess.call([jackhmmer, '-h'], stdout=f, stderr=f)
-    f.close()
-except Exception as e:
-    sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
-    sys.stderr.write('Chosen jackhmmer binary does not seem to work!\n')
-    sys.exit(1)
+    ### Check Rosetta ###
+    try:
+        f = open(os.devnull, "w")
+        x  = subprocess.call([rosetta_make_fragments, '-h'], stderr=f, stdout=f)
+        f.close()
+        pass
+    except:
+        sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
+        sys.stderr.write('There might be something wrong with your Rosetta installation in:\n')
+        sys.stderr.write(rosettadir + '\n')
+        sys.stderr.write('Please check the path to the Rosetta root directory\n')
+        sys.stderr.write('and use Rosetta 3.5 or higher (weekly).\n')
+        sys.stderr.write('Please ensure that the following Rosetta executable\n')
+        sys.stderr.write('is present and working:\n')
+        sys.stderr.write(rosetta_make_fragments + '\n')
+        sys.exit(1)
+    try:
+        f = open(os.devnull, "w")
+        x  = subprocess.call([rosetta_abinitiorelax, '-h'], stderr=f, stdout=f)
+        f.close()
+        pass
+    except:
+        sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
+        sys.stderr.write('There might be something wrong with your Rosetta installation in:\n')
+        sys.stderr.write(rosettadir + '\n')
+        sys.stderr.write('Please check the path to the Rosetta root directory\n')
+        sys.stderr.write('and use Rosetta 3.5 or higher (weekly).\n')
+        sys.stderr.write('Please ensure that the following Rosetta executable\n')
+        sys.stderr.write('is present and working:\n')
+        sys.stderr.write(rosetta_abinitiorelax + '\n')
+        sys.exit(1)
+    try:
+        f = open(os.devnull, "w")
+        x  = subprocess.call([rosetta_extract, '-h'], stderr=f, stdout=f)
+        f.close()
+        pass
+    except:
+        sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
+        sys.stderr.write('There might be something wrong with your Rosetta installation in:\n')
+        sys.stderr.write(rosettadir + '\n')
+        sys.stderr.write('Please check the path to the Rosetta root directory\n')
+        sys.stderr.write('and use Rosetta 3.5 or higher (weekly).\n')
+        sys.stderr.write('Please ensure that the following Rosetta executable\n')
+        sys.stderr.write('is present and working:\n')
+        sys.stderr.write(rosetta_extract + '\n')
+        sys.exit(1)
+    try:
+        f = open(os.devnull, "w")
+        x  = subprocess.call([rosetta_relax, '-h'], stderr=f, stdout=f)
+        f.close()
+        pass
+    except:
+        sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
+        sys.stderr.write('There might be something wrong with your Rosetta installation in:\n')
+        sys.stderr.write(rosettadir + '\n')
+        sys.stderr.write('Please check the path to the Rosetta root directory\n')
+        sys.stderr.write('and use Rosetta 3.5 or higher (weekly).\n')
+        sys.stderr.write('Please ensure that the following Rosetta executable\n')
+        sys.stderr.write('is present and working:\n')
+        sys.stderr.write(rosetta_relax + '\n')
+        sys.exit(1)
 
+else:
 
-### Check HHblits ###
-try:
-    f = open(os.devnull, "w")
-    x  = subprocess.call([hhblits, '-h'], stderr=f, stdout=f)
-    f.close()
-    pass
-except:
-    sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
-    sys.stderr.write('Chosen HHblits binary does not seem to work!\n')
-    sys.exit(1)
-
-
-### Check Rosetta ###
-try:
-    f = open(os.devnull, "w")
-    x  = subprocess.call([rosetta_make_fragments, '-h'], stderr=f, stdout=f)
-    f.close()
-    pass
-except:
-    sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
-    sys.stderr.write('There might be something wrong with your Rosetta installation in:\n')
-    sys.stderr.write(rosettadir + '\n')
-    sys.stderr.write('Please check the path to the Rosetta root directory\n')
-    sys.stderr.write('and use Rosetta 3.5 or higher (weekly).\n')
-    sys.stderr.write('Please ensure that the following Rosetta executable\n')
-    sys.stderr.write('is present and working:\n')
-    sys.stderr.write(rosetta_make_fragments + '\n')
-    sys.exit(1)
-try:
-    f = open(os.devnull, "w")
-    x  = subprocess.call([rosetta_abinitiorelax, '-h'], stderr=f, stdout=f)
-    f.close()
-    pass
-except:
-    sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
-    sys.stderr.write('There might be something wrong with your Rosetta installation in:\n')
-    sys.stderr.write(rosettadir + '\n')
-    sys.stderr.write('Please check the path to the Rosetta root directory\n')
-    sys.stderr.write('and use Rosetta 3.5 or higher (weekly).\n')
-    sys.stderr.write('Please ensure that the following Rosetta executable\n')
-    sys.stderr.write('is present and working:\n')
-    sys.stderr.write(rosetta_abinitiorelax + '\n')
-    sys.exit(1)
-try:
-    f = open(os.devnull, "w")
-    x  = subprocess.call([rosetta_extract, '-h'], stderr=f, stdout=f)
-    f.close()
-    pass
-except:
-    sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
-    sys.stderr.write('There might be something wrong with your Rosetta installation in:\n')
-    sys.stderr.write(rosettadir + '\n')
-    sys.stderr.write('Please check the path to the Rosetta root directory\n')
-    sys.stderr.write('and use Rosetta 3.5 or higher (weekly).\n')
-    sys.stderr.write('Please ensure that the following Rosetta executable\n')
-    sys.stderr.write('is present and working:\n')
-    sys.stderr.write(rosetta_extract + '\n')
-    sys.exit(1)
-try:
-    f = open(os.devnull, "w")
-    x  = subprocess.call([rosetta_relax, '-h'], stderr=f, stdout=f)
-    f.close()
-    pass
-except:
-    sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
-    sys.stderr.write('There might be something wrong with your Rosetta installation in:\n')
-    sys.stderr.write(rosettadir + '\n')
-    sys.stderr.write('Please check the path to the Rosetta root directory\n')
-    sys.stderr.write('and use Rosetta 3.5 or higher (weekly).\n')
-    sys.stderr.write('Please ensure that the following Rosetta executable\n')
-    sys.stderr.write('is present and working:\n')
-    sys.stderr.write(rosetta_relax + '\n')
-    sys.exit(1)
-
-
-### Check PSICOV ###
-try:
-    f = open(os.devnull, "w") 
-    x  = subprocess.call([psicov, root + '/extras/psicovtest.fas'], stdout=f, stderr=f)
-    f.close()
-except Exception as e:
-    sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
-    sys.stderr.write('Chosen PSICOV binary does not seem to work!\n')
-    sys.exit(1)
-
-if x == 255 and not psicovfail:
-    sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
-    sys.stderr.write('Your version of PSICOV refuses to handle low-complexity alignments.\n')
-    sys.stderr.write('We recommend patching the PSICOV code to allow this. See 00README\n')
-    sys.stderr.write('If you _really_ do not want to do that, please change psicovfail flag in \n')
-    sys.stderr.write(os.path.abspath(sys.argv[0]) + ' to True.\n')
-    sys.stderr.write('This will (most probably) affect the prediction performance.\n')
-    sys.exit(1)
-
-
-### Check plmDCA ###
-"""
-if plmdca:
+    ### Check Jackhmmer ###
     try:
         f = open(os.devnull, "w") 
-        x  = subprocess.call([plmdca, '-h'], stdout=f, stderr=f)
+        x  = subprocess.call([jackhmmer, '-h'], stdout=f, stderr=f)
         f.close()
     except Exception as e:
         sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
-        sys.stderr.write('Chosen plmdca binary does not seem to work!\n')
+        sys.stderr.write('Chosen jackhmmer binary does not seem to work!\n')
         sys.exit(1)
-elif matlab:
+
+    ### Check HHblits ###
     try:
-        f = open(os.devnull, "w") 
-        x  = subprocess.call([matlab, '-h'], stdout=f, stderr=f)
+        f = open(os.devnull, "w")
+        x  = subprocess.call([hhblits, '-h'], stderr=f, stdout=f)
         f.close()
+        pass
     except:
         sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
-        sys.stderr.write('Chosen MATLAB binary does not seem to work!\n')
+        sys.stderr.write('Chosen HHblits binary does not seem to work!\n')
         sys.exit(1)
-else:
-    sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
-    sys.stderr.write('You must set one of plmdca or matlab in localconfig.py!\n')
-    sys.exit(1)
-"""
+
+    ### Check PSICOV ###
+    try:
+        f = open(os.devnull, "w") 
+        x  = subprocess.call([psicov, root + '/extras/psicovtest.fas'], stdout=f, stderr=f)
+        f.close()
+    except Exception as e:
+        sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
+        sys.stderr.write('Chosen PSICOV binary does not seem to work!\n')
+        sys.exit(1)
+
+    if x == 255 and not psicovfail:
+        sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
+        sys.stderr.write('Your version of PSICOV refuses to handle low-complexity alignments.\n')
+        sys.stderr.write('We recommend patching the PSICOV code to allow this. See 00README\n')
+        sys.stderr.write('If you _really_ do not want to do that, please change psicovfail flag in \n')
+        sys.stderr.write(os.path.abspath(sys.argv[0]) + ' to True.\n')
+        sys.stderr.write('This will (most probably) affect the prediction performance.\n')
+        sys.exit(1)
+
+
+    ### Check plmDCA ###
+    if plmdca:
+        try:
+            f = open(os.devnull, "w") 
+            x  = subprocess.call([plmdca, '-h'], stdout=f, stderr=f)
+            f.close()
+        except Exception as e:
+            sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
+            sys.stderr.write('Chosen plmdca binary does not seem to work!\n')
+            sys.exit(1)
+    elif matlab:
+        try:
+            f = open(os.devnull, "w") 
+            x  = subprocess.call([matlab, '-h'], stdout=f, stderr=f)
+            f.close()
+        except:
+            sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
+            sys.stderr.write('Chosen MATLAB binary does not seem to work!\n')
+            sys.exit(1)
+    else:
+        sys.stderr.write('*****************\n   ERROR!\n*****************\n\n')
+        sys.stderr.write('You must set one of plmdca or matlab in localconfig.py!\n')
+        sys.exit(1)
+
 
 sys.stderr.write('\nDependencies OK.\n')
