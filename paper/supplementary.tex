@@ -18,10 +18,12 @@
   protein models}
 %\title[short Title]{Advancement in residue contact prediction improves quality of predicted structural models.}
 %\author[Sample \textit{et~al}]{Mirco Michel\,$^{1,2}$, Marcin J. Skwark\,$^{3}$ and Arne Elofsson\,$^{1,2}$\footnote{to whom correspondence should be addressed}}
-\author[M.Michel \textit{et~al}]{Mirco Michel\,$^{1,2}$, Sikander Hayat\,$^{3}$, Marcin Skwark\,$^{4}$, Debora Marks\,$^{3}$, Chris Sander\,$^{5}$ and Arne Elofsson\,$^{1,2,}$\footnote{to whom correspondence should be addressed}}
-\address{$^{1}$Department of Biochemistry and Biophysics, Stockholm University, 10691 Stockholm, Sweden, 
-$^{2}$Science for Life Laboratory, Box 1031, 17121 Solna, Sweden, 
-$^{3}$Department of Systems Biology, Harvard Medical School, Boston, Massachusetts, USA, 
+\author[M.Michel \textit{et~al}]{Mirco Michel\,$^{1,2}$, Sikander
+  Hayat\,$^{3}$, Marcin Skwark\,$^{4}$, Chris Sander\,$^{5}$, Debora
+  S. Marks\,$^{3}$,  and Arne Elofsson\,$^{1,2,}$\footnote{To whom correspondence should be addressed.}}
+\address{$^{1}$Department of Biochemistry and Biophysics, Stockholm University, 10691 Stockholm, Sweden,
+$^{2}$Science for Life Laboratory, Box 1031, 17121 Solna, Sweden,
+$^{3}$Department of Systems Biology, Harvard Medical School, Boston, Massachusetts, USA,
 $^{4}$Department of Information and Computer Science, Aalto University, PO Box 15400, FI-00076 Aalto, Finland, and
 $^{5}$Computational Biology Center, Memorial Sloan-Kettering Cancer Center, New York, New York, USA}
 
@@ -134,9 +136,9 @@ $^{5}$Computational Biology Center, Memorial Sloan-Kettering Cancer Center, New 
 
 
 \begin{table*}[!t]
-\processtable{TM-scores for top ranked models comparing EVfold as it was published, current EVfold server (accessed Feb. 2014), EVfold results re-ranked with Pcons, PconsFold 2,000 decoys, PconsFold 2,000 decoys re-ranked with Pcons, and PconsFold 20,000 decoys. \label{tab:evfold}}
+\processtable{TM-scores for top ranked models comparing EVfold with mean field, EVfold-PLM, EVfold-PLM results re-ranked with Pcons, PconsFold 2,000 decoys, PconsFold 2,000 decoys re-ranked with Pcons, and PconsFold 20,000 decoys. \label{tab:evfold}}
 {\begin{tabular}{lllllll}\toprule
-Protein & EVfold (paper) & EVfold (web) & EVfold (Pcons ranking) & PconsFold & PconsFold (Pcons ranking) & PconsFold (20k decoys)\\\midrule
+Protein & EVfold & EVfold-PLM & EVfold-PLM (Pcons ranking) & PconsFold & PconsFold (Pcons ranking) & PconsFold (20k decoys)\\\midrule
 %~ & (paper) & (web) & (re-ranked) & (2k decoys) & (2k dec., re-ranked) & (20k decoys) \\ \midrule
 BPT1\_BOVIN & 0.49 & 0.25 & 0.50 & 0.44 & 0.28 & 0.57 \\
 CADH1\_HUMAN & 0.55 & 0.54 & 0.60 & 0.59 & 0.37 & 0.53 \\
@@ -158,7 +160,7 @@ Mean & 0.48 & 0.55 & 0.57 & 0.61 & 0.57& 0.64 \\ \botrule
 \end{table*}
 
 \begin{table*}[!t]
-\processtable{MolProbity result for EVfold on each protein of the PSICOV dataset. Part 1. \label{tab:molpev}}
+\processtable{MolProbity result for EVfold-PLM on each protein of the PSICOV dataset. Part 1. \label{tab:molpev}}
 {\begin{tabular}{lllllllll}\toprule
     pdbFileName             & residues & clashscore & ramaOutlier & ramaAllowed & ramaFavored & numRama & MolProbityScore & Mol\_pct\_rank \\ \midrule
     1A3A\_150\_2\_hMIN\_0001.pdb & 144      & 10.25      & 14          & 27          & 101         & 142     & 2.362           & 55           \\
@@ -226,7 +228,7 @@ Mean & 0.48 & 0.55 & 0.57 & 0.61 & 0.57& 0.64 \\ \botrule
 
 
 \begin{table*}[!t]
-\processtable{MolProbity result for EVfold on each protein of the PSICOV dataset. Part 2. \label{tab:molpev}}
+\processtable{MolProbity result for EVfold-PLM on each protein of the PSICOV dataset. Part 2. \label{tab:molpev}}
 {\begin{tabular}{lllllllll}\toprule
     pdbFileName             & residues & clashscore & ramaOutlier & ramaAllowed & ramaFavored & numRama & MolProbityScore & Mol\_pct\_rank \\ \midrule
     1HDO\_340\_7\_hMIN\_0001.pdb & 198      & 9.04       & 23          & 45          & 128         & 196     & 2.361           & 55           \\
@@ -294,7 +296,7 @@ Mean & 0.48 & 0.55 & 0.57 & 0.61 & 0.57& 0.64 \\ \botrule
 
 
 \begin{table*}[!t]
-\processtable{MolProbity result for EVfold on each protein of the PSICOV dataset. Part 3. \label{tab:molpev}}
+\processtable{MolProbity result for EVfold-PLM on each protein of the PSICOV dataset. Part 3. \label{tab:molpev}}
 {\begin{tabular}{lllllllll}\toprule
     pdbFileName             & residues & clashscore & ramaOutlier & ramaAllowed & ramaFavored & numRama & MolProbityScore & Mol\_pct\_rank \\ \midrule
     1SMX\_100\_17\_hMIN\_0001.pdb & 94       & 7.36       & 17          & 30          & 45          & 92      & 2.382           & 54           \\
