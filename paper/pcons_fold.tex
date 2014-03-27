@@ -199,7 +199,7 @@ and resolve overlapping residues, i.e. when there is a negative
 distance between two residues. 
 
 \subsection{EVfold}
-On the PSCOV dataset EVfold was run in a standalone version. The alignment E-value cutoff was fixed to $10^{-4}$. The parameter $m$ was set to 0.9. This defines a threshold to exclude sequences from the alignment that consist of more than 90\% of gaps. This was done to enable comparison with other methods. In general EVfold choses E-value based on sequence coverage and number of sequences found.
+On the PSCOV dataset EVfold was run in a standalone version. The alignment E-value cutoff was fixed to $10^{-4}$. The parameter $m$ was set to 0.9. This defines a threshold to exclude sequences from the alignment that consist of more than 90\% of gaps. This was done to enable comparison with other methods. In general EVfold choses E-values based on sequence coverage and number of sequences found.
 
 The current web server version of EVfold was run with default parameters on the small test set. We ensured that it uses plmDCA instead of DCA for contact prediction.
 
@@ -222,11 +222,11 @@ each MQAP. The top-ranked model was then selected and compared to its
 native structure. For this comparison we used the TM-score
 \cite[]{zhang_scoring_2004} as a measure of structural similarity. As
 native structure we used the PDB structure of each protein without
-further loop-closing or other refinement. Tags from the seqres
+further loop-closing or other refinement. Tags from seqres
 sequences, although modeled, are therefore ignored in the structural
 comparison.
 
-The positive predictive value (PPV) was calculated to assess the quality of predicted models. It indicates how well a given contact map fits a given structure. All PPV values were calculated by using the C$^{\beta}$ (C$^{\alpha}$ in case of glycine) distances in the structure (native or model) with a cutoff at 8 \AA\ as reference contacts.
+The positive predictive value (PPV) was calculated to assess the quality of predicted models. It indicates how well a given contact map fits a given structure. All PPV values were calculated using reference contacts C$^{\beta}$ (C$^{\alpha}$ in case of glycine) distances in the structure (native or model) with a cutoff at 8 \AA\.
 
 
 \subsection{Model quality assessment}
