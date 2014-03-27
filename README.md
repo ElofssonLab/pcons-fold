@@ -21,7 +21,7 @@ A pipeline for protein folding using predicted contacts from PconsC and a  Roset
 
 - [Rosetta v3.5 or weekly built](https://www.rosettacommons.org/software)
 - [Jackhmmer from HMMER v3.0 or higher](http://hmmer.janelia.org/)
-- [HHblits from HHsuite v2.0.16](ftp://toolkit.genzentrum.lmu.de/pub/HH-suite/)
+- [HHblits from HHsuite v2.0.16](http://toolkit.tuebingen.mpg.de/hhblits)
 - [PSICOV v1.11](http://bioinfadmin.cs.ucl.ac.uk/downloads/PSICOV/)
 - [plmDCA symmetric v2](http://plmdca.csc.kth.se/)
 - either MATLAB v8.1 or higher
