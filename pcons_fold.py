@@ -5,7 +5,7 @@ import subprocess
 import multiprocessing
 
 from localconfig import *
-from pconsc import predictAll
+from pconsc import predict_all
 from folding.rosetta import prepare_input
 from folding.rosetta import fold
 from folding.rosetta import extract
@@ -231,7 +231,7 @@ constraintfile = contactfile + '-' + str(factor) + '.constraints'
 shutil.copyfile(root + '../localconfig.py', root + 'localconfig.py')
 shutil.copyfile(root + '../localconfig.py', root + '../folding/rosetta/localconfig.py')
 
-predictAll.main(hhblitsdb, jackhmmerdb, seqfile, n_cores=n_cores)
+predict_all.main(hhblitsdb, jackhmmerdb, seqfile, n_cores=n_cores)
 
 prepare_input.main(seqfile, contactfile, factor=factor, nohoms_flag=nohoms_flag)
 fold.main(seqfile, constraintfile, n_cores=n_cores, n_decoys=n_decoys)    

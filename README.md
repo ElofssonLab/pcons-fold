@@ -35,7 +35,7 @@ __Make sure__ all paths are correct in `localconfig.py`. Remark: except for plmD
 
 To run the full pipeline use:
 ```
-./run_pipeline.py [-c n_cores] [-n n_decoys] [-m n_models]
+./pcons_fold.py [-c n_cores] [-n n_decoys] [-m n_models]
                   [-f factor] [--norelax] [--nohoms] 
                   hhblits_database jackhmmer_database sequence_file
 ```
@@ -56,7 +56,7 @@ To run the full pipeline use:
 
 You can also run contact prediction independently with this command:
 ```
-./pconsc/predictAll_1.0.py [-c cores] hhblits_database jackhmmer_database sequence_file
+./pconsc/predict_all.py [-c cores] hhblits_database jackhmmer_database sequence_file
 ```
 
 
