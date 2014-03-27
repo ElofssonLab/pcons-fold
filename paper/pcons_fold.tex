@@ -236,28 +236,28 @@ model quality. The MolProbity tool {\tt oneline-analysis} was used to
 detect clashes and to evaluate backbone dihedrals as well as 
 side-chain rotamers. To prepare all structures for this analysis, we 
 first relaxed them with fixed backbone atoms.
-The Rosetta protocol {\tt relax.linuxgccrelease} was used to with the flags 
+The Rosetta protocol {\tt relax.linuxgccrelease} was used with the flags 
 {\tt -relax:quick} {\tt -in:file:fullatom} {\tt 
--constrain\_relax\_to\_start\_coords} set. Hydrogen atoms were then 
+-constrain\_relax\_to\_start\_coords}. Hydrogen atoms were then 
 added with the MolProbity tool {\tt reduce-build}. All resulting 
 structures are provided in the Supplementary Material.
 
 
 
 \subsection{Running time}
-A reduction from 20,000 to 2,000 folds corresponds to a 10-fold
-decrease of runtime during the folding step but also leads to an
+A reduction from 20,000 to 2,000 decoy structures corresponds to a 10-fold
+decrease of runtime during the Rosetta folding step but also leads to an
 expected decline in average model quality. On one core of an Intel
-E5-2660 (2.2 GHz Sandybridge), the generation of one decoy takes
+E5-2660 (2.2 GHz Sandybridge), the calculation of one decoy takes
 between 1 and 10 minutes for the shortest and longest protein in the
 PSICOV dataset respectively. To compute 2,000 decoys for each protein
 we ran 16 threads in parallel. Each of these threads then generates
 125 decoys, starting with independent random seeds. With this setting
 it takes between two hours and nearly one day to generate all decoys
 for one protein. This simple scaling is possible since Rosetta runs
-are independent of each other as long as independent random seeds are
-provided. Increasing the number of threads can then be used to reduce
-overall runtime or to generate more decoys in the same time.
+are independent of each other as long as they are based on 
+independent random seeds. Increasing the number of threads can then be used to reduce
+overall runtime or to generate more decoys within a given timespan.
 
 \end{methods}
 
@@ -265,13 +265,14 @@ overall runtime or to generate more decoys in the same time.
 \section{Results and Discussion}
 
 \subsection{PconsFold}
+
 \begin{figure*}[!tpb]%figure1
 \centerline{\includegraphics[scale=0.7]{figures/rosetta.eps}}
 \caption{Model quality in TM-score for adjustments of two
  different Rosetta parameters. (a) Performance distributions 
  for two different sample sizes of 20,000 (left) and 2,000 (right) 
  decoy structures. The black boxes indicate upper and lower 
- quartile and white dots the median of the distributions. For each 
+ quartile with white dots at the median of the distributions. For each 
  protein in the full PSICOV dataset the top 
  ranked model was selected from the decoys by its Rosetta score and 
  compared to the native structure. (b) Effects of adjustments to 
@@ -280,20 +281,21 @@ overall runtime or to generate more decoys in the same time.
  Constraints are stronger weighted by higher absolute values of 
  well-depth (right side). A subset of 14 proteins of the PSICOV dataset was used here.}\label{fig:ros} 
 \end{figure*}
+
 For all results in this section, we used the internal Rosetta score to
 rank all predicted decoys. The top-ranked decoy structure was then
 selected as a final model. With the {\tt -nohoms} flag during fragment
 picking we ensured that all homologous structures are excluded. Only
 fragments from non-homologous protein structures were selected. This
 was done to simulate a real application case and not to overestimate
-model quality. If not stated otherwise, we used all 150 proteins of
+prediction performance. If not stated otherwise, we used all 150 proteins of
 the PSICOV dataset as prediction targets in this section. 
 
 Previous studies have shown that 20,000 -- 200,000 decoys are
 necessary to sample native-like conformations without using spatial
 constraints \cite[]{Simons10526365}. We set out using 20,000 models
 and then reduced the number of decoy structures to
-2,000. The bulk at \~0.3 TM-score in the second
+2,000. The bulk at around 0.3 TM-score in the second
 distribution of Figure~\ref{fig:ros}(a) represents an increased
 number of low quality models. We think the practical advantages of
 massively shorter Rosetta runs outweigh slightly worse predicted
@@ -312,7 +314,9 @@ well-depth values of -0.5 and above. This leads to a significant
 decrease in model quality. Lower values of -5.0 and below put a larger
 absolute weight on the constraints resulting in higher model
 qualities. We assume this is due to the small number of decoys we are
-generating in this experiment. At the end we choose to use a value of -15.0 to achieve
+generating in this experiment. Without the help of spatial 
+constraints Rosetta's internal energy function does not converge. 
+At the end we choose to use a value of -15.0 to achieve
 high model quality without outweighing Rosetta's native energy
 function completely.
 
