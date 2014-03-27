@@ -117,7 +117,7 @@ predictions from plmDCA~\cite{ekeberg_improved_2013}.
 \subsection{Datasets}
 During the development of PconsFold we used the proteins from
 PSICOV \cite{jones_psicov:_2012}. The dataset consists of 150 single domain proteins with sequence
-lengths between 52 and 266 amino acids. A list of all Protein Data
+lengths between 52 and 266 amino acids. All Protein Data
 Bank (PDB) \cite[]{berman_protein_2000} and corresponding Uniprot
 \cite[]{magrane_uniprot_2011} IDs are given in (Supplementary Table
 1). 
@@ -209,7 +209,7 @@ E-values based on sequence coverage and number of sequences found.
 
 EVfold-PLM was run with default parameters on the small test set using
 the web-interface available at \url{http://evfold.org/}. We ensured
-that it uses plminstead of the mean field approach for
+that it uses pseudolikelihood maximization (plm) instead of the mean field approach for
 contact prediction.
 
 Folding with EVfold-PLM was performed using CNS and the same protocol
@@ -599,7 +599,7 @@ Sweden.
 This work was supported by grants from the Swedish
 Research Council (VR-NT 2012-5046, VR-M 2010-3555), SSF (the Foundation for
 Strategic Research) and Vinnova through the Vinnova-JSP program, and SeRC the
-Swedish E-science Research Center. DSM, CS adn SH are supported by NIH award R01 GM106303.
+Swedish E-science Research Center. DSM, CS and SH are supported by NIH award R01 GM106303.
 
 \bibliographystyle{natbib}
 %\bibliographystyle{achemnat}
