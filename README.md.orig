@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 PconsFold
 =========
 
@@ -75,8 +76,13 @@ The first script generates the file `(pconsc_output)-(factor).constraints` which
 
 
 =======
+=======
+>>>>>>> 4759942f36106dd089be50af41f990728d556ba1
 pcons-fold
 ==========
 
 A pipeline for protein folding using predicted contacts from PconsC and a  Rosetta folding protocol.
+<<<<<<< HEAD
 >>>>>>> Initial commit
+=======
+>>>>>>> 4759942f36106dd089be50af41f990728d556ba1

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 PconsFold
 =========
 
@@ -73,10 +72,3 @@ And then __fold the protein__ according to given predicted contacts with the fol
 
 The first script generates the file `(pconsc_output)-(factor).constraints` which is then used by Rosetta in the next step with `rosetta_constraintfile`.
 
-
-=======
-pcons-fold
-==========
-
-A pipeline for protein folding using predicted contacts from PconsC and a  Rosetta folding protocol.
->>>>>>> Initial commit
