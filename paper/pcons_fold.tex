@@ -144,7 +144,7 @@ PconsC \cite[]{skwark_PconsC:_2013}. The contact predictor
 plmDCA \cite[]{ekeberg_improved_2013} is used by Rosetta/plmDCA and in
 EVfold-PLM. Rosetta/plmDCA utilizes the direct output from plmDCA,
 while in EVfold predicted contacts are further optimized according to
-\cite{marks_protein_2011}. PSICOV \cite{jones_psicov:_2012} was used
+\cite{marks_protein_2011}. PSICOV \cite[]{jones_psicov:_2012} was used
 in Rosetta/PSICOV.
 
 
@@ -216,7 +216,7 @@ the web-interface available at \url{http://evfold.org/}. We ensured
 that it uses pseudolikelihood maximization (plm) on all data, instead of the na\"ive mean field approach for contact prediction.
 
 Folding with EVfold-PLM was performed using CNS and the same protocol
-as described before~\cite{marks_protein_2011}. Here, the distance
+as described before~\cite[]{marks_protein_2011}. Here, the distance
 geometry protocol is initially used and followed by a short simulated
 annealing. It can be noted that the run-time for this is much shorter
 than for Rosetta. 
@@ -410,13 +410,13 @@ function, i.e. models that satisfy more predicted contacts are
 assigned low energies and thus ranked on top.
 
 In  EVfold-PLM the best method to identify top-ranked models are by
-using Pcons~\cite{lundstrom_pcons:_2001}.
+using Pcons~\cite[]{lundstrom_pcons:_2001}.
 Further, Pcons performed only slightly worse than the internal scoring
 function of Rosetta on the models from PconsFold and
 Rosetta/plmDCA, showing the advantage of simple clustering methods.
 
 Further, we examined two quality assessments that have been reported
-to show good ability to identify accurate protein models, ProQ2~\cite{ray_improved_2012} and Dope~\cite{eswar_comparative_2006}.
+to show good ability to identify accurate protein models, ProQ2~\cite[]{ray_improved_2012} and Dope~\cite[]{Shen17075131}.
 The ProQ2 quality did not perform well on EVfold-PLM models but only slightly worse than
 Pcons on models from PconsFold and Rosetta/plmDCA. We also tested a
 combination of ProQ and Pcons, as in \cite{wallner_pcons.net:_2007}. However, the results are omitted
@@ -568,7 +568,7 @@ Mean & 0.48 & 0.55  & 0.64 \\ \botrule
 \section{Conclusion}
 
 Here, we show that improved contact predictions from
-PconsC \cite{skwark_PconsC:_2013} actually lead to improvements in
+PconsC \cite[]{skwark_PconsC:_2013} actually lead to improvements in
 protein structure prediction. Further, it is clear that for proteins
 with better-predicted contacts the generated models are of higher
 quality, i.e. future improvements in contact predictions will result
