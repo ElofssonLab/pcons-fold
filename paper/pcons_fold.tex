@@ -13,7 +13,7 @@
 \title[PconsFold]{PconsFold: Improved contact predictions improve
  protein models}
 \author[M.Michel \textit{et~al}]{Mirco Michel\,$^{1,2}$, Sikander
-  Hayat\,$^{3}$, Marcin Skwark\,$^{4}$, Chris Sander\,$^{5}$, Debora
+  Hayat\,$^{3}$, Marcin J. Skwark\,$^{4}$, Chris Sander\,$^{5}$, Debora
   S. Marks\,$^{3}$,  and Arne Elofsson\,$^{1,2,}$\footnote{To whom correspondence should be addressed.}}
 \address{$^{1}$Department of Biochemistry and Biophysics, Stockholm University, 10691 Stockholm, Sweden, 
 $^{2}$Science for Life Laboratory, Box 1031, 17121 Solna, Sweden, 
@@ -33,7 +33,7 @@ $^{5}$Computational Biology Center, Memorial Sloan-Kettering Cancer Center, New 
 A few years ago it was noted that the quality of protein contact
 predictions could be improved significantly if direct and indirect
 information was separated and sufficient number of 
-related sequences are available. It was shown that the contact
+related sequences was available. It was shown that the contact
 predictions alone contain sufficient information to predict the
 structure of many proteins. However, since the first reports there has
 been improvements in the contact predictions methods. Further there
@@ -213,8 +213,7 @@ E-values based on sequence coverage and number of sequences found.
 
 EVfold-PLM was run with default parameters on the small test set using
 the web-interface available at \url{http://evfold.org/}. We ensured
-that it uses pseudolikelihood maximization (plm) instead of the mean field approach for
-contact prediction.
+that it uses pseudolikelihood maximization (plm) on all data, instead of the na\"ive mean field approach for contact prediction.
 
 Folding with EVfold-PLM was performed using CNS and the same protocol
 as described before~\cite{marks_protein_2011}. Here, the distance
@@ -381,7 +380,7 @@ structure prediction leads to improved models.
 
 
 This relation between contact and model quality can also be observed
-in Figure~\ref{fig:main}b.The overall Pearson correlation between PPV and TM-score in
+in Figure~\ref{fig:main}b. The overall Pearson correlation between PPV and TM-score in
 this dataset is 0.59, i.e. proteins with contact maps of lower quality tend
 to be modeled less accurate. 
 
@@ -470,7 +469,7 @@ results in models that diverge from native structures with a better
 fit to the predicted contacts. Possibly, in these cases it would be
 better to use fewer contacts. 
 However, for most proteins with a PPV higher than 0.4 we are
-clearly not able to satisfy all constrain. Here, an improved folding
+clearly not able to satisfy all constraints. Here, an improved folding
 protocol would improve the models.
 
 
@@ -599,7 +598,7 @@ Sweden.
 This work was supported by grants from the Swedish
 Research Council (VR-NT 2012-5046, VR-M 2010-3555), SSF (the Foundation for
 Strategic Research) and Vinnova through the Vinnova-JSP program, and SeRC the
-Swedish E-science Research Center. DSM, CS and SH are supported by NIH award R01 GM106303.
+Swedish E-science Research Center. MJS is supported by the Academy of Finland Center of Excellence COIN. DSM, CS and SH are supported by NIH award R01 GM106303.
 
 \bibliographystyle{natbib}
 %\bibliographystyle{achemnat}
