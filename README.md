@@ -32,13 +32,13 @@ MATLAB is needed to run plmDCA. However, if MATLAB is not available you can also
 
 ## How to run it:
 
-__Make sure__ the paths to all dependencies are correct in `localconfig.py`.
+__Make sure__ all dependencies are working correctly and adjust the paths in `localconfig.py`.
 
 To run the full pipeline use:
 ```
 ./pcons_fold.py [-c n_cores] [-n n_decoys] [-m n_models]
-                  [-f factor] [--norelax] [--nohoms] 
-                  hhblits_database jackhmmer_database sequence_file
+                [-f factor] [--norelax] [--nohoms] 
+                hhblits_database jackhmmer_database sequence_file
 ```
 - Required:
   - `hhblits_database` and `jackhmmer_database` are paths to the databases used by HHblits and Jackhmmer
