@@ -79,7 +79,7 @@ structure prediction methods significantly
 \cite[]{marks_protein_2011}. This only became possible due to a new
 approach to separate direct from indirect contact information
 \cite[]{Weigt19116270,burger_disentangling_2010,Lapedes:2012}. Since then there
-have been continuous effort to improve the quality of predicted
+has been continuous effort to improve the quality of predicted
 contacts \cite[]{morcos_direct-coupling_2011, jones_psicov:_2012,
  ekeberg_improved_2013, skwark_PconsC:_2013}. In addition to the
 initial predictions of soluble proteins \cite[]{marks_protein_2011}
@@ -133,7 +133,7 @@ protein 1JBE, which was therefore excluded from all evaluations.
 
 
 As an additional comparison between PconsFold and EVfold we used the set
-of 15 proteins as in \cite{marks_protein_2011}. PDB and Uniprot IDs are given in
+of 15 proteins as in \cite{marks_protein_2011}. PDB and Uniprot IDs and the sequences are given in
 Supplementary Table 2. According to the Uniprot IDs we extracted the sequences from the
 Pfam alignments that were used in the publication. These sequences were
 submitted to the EVfold web-server and used as input for PconsFold.
@@ -374,7 +374,7 @@ There is an optimal number of contacts, specific to the contact
 prediction method. In Figure~\ref{fig:main}a the average TM-score
 maximum is reached at $x=1.0$ for PconsFold, while for PSICOV and
 plmDCA fewer contacts provide better models. This can be explained by
-the quality of predicted contacts, i.e. there exist a larger number of
+the quality of predicted contacts, i.e. there exists a larger number of
 correct contacts in PconsC compared to plmDCA or PSICOV \cite[]{skwark_PconsC:_2013}. Using more of these contacts during
 structure prediction leads to improved models.
 
@@ -409,7 +409,7 @@ of satisfied predicted contacts as a part of the energy
 function, i.e. models that satisfy more predicted contacts are
 assigned low energies and thus ranked on top.
 
-In  EVfold-PLM the best method to identify top-ranked models are by
+In  EVfold-PLM the best method to identify top-ranked models is by
 using Pcons~\cite[]{lundstrom_pcons:_2001}.
 Further, Pcons performed only slightly worse than the internal scoring
 function of Rosetta on the models from PconsFold and
@@ -503,7 +503,7 @@ as EVfold-PLM on average on such targets. The improvement might thus be
 due to PconsC contact maps, since it is only observable for PconsFold
 and not for Rosetta/plmDCA. At a level of single proteins we see quite
 some divergence between the results of EVfold-PLM and PconsFold in
-Figure~\ref{fig:vs}. This is especially true for {\em mainly beta'}
+Figure~\ref{fig:vs}. This is especially true for {\em mainly beta}
 proteins and {\em alpha \& beta} proteins.
 
 The analysis with MolProbity reveals that the backbone dihedral
