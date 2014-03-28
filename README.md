@@ -8,13 +8,13 @@ A pipeline for protein folding using predicted contacts from PconsC and a  Roset
 
 ## Pipeline overview:
 
-1. __Input:__ fasta file containing one sequence
+1. __Input:__ fasta file containing one protein sequence
 2. Prepare input for PconsC
 3. Contact prediction with PconsC
 4. Prepare input for Rosetta folding
 5. Rosetta folding
 6. Extract and relax structures with lowest Rosetta energy
-7. __Output:__ the predicted contact map (also as a plot) and the top-ranked structural model(s) relaxed and non-relaxed.
+7. __Output:__ the predicted contact map (also as a plot) and the top-ranked structural model(s) relaxed and non-relaxed
 
 
 ## Dependencies:
