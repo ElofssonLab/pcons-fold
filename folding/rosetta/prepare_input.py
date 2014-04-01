@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys
 import os
-from subprocess import check_output
+import subprocess
 
 import reformat_contacts
 from localconfig import *
