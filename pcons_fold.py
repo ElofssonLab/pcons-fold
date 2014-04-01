@@ -234,5 +234,5 @@ shutil.copyfile(root + '../localconfig.py', root + '../folding/rosetta/localconf
 predict_all.main(hhblitsdb, jackhmmerdb, seqfile, n_cores=n_cores)
 
 prepare_input.main(seqfile, contactfile, factor=factor, nohoms_flag=nohoms_flag)
-fold.main(seqfile, constraintfile, n_cores=n_cores, n_decoys=n_decoys)    
+fold.main(seqfile, constraintfile, n_cores=n_cores, n_decoys=n_decoys, rundir_postfix='rosetta')    
 extract.main(seqfile, n_cores=n_cores, n_models=n_models, relax_flag=relax_flag)

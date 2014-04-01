@@ -8,7 +8,7 @@ from subprocess import Popen
 from localconfig import *
 
 
-def main(seqfile, ros_cfile, n_cores=1, n_decoys=2000):
+def main(seqfile, ros_cfile, n_cores=1, n_decoys=2000, rundir_postfix=''):
 
     saved_path = os.getcwd()
     rundir = os.path.dirname(os.path.abspath(seqfile)) + '/'
@@ -18,7 +18,7 @@ def main(seqfile, ros_cfile, n_cores=1, n_decoys=2000):
     ### (see PconsFold paper)
     decoys_per_core = int(math.ceil(float(n_decoys) / n_cores))
 
-    os.chdir(rundir + 'rosetta')
+    os.chdir(rundir + rundir_postfix)
 
     ### n_cores folders containing run 1..n_cores
     plist = []
@@ -74,6 +74,12 @@ if __name__ == "__main__":
         except:
             print 'Number of decoys -n must be an integer, %r is not. Default is %s.' % (sys.argv[idx+1], n_decoys)
             sys.exit(1)
+        del sys.argv[idx +1]
+        del sys.argv[idx]
+
+    if '--rundir_postfix' in sys.argv:
+        idx = sys.argv.index('--rundir_postfix')    
+        rundir_postfix = sys.argv[idx+1])
         del sys.argv[idx +1]
         del sys.argv[idx]
 
