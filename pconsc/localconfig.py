@@ -31,7 +31,7 @@ if 'rosetta' in root:
 
 ### Path to root folder of your Rosetta installation ###
 # REQUIRES: Rosetta 3.5 or weekly build
-rosettadir = '/home/mirco_local/scratch/apps/rosetta_2013wk42_bundle'
+rosettadir = ''
 
 ### Jackhmmer executable ###
 jackhmmer = root + 'dependencies/hmmer-3.0/src/jackhmmer'
@@ -50,11 +50,11 @@ matlab = None
 
 ### Path to MATLAB compiler ###
 # Only needed if matlab is not available.
-matlabdir = '/home/mirco_local/scratch/apps/matlab-mcr/MATLAB_Compiler_Runtime/' 
+matlabdir = '' 
 
 ### Path to TM-score ###
 # only needed if result should be compared to native structure
-tmscore_binary = '/home/x_mirmi/pcons-fold/folding/rosetta/dependencies/TMscore/run_TMscore.sh'
+tmscore_binary = ''
 
 
 
