@@ -233,6 +233,16 @@ shutil.copyfile(root + '../localconfig.py', root + '../folding/rosetta/localconf
 
 predict_all.main(hhblitsdb, jackhmmerdb, seqfile, n_cores=n_cores)
 
+rundir_postfix = 'rosetta'
 prepare_input.main(seqfile, contactfile, factor=factor, nohoms_flag=nohoms_flag)
-fold.main(seqfile, constraintfile, n_cores=n_cores, n_decoys=n_decoys, rundir_postfix='rosetta')    
-extract.main(seqfile, n_cores=n_cores, n_models=n_models, relax_flag=relax_flag)
+fold.main(seqfile, constraintfile, n_cores=n_cores, n_decoys=n_decoys, rundir_postfix=rundir_postfix)    
+extract.main(seqfile, n_cores=n_cores, n_models=n_models, relax_flag=relax_flag, rundir_postfix=rundir_postfix)
+
+
+### collect the results in seperate folder
+call(['mkdir', rundir + 'rosetta_results'])
+call('mv %s/%s/*.run_*.*.pdb %s/rosetta_results' % (rundir, rundir_postfix, rundir), shell=True)
+
+if os.path.exists(rundir + 'native.pdb'):
+    call(['mv', rundir + rundir_postfix + '/TMscores.txt', rundir + 'rosetta_results'])
+

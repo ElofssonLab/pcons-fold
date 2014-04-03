@@ -7,7 +7,7 @@ import parse_pdb
 
 
 
-def fix(pdb1_filename, pdb2_filename):
+def fix(pdb1_filename, pdb2_filename, pdb2_outfilename=''):
 
     pdb1 = parse_pdb.read(open(pdb1_filename, 'r'))
     chain1 = parse_pdb.get_first_chain(open(pdb1_filename, 'r'))
@@ -74,7 +74,10 @@ def fix(pdb1_filename, pdb2_filename):
     #print len(pdb2_idx)
     #print align[-1]
     #print len(align[-1][1])
-    pdb2_outfile = open('.'.join(pdb2_filename.split('.')[:-1]) + '.aligned.pdb', 'w')
+    if pdb2_outfilename:
+        pdb2_outfile = open(pdb2_outfilename, 'w')
+    else:
+        pdb2_outfile = open('.'.join(pdb2_filename.split('.')[:-1]) + '.aligned.pdb', 'w')
     parse_pdb.write(pdb2_new, pdb2_outfile)
     
 

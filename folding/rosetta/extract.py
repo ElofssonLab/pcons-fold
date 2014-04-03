@@ -8,12 +8,12 @@ import evaluate_scores as ev
 from localconfig import *
 
 
-def main(seqfile, n_cores=1, n_models=10, relax_flag=True):
+def main(seqfile, n_cores=1, n_models=10, relax_flag=True, rundir_postfix=''):
 
     rundir = os.path.dirname(os.path.abspath(seqfile)) + '/'
 
     ### determine IDs of top scoring decoys
-    all_scores_sorted = ev.get_best_of_all_runs(n_models, n_cores, rundir + 'rosetta')
+    all_scores_sorted = ev.get_best_of_all_runs(n_models, n_cores, rundir + rundir_postfix)
 
     ### extract given IDs
     ev.extract_structures(all_scores_sorted)
@@ -24,20 +24,13 @@ def main(seqfile, n_cores=1, n_models=10, relax_flag=True):
 
     ### calculate similarity scores to native structure, if given
     ### and store them in "TMscores.txt"
-    if os.path.exists(rundir + 'native.pdb'):
-        scorestr = ev.compare_to_native(all_scores_sorted, relax_flag, False)
-        scorefile = open(rundir + 'rosetta/TMscores.txt', 'w')
+    native_fname = rundir + 'native.pdb'
+    if os.path.exists(native_fname):
+        scorestr = ev.compare_to_native(all_scores_sorted, relax_flag, False, native_fname=native_fname)
+        scorefile = open(rundir + rundir_postfix + '/TMscores.txt', 'w')
         scorefile.write(scorestr)
         scorefile.close()
      
-    ### collect the results in seperate folder
-    call(['mkdir', rundir + 'rosetta_results'])
-    call('mv %s/rosetta/*.run_*.*.pdb %s/rosetta_results' % (rundir, rundir), shell=True)
-
-    if os.path.exists(rundir + 'native.pdb'):
-        call(['mv', rundir + 'rosetta/TMscores.txt', rundir + 'rosetta_results'])
-
-
 
 if __name__ == "__main__":
 
@@ -45,6 +38,8 @@ if __name__ == "__main__":
     relax_flag = True
     ### default: extract top 10 ranked models
     n_models = 10
+    
+    rundir_postfix=''
 
     ### parse parameters
     if '-c' in sys.argv:
@@ -72,6 +67,12 @@ if __name__ == "__main__":
         relax_flag = False
         del sys.argv[idx]
 
+    if '--rundir_postfix' in sys.argv:
+        idx = sys.argv.index('--rundir_postfix')
+        rundir_postfix = sys.argv[idx+1]
+        del sys.argv[idx]
+        del sys.argv[idx]
+
     seqfile = os.path.abspath(sys.argv[1])
 
-    main(seqfile, n_cores=n_cores, n_models=n_models, relax_flag=relax_flag)
+    main(seqfile, n_cores=n_cores, n_models=n_models, relax_flag=relax_flag, rundir_postfix=rundir_postfix)
