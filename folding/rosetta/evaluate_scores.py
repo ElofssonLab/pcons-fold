@@ -115,13 +115,12 @@ def rescore_structures(scores_sorted, relax_flag):
         i += 1
     
 
-
-
-def compare_to_native(scores_sorted, relax_flag, rescore_flag, native_fname='native.pdb'):
+def compare_to_native(scores_sorted, relax_flag, rescore_flag, native_fname='native.pdb', name=''):
 
     scores = defaultdict(list)
     rosetta_scores = []
-    name = scores_sorted[0][0].split('/')[0]
+    if not name:
+       name = scores_sorted[0][0].split('/')[0]
     i = 0
     currdir = os.getcwd()
     for (rundir_tag, score_list) in scores_sorted:
