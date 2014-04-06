@@ -66,6 +66,15 @@ license. PconsC is available from \url{http://c.pcons.net/}.
 \end{abstract}
 
 \section{Introduction}
+\begin{figure}[!tpb]%figure1
+\centerline{\includegraphics[scale=0.35]{figures/pipeline.eps}}
+\caption{PconsFold pipeline. Based on a given protein sequence,
+ amino-acid contacts are predicted with PconsC. These contacts then
+ facilitate protein folding with Rosetta. In the end PconsFold
+ outputs a structural model for the given
+ sequence.}\label{fig:pipeline} 
+\end{figure}
+
 The protein folding problem is one of the
 longest standing problems in structural biology. Although the problem
 of physically folding up a single protein chain in the computer
@@ -99,16 +108,6 @@ In addition to the initial predictions of soluble proteins \cite[]{marks_protein
 and protein-complexes \cite[]{Schug20018738}  contacts predicted from evolutionary information
 have also been applied in structure prediction of membrane proteins
 \cite[]{hopf_three-dimensional_2012, nugent_accurate_2012}.
-
-
-\begin{figure}[!tpb]%figure1
-\centerline{\includegraphics[scale=0.35]{figures/pipeline.eps}}
-\caption{PconsFold pipeline. Based on a given protein sequence,
- amino-acid contacts are predicted with PconsC. These contacts then
- facilitate protein folding with Rosetta. In the end PconsFold
- outputs a structural model for the given
- sequence.}\label{fig:pipeline} 
-\end{figure}
 
 To optimize protein structure prediction from predicted contacts we
 developed PconsFold, a pipeline for ab-initio protein structure
@@ -221,9 +220,7 @@ the PSICOV dataset as prediction targets in this section.
 On the PSICOV dataset EVfold-PLM was run in a standalone version. The
 alignment E-value cutoff was fixed to $10^{-4}$. The parameter $m$ was
 set to 0.9. This defines a threshold to exclude sequences from the
-alignment that consist of more than 90\% of gaps. This was done to
-enable comparison with other methods. In general EVfold choses
-E-values based on sequence coverage and number of sequences found. 
+alignment that consist of more than 90\% of gaps. Using just one E-value for the alignment  enabled comparison across the methods but it should be noted that the EVfold server offers optimization of the E-values based on sequence coverage and number of sequences found, which results in improved results in some cases. 
 
 EVfold-PLM was run with default parameters on the small test set using
 the web-interface available at \url{http://evfold.org/}. We ensured
@@ -232,8 +229,8 @@ that it uses pseudolikelihood maximization (plm) on all data, instead of the na\
 Folding with EVfold-PLM was performed using CNS and the same protocol
 as described before~\cite[]{marks_protein_2011}. Here, the distance
 geometry protocol is initially used and followed by a short simulated
-annealing. It can be noted that the run-time for this is much shorter
-than for Rosetta. 
+annealing. The CNS based foldig protocol used in EVfold is approximately
+one order of magnitude faster than the Rosetta protocol used in PconsFold.
 
 \begin{figure*}[!tpb]%figure1
 \centerline{\includegraphics[scale=0.7]{figures/rosetta.eps}}
@@ -627,4 +624,5 @@ Swedish E-science Research Center. MJS is supported by the Academy of Finland Ce
 
 
 \end{document}
+
 
