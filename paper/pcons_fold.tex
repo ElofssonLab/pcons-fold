@@ -220,7 +220,7 @@ the PSICOV dataset as prediction targets in this section.
 On the PSICOV dataset EVfold-PLM was run in a standalone version. The
 alignment E-value cutoff was fixed to $10^{-4}$. The parameter $m$ was
 set to 0.9. This defines a threshold to exclude sequences from the
-alignment that consist of more than 90\% of gaps. Using just one E-value for the alignment  enabled comparison across the methods but it should be noted that the EVfold server offers optimization of the E-values based on sequence coverage and number of sequences found, which improves the results in some cases. 
+alignment that consist of more than 90\% of gaps. Using just one E-value for the alignment  enabled comparison across the methods but it should be noted that the EVfold server offers optimization of the E-values based on sequence coverage and number of sequences found, which results in improved results in some cases. 
 
 EVfold-PLM was run with default parameters on the small test set using
 the web-interface available at \url{http://evfold.org/}. We ensured
@@ -229,7 +229,7 @@ that it uses pseudolikelihood maximization (plm) on all data, instead of the na\
 Folding with EVfold-PLM was performed using CNS and the same protocol
 as described before~\cite[]{marks_protein_2011}. Here, the distance
 geometry protocol is initially used and followed by a short simulated
-annealing. It can be noted that the run-time for CNS is up to an order of magnitude shorter than for Rosetta.
+annealing. The EVfold run-time is approximately one order of magnitude faster than Rosetta.
 
 \begin{figure*}[!tpb]%figure1
 \centerline{\includegraphics[scale=0.7]{figures/rosetta.eps}}
