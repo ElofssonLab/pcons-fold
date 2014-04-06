@@ -34,18 +34,18 @@ $^{5}$Computational Biology Center, Memorial Sloan-Kettering Cancer Center, New 
 \begin{abstract}
 
 \section{Motivation:}
-A few years ago it was noted that the quality of protein contact
-predictions could be improved significantly if direct and indirect
-information was separated and sufficient number of homologous
-sequences are available. It was shown that the contact
-predictions alone contain sufficient information to predict the
-structure of many proteins. However, since the first reports there has
-been improvements in the contact predictions methods. Further there
-also exist slower, but potentially more accurate methods to model the
+Application of maximum entropy statistical methods have shown that the
+quality of protein contact prediction from evolutionary information
+can be improved significantly if direct and indirect information is
+separated, provided a sufficient number of related sequences is
+available. It was shown that the contact predictions alone contain
+sufficient information to predict the structure of many
+proteins. However, since the first reports there have been
+improvements in the contact prediction methods. Further there also
+exist slower, but potentially more accurate methods to model the
 proteins. Here, we ask how much the final models are improved if (i)
 improved contact predictions are used and (ii) if Rosetta is used to
-model the proteins. 
-
+model the proteins.
 
 
 \section{Results:}
@@ -70,27 +70,39 @@ license.
 \end{abstract}
 
 \section{Introduction}
-The protein folding problem is one of the longest standing problems in
-structural biology. Although the problem itself remains largely unsolved,
-there have been continuous effort and progress resulting in increased
-accuracy of predicted models
-\cite[]{kryshtafovych_CASP10_2013}. 
+The protein folding problem is one of the
+longest standing problems in structural biology. Although the problem
+of physically folding up a single protein chain in the computer
+remains largely unsolved, there have been continuous effort and
+progress resulting in increased accuracy of predicted models
+\cite[]{kryshtafovych_CASP10_2013}.
 
-The idea of using predicted residue-residue contacts for protein
-structure prediction is not new \cite[]{Vendruscolo9377713}. However,
-until recently predicted contacts lacked the accuracy to facilitate
-structure prediction methods significantly
-\cite[]{marks_protein_2011}. This only became possible due to a new
-approach to separate direct from indirect contact information
-\cite[]{Weigt19116270,burger_disentangling_2010}.  Since then there
-has been continuous effort to improve the quality of predicted
-contacts \cite[]{morcos_direct-coupling_2011, jones_PSICOV:_2012,
-  ekeberg_improved_2013, skwark_PconsC:_2013}.  In addition to the
-initial predictions of soluble proteins \cite[]{marks_protein_2011}
-and protein-complexes \cite{Schug20018738} now the predicted contacts
+The idea of using residue-residue contacts predicted from analysis of
+correlated mutations observed in evolution for 3D protein structure
+prediction is not new
+\cite[]{gobel_correlated_1994,Neher8278414,Hatrick16649265,Shindyalov_can_1994,Vendruscolo9377713}.
+However, until recently contacts predicted from multiple sequence
+alignments were not sufficiently accurate to facilitate structure
+prediction methods significantly \cite[]{marks_protein_2012}.  This
+only became possible due to a new statistical approaches to separate
+direct from indirect contact information \cite[]{Lapedes1999,
+  Lapedes2002, Weigt19116270,burger_disentangling_2010,
+  morcos_direct-coupling_2011, marks_protein_2011} as well as a
+greatly increased corpus of sequence information. These efforts came
+to completion with the first demonstration of successful computation
+of correct folds with explicit atomic coordinates using
+maximum-entropy derived contacts \cite[]{marks_protein_2011}. Analysis
+of the relative contribution of secondary structure and
+co-evolutionary information pointed to potential improvements in 3D
+accuracy \cite[]{Sulkowska22691493}. Since then there has also been
+continuous effort to improve the quality of predicted contacts
+\cite[]{jones_psicov:_2012, ekeberg_improved_2013,
+  skwark_PconsC:_2013}.
+
+In addition to the initial predictions of soluble proteins \cite[]{marks_protein_2011}
+and protein-complexes \cite[]{Schug20018738}  contacts predicted from evolutionary information
 have also been applied in structure prediction of membrane proteins
 \cite[]{hopf_three-dimensional_2012, nugent_accurate_2012}.
-
 
 \begin{figure}[!tpb]%figure1
 \centerline{\includegraphics[scale=0.35]{figures/pipeline.eps}}
@@ -120,7 +132,7 @@ predictions from plmDCA~\cite{ekeberg_improved_2013}.
 
 \subsection{Datasets}
 During the development of PconsFold we used the proteins from
-\citeauthor{jones_PSICOV:_2012} \citeyear{jones_PSICOV:_2012} (PSICOV
+\citeauthor{jones_psicov:_2012} \citeyear{jones_psicov:_2012} (PSICOV
 dataset). The dataset consists of 150 single domain proteins with sequence
 lengths between 52 and 266 amino acids. A list of all Protein Data
 Bank (PDB) \cite[]{berman_protein_2000} and corresponding Uniprot
