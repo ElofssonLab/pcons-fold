@@ -230,7 +230,9 @@ Folding with EVfold-PLM was performed using CNS and the same protocol
 as described before~\cite[]{marks_protein_2011}. Here, the distance
 geometry protocol is initially used and followed by a short simulated
 annealing. The CNS based foldig protocol used in EVfold is approximately
-one order of magnitude faster than the Rosetta protocol used in PconsFold.
+one order of magnitude faster than the Rosetta protocol used in
+PconsFold. In addition PconsC is at least four times slower than just
+running the contact predictions used in EVfold-PLM.
 
 \begin{figure*}[!tpb]%figure1
 \centerline{\includegraphics[scale=0.7]{figures/rosetta.eps}}
@@ -497,7 +499,15 @@ more efficient folding protocol would be preferable.
 
 
 
-
+\begin{figure*}[!tpb]%figure1
+\centerline{\includegraphics[scale=0.7]{figures/vs.eps}}
+\caption{TM-score comparison for top-ranked models of the proteins in
+ the PSICOV dataset. The decoys for each method were re-ranked using
+ Pcons to assess the performance of the structure prediction process
+ independent of the model ranking scheme. The colors represent all
+ four CATH fold classes. (a) PconsFold compared to EVfold-PLM. (b)
+ Rosetta/plmDCA compared to EVfold-PLM.}\label{fig:vs}
+\end{figure*}
 
 \subsection{PconsFold vs. EVfold }
 
@@ -540,15 +550,6 @@ PconsFold there is an additional improvement of 16\% to an average
 TM-score of 0.64. This further supports our observation that improved
 contact maps improve structure prediction.
 
-\begin{figure*}[!tpb]%figure1
-\centerline{\includegraphics[scale=0.7]{figures/vs.eps}}
-\caption{TM-score comparison for top-ranked models of the proteins in
- the PSICOV dataset. The decoys for each method were re-ranked using
- Pcons to assess the performance of the structure prediction process
- independent of the model ranking scheme. The colors represent all
- four CATH fold classes. (a) PconsFold compared to EVfold-PLM. (b)
- Rosetta/plmDCA compared to EVfold-PLM.}\label{fig:vs}
-\end{figure*}
 
 \begin{table}[!t]
 \processtable{TM-scores for top ranked models comparing EVfold with
