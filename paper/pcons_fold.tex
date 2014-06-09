@@ -30,18 +30,18 @@ $^{5}$Computational Biology Center, Memorial Sloan-Kettering Cancer Center, New 
 \begin{abstract}
 
 \section{Motivation:}
-A few years ago it was noted that the quality of protein contact
-predictions could be improved significantly if direct and indirect
-information was separated and sufficient number of 
-related sequences was available. It was shown that the contact
-predictions alone contain sufficient information to predict the
-structure of many proteins. However, since the first reports there has
-been improvements in the contact predictions methods. Further there
-also exist slower, but potentially more accurate methods to model the
+Application of maximum entropy and related statistical methods have shown that the
+quality of protein contact prediction from evolutionary information
+can be improved significantly if direct and indirect information is
+separated, provided a sufficient number of related sequences is
+available. It was shown that the contact predictions alone contain
+sufficient information to predict the structure of many
+proteins. However, since the first reports there have been
+improvements in the contact prediction methods. Further there also
+exist slower, but potentially more accurate methods to model the
 proteins. Here, we ask how much the final models are improved if (i)
 improved contact predictions are used and (ii) if Rosetta is used to
-model the proteins. 
-
+model the proteins.
 
 
 \section{Results:}
@@ -66,28 +66,6 @@ license. PconsC is available from \url{http://c.pcons.net/}.
 \end{abstract}
 
 \section{Introduction}
-The protein folding problem is one of the longest standing problems in
-structural biology. Although the problem itself remains largely unsolved,
-there have been continuous effort and progress resulting in increased
-accuracy of predicted models
-\cite[]{kryshtafovych_CASP10_2013}. 
-
-The idea of using predicted residue-residue contacts for protein
-structure prediction is not new \cite[]{Neher8278414,Gobel8208723,Shindyalov8177884,Vendruscolo9377713}. However,
-until recently predicted contacts lacked the accuracy to facilitate
-structure prediction methods significantly
-\cite[]{marks_protein_2011}. This only became possible due to a new
-approach to separate direct from indirect contact information
-\cite[]{Weigt19116270,burger_disentangling_2010,Lapedes:2012}. Since then there
-has been continuous effort to improve the quality of predicted
-contacts \cite[]{morcos_direct-coupling_2011, jones_psicov:_2012,
- ekeberg_improved_2013, skwark_PconsC:_2013}. In addition to the
-initial predictions of soluble proteins \cite[]{marks_protein_2011}
-and protein-complexes \cite[]{Schug20018738} now the predicted contacts
-have also been applied in structure prediction of membrane proteins
-\cite[]{hopf_three-dimensional_2012, nugent_accurate_2012}.
-
-
 \begin{figure}[!tpb]%figure1
 \centerline{\includegraphics[scale=0.35]{figures/pipeline.eps}}
 \caption{PconsFold pipeline. Based on a given protein sequence,
@@ -96,6 +74,40 @@ have also been applied in structure prediction of membrane proteins
  outputs a structural model for the given
  sequence.}\label{fig:pipeline} 
 \end{figure}
+
+The protein folding problem is one of the
+longest standing problems in structural biology. Although the problem
+of physically folding up a single protein chain in the computer
+remains largely unsolved, there have been continuous effort and
+progress resulting in increased accuracy of predicted models
+\cite[]{kryshtafovych_CASP10_2013}.
+
+The idea of using residue-residue contacts predicted from analysis of
+correlated mutations observed in evolution for 3D protein structure
+prediction is not new
+\cite[]{gobel_correlated_1994,Neher8278414,Hatrick16649265,Shindyalov_can_1994,Vendruscolo9377713}.
+However, until recently contacts predicted from multiple sequence
+alignments were not sufficiently accurate to facilitate structure
+prediction methods significantly \cite[]{marks_protein_2012}.  This
+only became possible due to a new statistical approaches to separate
+direct from indirect contact information \cite[]{Lapedes1999,
+  Lapedes2002, Weigt19116270,burger_disentangling_2010,
+  morcos_direct-coupling_2011, marks_protein_2011} as well as a
+greatly increased corpus of sequence information. These efforts came
+to completion with the first demonstration of successful computation
+of correct folds with explicit atomic coordinates using
+maximum-entropy derived contacts \cite[]{marks_protein_2011}. Analysis
+of the relative contribution of secondary structure and
+co-evolutionary information pointed to potential improvements in 3D
+accuracy \cite[]{Sulkowska22691493}. Since then there has also been
+continuous effort to improve the quality of predicted contacts
+\cite[]{jones_psicov:_2012, ekeberg_improved_2013,
+  skwark_PconsC:_2013}.
+
+In addition to the initial predictions of soluble proteins \cite[]{marks_protein_2011}
+and protein-complexes \cite[]{Schug20018738}  contacts predicted from evolutionary information
+have also been applied in structure prediction of membrane proteins
+\cite[]{hopf_three-dimensional_2012, nugent_accurate_2012}.
 
 To optimize protein structure prediction from predicted contacts we
 developed PconsFold, a pipeline for ab-initio protein structure
@@ -114,8 +126,9 @@ predictions from plmDCA~\cite[]{ekeberg_improved_2013}.
 
 \subsection{Datasets}
 During the development of PconsFold we used the proteins from
-PSICOV \cite[]{jones_psicov:_2012}. The dataset consists of 150 single domain proteins with sequence
-lengths between 52 and 266 amino acids. All Protein Data
+\citeauthor{jones_psicov:_2012} \citeyear{jones_psicov:_2012} (PSICOV
+dataset). The dataset consists of 150 single domain proteins with sequence
+lengths between 52 and 266 amino acids. A list of all Protein Data
 Bank (PDB) \cite[]{berman_protein_2000} and corresponding Uniprot
 \cite[]{magrane_uniprot_2011} IDs are given in Supplementary Table
 1. 
@@ -128,7 +141,7 @@ sequences were not directly used to avoid including mutations and other sequenti
 with the PDB sequences. This also allows direct comparisons between predicted
 models and native PDB structures. 
 
-{\color{red}(Due to technical reasons)} CNS~\cite[]{Brunger18007608} did not produce any models for the
+Due to technical reasons CNS~\cite[]{Brunger18007608} did not produce any models for the
 protein 1JBE, which was therefore excluded from all evaluations.
 
 
@@ -152,9 +165,7 @@ Predicted contacts were ranked according to the confidence score
 assigned by the respective contact prediction method. For each protein
 we selected $n = f \cdot l$ top-ranked contacts, where $l$ represents
 the length of the protein sequence and $f$ a factor to scale $n$
-relative to sequence length. {\color{red} Consider $f$ is set to 1.0.
-A protein with length 100 amino acids will thus be constrained by the
-first 100 predicted contacts.}
+relative to sequence length.
 
 
 
@@ -209,9 +220,7 @@ the PSICOV dataset as prediction targets in this section.
 On the PSICOV dataset EVfold-PLM was run in a standalone version. The
 alignment E-value cutoff was fixed to $10^{-4}$. The parameter $m$ was
 set to 0.9. This defines a threshold to exclude sequences from the
-alignment that consist of more than 90\% of gaps. This was done to
-enable comparison with other methods. In general EVfold choses
-E-values based on sequence coverage and number of sequences found. 
+alignment that consist of more than 90\% of gaps. Using just one E-value for the alignment  enabled comparison across the methods but it should be noted that the EVfold server offers optimization of the E-values based on sequence coverage and number of sequences found, which results in improved results in some cases. 
 
 EVfold-PLM was run with default parameters on the small test set using
 the web-interface available at \url{http://evfold.org/}. We ensured
@@ -220,8 +229,10 @@ that it uses pseudolikelihood maximization (plm) on all data, instead of the na\
 Folding with EVfold-PLM was performed using CNS and the same protocol
 as described before~\cite[]{marks_protein_2011}. Here, the distance
 geometry protocol is initially used and followed by a short simulated
-annealing. It can be noted that the run-time for this is much shorter
-than for Rosetta. 
+annealing. The CNS based foldig protocol used in EVfold is approximately
+one order of magnitude faster than the Rosetta protocol used in
+PconsFold. In addition PconsC is at least four times slower than just
+running the contact predictions used in EVfold-PLM.
 
 \begin{figure*}[!tpb]%figure1
 \centerline{\includegraphics[scale=0.7]{figures/rosetta.eps}}
@@ -289,7 +300,7 @@ structures are provided in the Supplementary Material.
 \subsection{Running time}
 A reduction from 20,000 to 2,000 decoy structures corresponds to a 10-fold
 decrease of runtime during the Rosetta folding step but also leads to an
-expected decline in average model quality{\color{red}, see Figure~\ref{fig:ros}a}. On one core of an Intel
+expected decline in average model quality. On one core of an Intel
 E5-2660 (2.2 GHz Sandybridge), the calculation of one decoy takes
 between 1 and 10 minutes for the shortest and longest protein in the
 PSICOV dataset respectively. To compute 2,000 decoys for each protein
@@ -329,12 +340,13 @@ setting, ie. using 2000 models.
 
 We selected the FADE function to incorporate predicted residue
 contacts into Rosetta's native energy function. We then optimized the
-parameter $w$ (well-depth) of FADE (Equation~\ref{eq:fade}). {\color{red} A subset of 14 proteins of the PSICOV dataset, see Supplementary Table 1, was used to reduce CPU hours of this step.}
-The resulting TM-scores are shown in Figure~\ref{fig:ros}b. The energy term from spatial constraints diminishes with
+parameter $w$ (well-depth) of FADE (Equation~\ref{eq:fade}), using a
+subset of 14 Proteins of the PSICOV
+dataset, see Supplementary Table 1. The resulting TM-scores are shown in Figure~\ref{fig:ros}(b). The energy term from spatial constraints diminishes with
 well-depth values of -0.5 and above. This leads to a significant
 decrease in model quality. Stronger weights than -5.0  put a larger
 absolute weight on the constraints resulting in higher model
-qualities. {\color{red} This trend can also be observed when looking at the full dataset. The average TM-score decreases to 0.28 using a well-depth of -1.0.} At the end we choose to use a value of -15.0 to achieve
+qualities. At the end we choose to use a value of -15.0 to achieve
 high model quality without outweighing Rosetta's internal energy
 function completely.
 
@@ -360,8 +372,8 @@ contact information. Figure~\ref{fig:main}a shows that predicted contacts genera
 quality, regardless of method or amount of contacts. 
 
 
-{\color{red}In addition, improvements in contact prediction methods further increase the quality
-of predicted structures.} With an average TM-score of 0.55
+Improvements in contact prediction methods also increase the quality
+of predicted structures. With an average TM-score of 0.55
 PconsFold, i.e. using PconsC contacts provides a 10\% improvement
 over using PSICOV or plmDCA contacts. This observation is consistent
 with a direct comparison of contact prediction methods as in
@@ -401,9 +413,9 @@ TM-score.
 \subsection{Identification of top ranked model}
 Table~\ref{tab:qa} summarizes the evaluation of different MQAPs on the
 predictions for the PSICOV dataset. It shows average TM-scores for
-top-ranked models after re-ranking all models with each MQAP. {\color{red}(Due to
-technical reasons, )}Rosetta's internal scoring function was not
-applicable to the models generated by CNS. For PconsFold and
+top-ranked models after re-ranking all models with each MQAP.  Due to
+technical reasons, Rosetta's internal scoring function was not
+applicable to the models generated by CNS.  For PconsFold and
 Rosetta/plmDCA the internal scoring was able to pick the best model on
 average. The internal scoring function takes into account the number
 of satisfied predicted contacts as a part of the energy
@@ -427,7 +439,7 @@ but we observe a strong decline in average model quality for PconsFold
 and Rosetta/plmDCA. 
 
 \begin{table}[!t]
-    \processtable{{\color{red}Average TM-scores for top-ranked models. Models were ranked by different scoring methods.} \label{tab:qa}}
+\processtable{Average TM-scores for top-ranked models selected by different MQAPs. \label{tab:qa}}
 {\begin{tabular}{llll}\toprule
 Method & EVfold-PLM & Rosetta/plmDCA& PconsFold  \\ \midrule
 Rosetta & -- & 0.50 & 0.55 \\
@@ -487,7 +499,15 @@ more efficient folding protocol would be preferable.
 
 
 
-
+\begin{figure*}[!tpb]%figure1
+\centerline{\includegraphics[scale=0.7]{figures/vs.eps}}
+\caption{TM-score comparison for top-ranked models of the proteins in
+ the PSICOV dataset. The decoys for each method were re-ranked using
+ Pcons to assess the performance of the structure prediction process
+ independent of the model ranking scheme. The colors represent all
+ four CATH fold classes. (a) PconsFold compared to EVfold-PLM. (b)
+ Rosetta/plmDCA compared to EVfold-PLM.}\label{fig:vs}
+\end{figure*}
 
 \subsection{PconsFold vs. EVfold }
 
@@ -530,15 +550,6 @@ PconsFold there is an additional improvement of 16\% to an average
 TM-score of 0.64. This further supports our observation that improved
 contact maps improve structure prediction.
 
-\begin{figure*}[!tpb]%figure1
-\centerline{\includegraphics[scale=0.7]{figures/vs.eps}}
-\caption{TM-score comparison for top-ranked models of the proteins in
- the PSICOV dataset. The decoys for each method were re-ranked using
- Pcons to assess the performance of the structure prediction process
- independent of the model ranking scheme. The colors represent all
- four CATH fold classes. (a) PconsFold compared to EVfold-PLM. (b)
- Rosetta/plmDCA compared to EVfold-PLM.}\label{fig:vs}
-\end{figure*}
 
 \begin{table}[!t]
 \processtable{TM-scores for top ranked models comparing EVfold with
@@ -592,7 +603,7 @@ Joel Hedlund is acknowledged for technical advice and valuable contributions to 
 The computations were performed on resources at PDC Centre for High
 Performance Computing (PDC-HPC) and on resources provided by SNIC
 through Uppsala Multidisciplinary Center for Advanced Computational
-Science (UPPMAX) and National Supercomputer (NSC) Centre in Linköping,
+Science (UPPMAX) and National Supercomputer (NSC) Centre in Link\"oping,
 Sweden.
 
 \paragraph{Funding\textcolon}
@@ -614,4 +625,5 @@ Swedish E-science Research Center. MJS is supported by the Academy of Finland Ce
 
 
 \end{document}
+
 
