@@ -1,21 +1,4 @@
 
-3. 
-
-4.
-5. 
-
-
-To review 2:
-
-?? Thanks! ??
-
-
-To review 3:
-
-Thank you very much for your comments. We tried to improve the
-manuscript according to your suggestions.
-
-
 ----------------------- REVIEW 1 ---------------------
 PAPER: 64
 TITLE: PconsFold: Improved contact predictions improve  protein models
@@ -51,25 +34,20 @@ The authors may want to consider these suggestions to improve the presentation o
    roughly 250 residues. How feasible would the modelling of larger
    proteins be?
 
-
-
 When looking at Pfam domains, there are XX out of XX with unknown
 structures. XX of these have the neccesary alignment depth of more
-than 1000 sequences. Predictions of another independent dataset showed
-that our method is feasible to fold even larger proteins. This second
-dataset contains proteins nearly 400 residues in length. Results were
-added to the supplementary information. We further predicted an
-example protein of length 784 (LptD). Therefore, we are confident our
-method is applicable to larger proteins.
-
-Theoretically, there is no upper limit to protein length for
-PconsFold. However, in practice we noticed two issues that might limit
-the applicability of PconsFold in terms of protein length: (i) the
-runtime of PSICOV and especially plmDCA will increase dramatically
-with the length of proteins. (ii) The same is true for the Rosetta
-folding step.
-
-We updated the manuscript accordingly. It now includes these numbers to give the readers additional statistics. 
+than 1000 sequences. We updated the manuscript accordingly. 
+Predictions of another independent dataset showed that our method is
+feasible to fold even larger proteins. This second dataset contains
+proteins nearly 400 residues in length. Results were added to the
+supplementary information. Therefore, we are confident our method is
+applicable to larger proteins. Theoretically, there is no upper limit
+to protein length for PconsFold, assuming the alignments are of
+sufficient depth. However, in practice we noticed two issues that
+might limit the applicability of PconsFold in terms of protein length:
+(i) the runtime of PSICOV and especially plmDCA will increase
+dramatically with the length of proteins. (ii) The same is true for
+the Rosetta folding step.  
 
 
 2. Some results could be discussed more thoroughly – e.g. the quality
@@ -92,14 +70,11 @@ able to infer hydrogen bonding patterns in beta sheets. Hydrogen bonds
 will then be provided as strong additional constraints to Rosetta.
 
 
-
-
 3. Some statements do not appear to be supported by the data
    shown. The values in Table 1 do not appear to support the statement
    “For PconsFold and Rosetta/plmDCA the internal scoring was able to
    pick the best model on average” nor do the following
    figures. Hopefully the authors will be able to improve this point.
-
 
 We are sorry for the misconception of this sentence. By "best models
 on average" we meant the highest ranked models from the internal
@@ -107,7 +82,7 @@ scoring were on average better than the models selected by other
 scoring methods. We rephrased the sentence into: "For PconsFold and
 Rosetta/plmDCA the internal scoring performed best, which is indicated
 by the highest average TM-scores in Table 1.". Hopefully this enhances
-the understandability of the text.
+understandability of the text.
 
 
 4. While the Rosetta development team may be glad to read that
@@ -120,9 +95,8 @@ the understandability of the text.
    contain no experimental artefacts and yet deviate more or less
    substantially from such distributions.
 
-
 We are aware of the drawbacks of using Molprobity. Therefore, we
-included quality assessments of WHATCHECK/PROCHECK to the
+included quality assessments of PROCHECK to the
 supplementary. The results show the same overall trend of Rosetta
 models being stereochemically more correct and thus support our point.
 
@@ -164,7 +138,8 @@ well written and provides enough data to substantiate the conclusions
 reached.
 
 
-THANKS
+THANKS!
+
 
 ----------------------- REVIEW 3 ---------------------
 PAPER: 64
@@ -183,33 +158,69 @@ confirmed and quantified.
 The abstract is quite technical - maybe explain what each of the
 methods mentioned actually do for more general readers.
 
+We have expanded the abstract.
+
 
 In section 2.1 the authors state “Due to technical reasons…” this is
 vague please explain.
 
-
 We have expanded these sentences. 
 
 
-Thanks for noting the other typos. They have been fixed.
+In section 2.2 the equation n=f.l is also vague - perhaps show a
+worked example.
+
+Typo in section 2.4 “folding” not “foldig”.
+
+In section 2.7 you could refer to figure 2.
+
+Thank you! We included your suggestions in the manuscript and fixed
+the error.
+
+
+In Figure 2b why is only a subset of proteins used - is the effect
+not seen on the other proteins?
+
+A subset is used due to limitations in computational time. However, we
+also ran the predictions exemplary for a well-depth of -1.0 on the
+full dataset. This resulted in a TM-score of 0.28. Thus, the effect
+is seen on the full set as well. We also extended the text to answer
+this question.
+
+
+Does Supplementary Table 1 exist?
+
+Yes, it can be found in supplementary.pdf.
+
+
+In section 3.1, 5th paragraph, 1st sentence could be reworded “In
+addition, improvements in contact prediction methods further increases
+the quality…”
+
+Thanks for noting this. It has been fixed.
+
 
 Figure 3a is interesting and a nice way to compare approaches on the
 same plot. Perhaps you could show how the individual confidence score
 cutoffs related to the TM-scores? Can you give optimal confidence
 score cut-offs for each contact method? 
 
-
 We have added standard errors to the plot.
 
+
+In section 3.2 again “Due to technical reasons…” be more specific.
+
+We have expanded these sentences. 
 
 
 Table 1 is not totally clear. What is the baseline score for each
 method column? Perhaps use a more descriptive title.
 
-We have added the information for Rosetta without contact preditions alone.
+We have added the information for Rosetta without contact predictions alone.
 
 
 Finally, the data set is quite small - are the differences observed significant?
 
-We have added T-test.
+We have added T-test confidence scores to show the significance of the
+differences.
 
