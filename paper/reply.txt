@@ -1,3 +1,6 @@
+We thank all reviewers for valuable suggestions. All changes are
+marked with red in the manuscript.
+
 
 ----------------------- REVIEW 1 ---------------------
 PAPER: 64
@@ -63,14 +66,17 @@ quality).
 
 The higher quality predictions of all alpha proteins are to our extend
 of knowledge due to the difficulty of satisfying long range beta-beta
-interactions during folding. We are currently trying to improve the
-behaviour of PconsFold on beta sheet-containing proteins. There are
-several ways to achieve this goal, such as improving beta-beta contact
-predictions or changing type or weight of such contacts in Rosetta. We
-are in the process of retraining a version PconsC to be specialized
-for beta-beta contacts. From such improved contacts we are hopefully
-able to infer hydrogen bonding patterns in beta sheets. Hydrogen bonds
-will then be provided as strong additional constraints to Rosetta.
+interactions during folding. We think that especially in beta-sheet
+containing proteins accurate long-range contacts are of high value. We
+are currently trying to improve the behaviour of PconsFold on such
+proteins. There are several ways to achieve this goal, such as
+improving beta-beta contact predictions or changing type or weight of
+such contacts in Rosetta. We are in the process of retraining a
+version PconsC to be specialized for beta-beta contacts.  From such
+improved contacts we are hopefully able to infer hydrogen bonding
+patterns in beta sheets. Hydrogen bonds will then be provided as
+strong additional constraints to Rosetta. We also updated the
+manuscript to discuss this topic more thoroughly.
 
 
 3. Some statements do not appear to be supported by the data

@@ -411,7 +411,10 @@ hardest to fold, see Figure~\ref{fig:main}. On average predicted contact maps in
 mainly $\alpha$-helical proteins (blue) have similar or lower PPV
 values than those of $\beta$-sheet containing proteins (green and
 yellow), but the resulting models are more accurate in terms of
-TM-score.
+TM-score. {\color{red}This might be explained by higher
+contact-order \cite[]{Plaxco1998985} in beta-sheet proteins, which
+renders such proteins more difficult to fold
+\cite[]{bradley_improved_2006}.}
 
 
 
@@ -610,7 +613,9 @@ the native structures, i.e. an improved folding protocol would improve
 the models. One option would be to use model-PPV as a measure of model
 quality, or as a stopping criterion for decoy generation, another
 option is to use both CNS and Rosetta and then try to identify the
-optimal model.
+optimal model. {\color{red}Model quality could be even further enhanced by
+improving the quality of long range beta-beta contacts and increasing
+their weight during folding.}
 
 
 
