@@ -75,8 +75,8 @@ such contacts in Rosetta. We are in the process of retraining a
 version PconsC to be specialized for beta-beta contacts.  From such
 improved contacts we are hopefully able to infer hydrogen bonding
 patterns in beta sheets. Hydrogen bonds will then be provided as
-strong additional constraints to Rosetta. We also updated the
-manuscript to discuss this topic more thoroughly.
+strong additional constraints to Rosetta. We updated the manuscript to
+discuss this topic more thoroughly.
 
 
 3. Some statements do not appear to be supported by the data
