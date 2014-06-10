@@ -42,8 +42,7 @@ According to a study by Kamisetty et al.
 422 protein families whithout known structure and enough sequences to
 successfully apply sequence-based contact prediction. The proteins
 from our benchmark all have known structures and are thus not included
-in this number. We updated the manuscript accordingly and included
-this reference. Theoretically, there is no upper limit to protein
+in this number. Theoretically, there is no upper limit to protein
 length for PconsFold, assuming the alignments are of sufficient depth.
 However, in practice we noticed two issues that might limit the
 applicability of PconsFold in terms of protein length: (i) the runtime
@@ -53,7 +52,8 @@ decoys to converge. The first issue can be tackled by further
 optimizing contact prediction methods (e.g. using the newer
 "asymmetric" version of plmDCA). Another stopping criterion for
 Rosetta could resolve the latter issue (at least regarding model
-quality). 
+quality). We updated the manuscript accordingly and included
+necessary references. 
 
 
 2. Some results could be discussed more thoroughly – e.g. the quality
@@ -106,7 +106,7 @@ understandability of the text.
 
 We are aware of the drawbacks of using Molprobity. Therefore, we
 included quality assessments of PROCHECK to the
-supplementary. The results show the same overall trend of Rosetta
+supplementary material. The results show the same overall trend of Rosetta
 models being stereochemically more correct and thus support our point.
 
 
