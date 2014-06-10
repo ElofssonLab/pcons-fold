@@ -90,18 +90,18 @@ alignments were not sufficiently accurate to facilitate structure
 prediction methods significantly \cite[]{marks_protein_2012}.  This
 only became possible due to a new statistical approaches to separate
 direct from indirect contact information \cite[]{Lapedes1999,
-  Lapedes2002, Weigt19116270,burger_disentangling_2010,
-  morcos_direct-coupling_2011, marks_protein_2011} as well as a
-greatly increased corpus of sequence information. These efforts came
-to completion with the first demonstration of successful computation
-of correct folds with explicit atomic coordinates using
-maximum-entropy derived contacts \cite[]{marks_protein_2011}. Analysis
-of the relative contribution of secondary structure and
-co-evolutionary information pointed to potential improvements in 3D
-accuracy \cite[]{Sulkowska22691493}. Since then there has also been
-continuous effort to improve the quality of predicted contacts
+Lapedes2002, Weigt19116270,burger_disentangling_2010,
+morcos_direct-coupling_2011, marks_protein_2011} as well as a greatly
+increased corpus of sequence information. These efforts came to
+completion with the first demonstration of successful computation of
+correct folds with explicit atomic coordinates using maximum-entropy
+derived contacts \cite[]{marks_protein_2011}. Analysis of the relative
+contribution of secondary structure and co-evolutionary information
+pointed to potential improvements in 3D accuracy
+\cite[]{Sulkowska22691493}. Since then there has also been continuous
+effort to improve the quality of predicted contacts
 \cite[]{jones_psicov:_2012, ekeberg_improved_2013,
-  skwark_PconsC:_2013}.
+skwark_PconsC:_2013}.
 
 In addition to the initial predictions of soluble proteins \cite[]{marks_protein_2011}
 and protein-complexes \cite[]{Schug20018738}  contacts predicted from evolutionary information
@@ -274,7 +274,7 @@ native structure. For this comparison we used the TM-score
 \cite[]{zhang_scoring_2004} as a measure of structural similarity. As
 native structure we used the PDB structure of each protein without
 further loop-closing or other refinement. Residues present in seqres
-but not observed in the crystal stucture, although modeled, are therefore ignored in the structural
+but not observed in the crystal structure, although modeled, are therefore ignored in the structural
 comparison.
 
 The positive predictive value (PPV) was calculated to assess the
@@ -596,15 +596,21 @@ Here, we show that improved contact predictions from PconsC
 structure prediction. Further, it is clear that for proteins with
 better-predicted contacts the generated models are of higher quality,
 i.e. future improvements in contact predictions will result in higher
-quality models. A comparison between using Rosetta and CNS indicates
-that using similar contact predictions generates models of similar
-quality. However, Rosetta models are chemically more correct. Finally,
-it is also clear that in many top ranked models the contacts are less
-well satisfied than in the native structures, i.e. an improved folding
-protocol would improve the models. One option would be to use
-model-PPV as a measure of model quality, or as a stopping criterion
-for decoy generation, another option is to use both CNS and Rosetta
-and then try to identify the optimal model.
+quality models. {\color{red}According to
+\cite{kamisetty_assessing_2013} there are 422 protein families
+without known structure and enough non-redundand sequences to
+apply coevolution-based contact prediction methods. This number
+will surely increase due to improved contact prediction methods
+and growing sequence databases at increasing rates.} A comparison
+between using Rosetta and CNS indicates that using similar contact
+predictions generates models of similar quality. However, Rosetta
+models are chemically more correct. Finally, it is also clear that in
+many top ranked models the contacts are less well satisfied than in
+the native structures, i.e. an improved folding protocol would improve
+the models. One option would be to use model-PPV as a measure of model
+quality, or as a stopping criterion for decoy generation, another
+option is to use both CNS and Rosetta and then try to identify the
+optimal model.
 
 
 

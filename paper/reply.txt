@@ -34,20 +34,23 @@ The authors may want to consider these suggestions to improve the presentation o
    roughly 250 residues. How feasible would the modelling of larger
    proteins be?
 
-When looking at Pfam domains, there are XX out of XX with unknown
-structures. XX of these have the neccesary alignment depth of more
-than 1000 sequences. We updated the manuscript accordingly. 
-Predictions of another independent dataset showed that our method is
-feasible to fold even larger proteins. This second dataset contains
-proteins nearly 400 residues in length. Results were added to the
-supplementary information. Therefore, we are confident our method is
-applicable to larger proteins. Theoretically, there is no upper limit
-to protein length for PconsFold, assuming the alignments are of
-sufficient depth. However, in practice we noticed two issues that
-might limit the applicability of PconsFold in terms of protein length:
-(i) the runtime of PSICOV and especially plmDCA will increase
-dramatically with the length of proteins. (ii) The same is true for
-the Rosetta folding step.  
+According to a study by Kamisetty et al.
+(http://www.pnas.org/content/early/2013/09/04/1314045110) there are
+422 protein families whithout known structure and enough sequences to
+successfully apply sequence-based contact prediction. The proteins
+from our benchmark all have known structures and are thus not included
+in this number. We updated the manuscript accordingly and included
+this reference. Theoretically, there is no upper limit to protein
+length for PconsFold, assuming the alignments are of sufficient depth.
+However, in practice we noticed two issues that might limit the
+applicability of PconsFold in terms of protein length: (i) the runtime
+of PSICOV and especially plmDCA will increase dramatically with the
+length of proteins. (ii) Rosetta might need to compute more than 2000
+decoys to converge. The first issue can be tackled by further
+optimizing contact prediction methods (e.g. using the newer
+"asymmetric" version of plmDCA). Another stopping criterion for
+Rosetta could resolve the latter issue (at least regarding model
+quality). 
 
 
 2. Some results could be discussed more thoroughly – e.g. the quality
@@ -158,7 +161,7 @@ confirmed and quantified.
 The abstract is quite technical - maybe explain what each of the
 methods mentioned actually do for more general readers.
 
-We have expanded the abstract.
+We have edided the abstract accordingly.
 
 
 In section 2.1 the authors state “Due to technical reasons…” this is
@@ -184,7 +187,7 @@ not seen on the other proteins?
 A subset is used due to limitations in computational time. However, we
 also ran the predictions exemplary for a well-depth of -1.0 on the
 full dataset. This resulted in a TM-score of 0.28. Thus, the effect
-is seen on the full set as well. We also extended the text to answer
+is seen on the other proteins as well. We also extended the text to answer
 this question.
 
 
