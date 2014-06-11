@@ -108,10 +108,10 @@ understandability of the text.
 accordingly. We decided to include this analysis, since the predicted
 models reach TM-scores of 0.5 and higher, which indicates correctly
 predicted folds.
-2) We
-included quality assessments of PROCHECK to the
-supplementary material. The results show the same overall trend of Rosetta
-models being stereochemically more correct and thus support our point.
+2) Additionally, we ran PROCHECK on the relaxed models (same input as
+for Molprobity). The results show the same overall trend of Rosetta
+models being stereochemically more correct and thus support our
+point. We updated the manuscript accordingly.
 
 
 5. PconsFold is made available to the community in the form of a
