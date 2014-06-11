@@ -173,8 +173,8 @@ We have edided the abstract accordingly.
 In section 2.1 the authors state “Due to technical reasons…” this is
 vague please explain.
 
-We now included the results for 1JBE as well. This sentence was
-removed from the manuscript. 
+We now included 1JBE to all results and updated the figures
+accordingly. This sentence was removed from the manuscript. 
 
 
 In section 2.2 the equation n=f.l is also vague - perhaps show a
