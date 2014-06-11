@@ -231,6 +231,9 @@ We have added the information for Rosetta without contact predictions alone.
 
 Finally, the data set is quite small - are the differences observed significant?
 
-We have added T-test confidence scores to show the significance of the
+Regarding Table 1: an all-to-all pairwise t-test analysis of the
+differences in TM-score showed that the difference is significant
+with >95% confidence if its absolute value is 0.02 or larger. Table 2:
+Here we have also added p-values to show the significance of the
 differences.
 
