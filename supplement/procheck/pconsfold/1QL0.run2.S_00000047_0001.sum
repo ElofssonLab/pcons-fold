@@ -1,0 +1,24 @@
+
+ +----------<<<  P  R  O  C  H  E  C  K     S  U  M  M  A  R  Y  >>>----------+
+ |                                                                            |
+ | ../../input/1QL0.run2.S_00000047_0001.pdb   2.0  A            241 residues |
+ |                                                                            |
+*| Ramachandran plot:   79.3% core   18.8% allow    1.0% gener    1.0% disall |
+ |                                                                            |
+*| All Ramachandrans:   18 labelled residues (out of 239)                     |
+ | Chi1-chi2 plots:      0 labelled residues (out of 131)                     |
+ | Main-chain params:    6 better     0 inside      0 worse                   |
+ | Side-chain params:    5 better     0 inside      0 worse                   |
+ |                                                                            |
++| Residue properties: Max.deviation:     4.0              Bad contacts:    4 |
+ |                     Bond len/angle:    1.5    Morris et al class:  1  1  2 |
+ |                                                                            |
+ | G-factors           Dihedrals:  -0.04  Covalent:   0.68    Overall:   0.25 |
+ |                                                                            |
+ | M/c bond lengths:100.0% within limits   0.0% highlighted                   |
+ | M/c bond angles: 100.0% within limits   0.0% highlighted                   |
+ | Planar groups:   100.0% within limits   0.0% highlighted                   |
+ |                                                                            |
+ +----------------------------------------------------------------------------+
+   + May be worth investigating further.  * Worth investigating further.
+
