@@ -104,7 +104,11 @@ understandability of the text.
    contain no experimental artefacts and yet deviate more or less
    substantially from such distributions.
 
-We are aware of the drawbacks of using Molprobity. Therefore, we
+1) Thank you for pointing that out, we updated the manuscript
+accordingly. We decided to include this analysis, since the predicted
+models reach TM-scores of 0.5 and higher, which indicates correctly
+predicted folds.
+2) We
 included quality assessments of PROCHECK to the
 supplementary material. The results show the same overall trend of Rosetta
 models being stereochemically more correct and thus support our point.

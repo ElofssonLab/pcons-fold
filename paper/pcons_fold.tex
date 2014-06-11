@@ -281,7 +281,8 @@ the structure (native or model) with a cutoff at 8 \AA.
 
 \subsection{Model quality assessment}
 
-We used MolProbity \cite[]{chen_molprobity:_2010} to assess the chemical
+{\color{red}Accurate stereochemistry becomes important when the predicted models
+are of correct overall fold. Therefore,} we used MolProbity \cite[]{chen_molprobity:_2010} to assess the chemical
 model quality. The MolProbity tool {\tt oneline-analysis} was used to 
 detect clashes and to evaluate backbone dihedrals as well as 
 side-chain rotamers. To prepare all structures for this analysis, we 
@@ -550,7 +551,8 @@ models have slightly less clashes than the models from PconsFold. The
 average final MolProbity score is with 1.85 better for PconsFold then
 2.38 for EVfold-PLM. This corresponds to a better average MolProbity
 percentile rank of 80.69 for PconsFold than the average rank of 54.21
-for EVfold-PLM.
+for EVfold-PLM. {\color{red}Additional analysis with PROCHECK confirmed this
+trend, see Supplementary.}
 
 
 Table~\ref{tab:evfold} contains TM-scores for the top-ranked models of
