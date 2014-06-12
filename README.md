@@ -23,7 +23,7 @@ A pipeline for protein folding using predicted contacts from PconsC and a  Roset
 - [Jackhmmer from HMMER v3.0 or higher](http://hmmer.janelia.org/)
 - [HHblits from HHsuite v2.0.16](http://toolkit.tuebingen.mpg.de/hhblits)
 - [PSICOV v1.11](http://bioinfadmin.cs.ucl.ac.uk/downloads/PSICOV/)
-- [plmDCA symmetric v2](http://plmdca.csc.kth.se/)
+- [plmDCA asymmetric](http://plmdca.csc.kth.se/)
 - either MATLAB v8.1 or higher
 - or [MATLAB Compiler Runtime (MCR) v8.1](http://www.mathworks.se/products/compiler/mcr/)
 
