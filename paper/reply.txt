@@ -39,7 +39,7 @@ The authors may want to consider these suggestions to improve the presentation o
 
 According to a study by Kamisetty et al.
 (http://www.pnas.org/content/early/2013/09/04/1314045110) there are
-422 protein families whithout known structure and enough sequences to
+422 protein families without known structure and enough sequences to
 successfully apply sequence-based contact prediction. The proteins
 from our benchmark all have known structures and are thus not included
 in this number. Theoretically, there is no upper limit to protein
@@ -68,7 +68,7 @@ The higher quality predictions of all alpha proteins are to our extend
 of knowledge due to the difficulty of satisfying long range beta-beta
 interactions during folding. We think that especially in beta-sheet
 containing proteins accurate long-range contacts are of high value. We
-are currently trying to improve the behaviour of PconsFold on such
+are currently trying to improve the behavior of PconsFold on such
 proteins. There are several ways to achieve this goal, such as
 improving beta-beta contact predictions or changing type or weight of
 such contacts in Rosetta. We are in the process of retraining a
@@ -171,7 +171,7 @@ confirmed and quantified.
 The abstract is quite technical - maybe explain what each of the
 methods mentioned actually do for more general readers.
 
-We have edided the abstract accordingly.
+We have edited the abstract accordingly.
 
 
 In section 2.1 the authors state “Due to technical reasons…” this is
