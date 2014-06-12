@@ -41,11 +41,11 @@ sufficient information to predict the structure of many protein
 models are improved if improved contact predictions are used.
 
 
-\section{Results:} \red{In a small benchmark of 12 proteins from} we
-show that the TM-score of top ranked models are improved by on average
-33\% \red{using Pcons-fold compared to the orginal version of EVfold}.
+\section{Results:} \red{In a small benchmark of 15 proteins} we
+show that the TM-scores of top ranked models are improved by on average
+33\% \red{using PconsFold compared to the original version of EVfold}.
 In a larger benchmark we find that the quality is improved with
-15-30\% \red{when using PconsC in comparson to earlier contact
+15-30\% \red{when using PconsC in comparison to earlier contact
   prediction methods.  Further,} using Rosetta instead of CNS does not
 significantly improve global model accuracy \red{but} the chemistry of
 models generated with Rosetta is improved.
@@ -66,7 +66,7 @@ license. PconsC is available from \url{http://c.pcons.net/}.
 \begin{figure}[!tpb]%figure1
 \centerline{\includegraphics[scale=0.35]{figures/pipeline.eps}}
 \caption{PconsFold pipeline. Based on a given protein sequence,
- amino-acid contacts are predicted with PconsC. These contacts then
+ amino acid contacts are predicted with PconsC. These contacts then
  facilitate protein folding with Rosetta. In the end PconsFold
  outputs a structural model for the given
  sequence.}\label{fig:pipeline} 
@@ -109,7 +109,7 @@ have also been applied in structure prediction of membrane proteins
 To optimize protein structure prediction from predicted contacts we
 developed PconsFold, a pipeline for ab-initio protein structure
 prediction of  single-domain proteins, see Figure~\ref{fig:pipeline}. PconsFold is based on predicted
-amino-acid contacts from PconsC. These contacts are utilized within
+amino acid contacts from PconsC. These contacts are utilized within
 Rosetta to fold a given protein sequence from scratch. We benchmark
 our method on two datasets and compare it to the CNS~\cite[]{Brunger18007608} protocol used in EVfold
 \cite[]{marks_protein_2011}. It was found that the improved quality of predicted contacts
@@ -444,7 +444,7 @@ Further, we examined two quality assessments that have been reported
 to show good ability to identify accurate protein models, ProQ2~\cite[]{ray_improved_2012} and Dope~\cite[]{Shen17075131}.
 The ProQ2 quality did not perform well on EVfold-PLM models but only slightly worse than
 Pcons on models from PconsFold and Rosetta/plmDCA. We also tested a
-combination of ProQ and Pcons, as in \cite{wallner_pcons.net:_2007}. However, the results are omitted
+combination of ProQ2 and Pcons, as in \cite{wallner_pcons.net:_2007}. However, the results are omitted
 since they were not significantly different from those of Pcons
 alone. DOPE scoring of EVfold-PLM models worked almost as good as Pcons,
 but we observe a strong decline in average model quality for PconsFold
@@ -612,7 +612,7 @@ better-predicted contacts the generated models are of higher quality,
 i.e. future improvements in contact predictions will result in higher
 quality models. {\color{red}According to
 \cite{kamisetty_assessing_2013} there are 422 protein families
-without known structure that are suitable for coevolution-based
+without known structure that are suitable for co-evolution based
 contact prediction methods. This number will surely increase due
 to improved contact prediction methods and growing sequence
 databases at increasing rates.} A comparison between using Rosetta and
@@ -626,7 +626,7 @@ stopping criterion for decoy generation, another option is to use both
 CNS and Rosetta and then try to identify the optimal model.
 {\color{red}Our results on different fold classes show that model
 quality, especially in beta-sheet containing proteins, could be
-even further enhanced by focussing future work on long-range
+even further enhanced by focusing future work on long-range
 contacts.}
 
 
