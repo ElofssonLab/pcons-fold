@@ -168,31 +168,31 @@ Overall a nicely written paper and technically sound study. The title
 seems intuitively obvious title but it is good to see improvements
 confirmed and quantified.
 
-The abstract is quite technical - maybe explain what each of the
+1. The abstract is quite technical - maybe explain what each of the
 methods mentioned actually do for more general readers.
 
 We have edited the abstract accordingly.
 
 
-In section 2.1 the authors state “Due to technical reasons…” this is
+2. In section 2.1 the authors state “Due to technical reasons…” this is
 vague please explain.
 
 We now included 1JBE to all results and updated the figures
 accordingly. This sentence was removed from the manuscript. 
 
 
-In section 2.2 the equation n=f.l is also vague - perhaps show a
+3. In section 2.2 the equation n=f.l is also vague - perhaps show a
 worked example.
 
-Typo in section 2.4 “folding” not “foldig”.
+4. Typo in section 2.4 “folding” not “foldig”.
 
-In section 2.7 you could refer to figure 2.
+5. In section 2.7 you could refer to figure 2.
 
 Thank you! We included your suggestions in the manuscript and fixed
 the error.
 
 
-In Figure 2b why is only a subset of proteins used - is the effect
+6. In Figure 2b why is only a subset of proteins used - is the effect
 not seen on the other proteins?
 
 A subset is used due to limitations in computational time. However, we
@@ -202,19 +202,19 @@ is seen on the other proteins as well. We also extended the text to answer
 this question.
 
 
-Does Supplementary Table 1 exist?
+7. Does Supplementary Table 1 exist?
 
 Yes, it can be found in supplementary.pdf.
 
 
-In section 3.1, 5th paragraph, 1st sentence could be reworded “In
+8. In section 3.1, 5th paragraph, 1st sentence could be reworded “In
 addition, improvements in contact prediction methods further increases
 the quality…”
 
 Thanks for noting this. It has been fixed.
 
 
-Figure 3a is interesting and a nice way to compare approaches on the
+9. Figure 3a is interesting and a nice way to compare approaches on the
 same plot. Perhaps you could show how the individual confidence score
 cutoffs related to the TM-scores? Can you give optimal confidence
 score cut-offs for each contact method? 
@@ -222,22 +222,24 @@ score cut-offs for each contact method?
 We have added standard errors to the plot.
 
 
-In section 3.2 again “Due to technical reasons…” be more specific.
+10. In section 3.2 again “Due to technical reasons…” be more specific.
 
 We have expanded these sentences. 
 
 
-Table 1 is not totally clear. What is the baseline score for each
+11. Table 1 is not totally clear. What is the baseline score for each
 method column? Perhaps use a more descriptive title.
 
 We have added the information for Rosetta without contact predictions alone.
 
 
-Finally, the data set is quite small - are the differences observed significant?
+12. Finally, the data set is quite small - are the differences observed significant?
 
 Regarding Table 1: an all-to-all pairwise t-test analysis of the
-differences in TM-score showed that the difference is significant
-with >95% confidence if its absolute value is 0.02 or larger. Table 2:
-Here we have also added p-values to show the significance of the
-differences.
+differences in TM-score showed that the difference is significant with
+>95% confidence if its absolute value is 0.02 or larger. Table 2: Here
+did all-against-all one-sample t-tests of the TM-score difference.
+This revealed that the difference between two TM-score values is
+significant with $>$95\% confidence if its absolute value is 0.02 or
+above. We updated the manuscript accordingly.
 
