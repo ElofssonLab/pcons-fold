@@ -5,6 +5,7 @@
 
 \usepackage{hyperref}
 
+\newcommand{\red}{\textcolor{red}}
 
 
 \begin{document}
@@ -30,27 +31,24 @@ $^{5}$Computational Biology Center, Memorial Sloan-Kettering Cancer Center, New 
 \begin{abstract}
 
 \section{Motivation:}
-Application of maximum entropy and related statistical methods have shown that the
-quality of protein contact prediction from evolutionary information
-can be improved significantly if direct and indirect information is
-separated, provided a sufficient number of related sequences is
-available. It was shown that the contact predictions alone contain
-sufficient information to predict the structure of many
-proteins. However, since the first reports there have been
-improvements in the contact prediction methods. Further there also
-exist slower, but potentially more accurate methods to model the
-proteins. Here, we ask how much the final models are improved if (i)
-improved contact predictions are used and (ii) if Rosetta is used to
-model the proteins.
+\red{Recently is has been shown} that the quality of protein contact
+prediction from evolutionary information can be improved significantly
+if direct and indirect information is separated. \red{Given
+  sufficiently large protein families the contact predictions} contain
+sufficient information to predict the structure of many protein
+\red{families}. However, since the first \red{studies contact
+  prediction methods have improved}. Here, we ask how much the final
+models are improved if improved contact predictions are used.
 
 
-\section{Results:} Using the same 12 proteins as in the original
-publication of EVfold the TM-score of the top ranked models are
-improved by on average 33\%.  We find that on average the quality is
-improved with about 15\% when the improved contacts from plmDCA are
-used and another 16\% when PconsC is used. Using Rosetta instead of
-CNS does not significantly improve global model accuracy. However, the
-chemistry of models generated with Rosetta is improved.
+\section{Results:} \red{In a small benchmark of 12 proteins from} we
+show that the TM-score of top ranked models are improved by on average
+33\% \red{using Pcons-fold compared to the orginal version of EVfold}.
+In a larger benchmark we find that the quality is improved with
+15-30\% \red{when using PconsC in comparson to earlier contact
+  prediction methods.  Further,} using Rosetta instead of CNS does not
+significantly improve global model accuracy \red{but} the chemistry of
+models generated with Rosetta is improved.
 
 \section{Availability:}
 PconsFold is a fully automated pipeline for ab-initio protein
