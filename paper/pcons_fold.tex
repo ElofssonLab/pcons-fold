@@ -5,7 +5,6 @@
 
 \usepackage{hyperref}
 
-\newcommand{\red}{\textcolor{red}}
 
 
 \begin{document}
@@ -31,23 +30,23 @@ $^{5}$Computational Biology Center, Memorial Sloan-Kettering Cancer Center, New 
 \begin{abstract}
 
 \section{Motivation:}
-\red{Recently is has been shown} that the quality of protein contact
+{Recently is has been shown} that the quality of protein contact
 prediction from evolutionary information can be improved significantly
-if direct and indirect information is separated. \red{Given
-  sufficiently large protein families the contact predictions} contain
+if direct and indirect information is separated. Given
+  sufficiently large protein families the contact predictions contain
 sufficient information to predict the structure of many protein
-\red{families}. However, since the first \red{studies contact
-  prediction methods have improved}. Here, we ask how much the final
+families. However, since the first studies contact
+  prediction methods have improved. Here, we ask how much the final
 models are improved if improved contact predictions are used.
 
 
-\section{Results:} \red{In a small benchmark of 15 proteins} we
+\section{Results:} {In a small benchmark of 15 proteins} we
 show that the TM-scores of top ranked models are improved by on average
-33\% \red{using PconsFold compared to the original version of EVfold}.
+33\% {using PconsFold compared to the original version of EVfold}.
 In a larger benchmark we find that the quality is improved with
-15-30\% \red{when using PconsC in comparison to earlier contact
+15-30\% {when using PconsC in comparison to earlier contact
   prediction methods.  Further,} using Rosetta instead of CNS does not
-significantly improve global model accuracy \red{but} the chemistry of
+significantly improve global model accuracy {but} the chemistry of
 models generated with Rosetta is improved.
 
 \section{Availability:}
@@ -158,9 +157,9 @@ Predicted contacts were ranked according to the confidence score
 assigned by the respective contact prediction method. For each protein
 we selected $n = f \cdot l$ top-ranked contacts, where $l$ represents
 the length of the protein sequence and $f$ a factor to scale $n$
-relative to sequence length. \red{ Consider $f$ is set to 1.0.
+relative to sequence length. Consider $f$ is set to 1.0.
 A protein with length 100 amino acids will thus be constrained by the
-first 100 predicted contacts.}
+first 100 predicted contacts.
 
 
 
@@ -224,7 +223,7 @@ that it uses pseudolikelihood maximization (plm) on all data, instead of the na\
 Folding with EVfold-PLM was performed using CNS and the same protocol
 as described before~\cite[]{marks_protein_2011}. Here, the distance
 geometry protocol is initially used and followed by a short simulated
-annealing. The CNS based \red{folding} protocol used in EVfold is approximately
+annealing. The CNS based {folding} protocol used in EVfold is approximately
 one order of magnitude faster than the Rosetta protocol used in
 PconsFold. In addition PconsC is at least four times slower than just
 running the contact predictions used in EVfold-PLM.
@@ -279,7 +278,7 @@ the structure (native or model) with a cutoff at 8 \AA.
 
 \subsection{Model quality assessment}
 
-\red{Accurate stereochemistry becomes important when the predicted models
+{Accurate stereochemistry becomes important when the predicted models
 are of correct overall fold. Therefore,} we used MolProbity \cite[]{chen_molprobity:_2010} to assess the chemical
 model quality. The MolProbity tool {\tt oneline-analysis} was used to 
 detect clashes and to evaluate backbone dihedrals as well as 
@@ -296,7 +295,7 @@ structures are provided in the Supplementary Material.
 \subsection{Running time}
 A reduction from 20,000 to 2,000 decoy structures corresponds to a 10-fold
 decrease of runtime during the Rosetta folding step but also leads to an
-expected decline in average model quality\red{, see Figure~\ref{fig:ros}a}. On one core of an Intel
+expected decline in average model quality, see Figure~\ref{fig:ros}a. On one core of an Intel
 E5-2660 (2.2 GHz Sandybridge), the calculation of one decoy takes
 between 1 and 10 minutes for the shortest and longest protein in the
 PSICOV dataset respectively. To compute 2,000 decoys for each protein
@@ -337,15 +336,15 @@ setting, ie. using 2000 models.
 We selected the FADE function to incorporate predicted residue
 contacts into Rosetta's native energy function. We then optimized the
 parameter $w$ (well-depth) of FADE (Equation~\ref{eq:fade}).
-\red{A subset of 14 proteins of the PSICOV dataset, see
+{A subset of 14 proteins of the PSICOV dataset, see
 Supplementary Table 1, was used to reduce CPU hours of this step.} The
 resulting TM-scores are shown in Figure~\ref{fig:ros}(b). The energy
 term from spatial constraints diminishes with well-depth values of
 -0.5 and above. This leads to a significant decrease in model quality.
 Stronger weights than -5.0  put a larger absolute weight on the
-constraints resulting in higher model qualities. \red{ This
+constraints resulting in higher model qualities. This
 trend can also be observed when looking at the full dataset. The
-average TM-score decreases to 0.28 using a well-depth of -1.0.} At the
+average TM-score decreases to 0.28 using a well-depth of -1.0. At the
 end we choose to use a value of -15.0 to achieve high model quality
 without outweighing Rosetta's internal energy function completely.
 
@@ -359,7 +358,7 @@ without outweighing Rosetta's internal energy function completely.
  Rosetta/PSICOV (black squares). For each protein the number of top
  ranked contacts was selected relative to its sequence length. A value
  of 1.0 on the $x$-axis represents one
- contact per residue on average. \red{Error bars indicate
+ contact per residue on average. {Error bars indicate
  standard errors.} b) TM-scores are compared
  to the PPV of underlying contact maps for PconsFold (using
  PconsC). The colors represent all four CATH fold classes. Lines 
@@ -372,7 +371,7 @@ contact information. Figure~\ref{fig:main}a shows that predicted contacts genera
 quality, regardless of method or amount of contacts. 
 
 
-\red{In addition, improvements in contact prediction methods further increase the quality
+{In addition, improvements in contact prediction methods further increase the quality
 of predicted structures.} With an average TM-score of 0.55
 PconsFold, i.e. using PconsC contacts provides a 10\% improvement
 over using PSICOV or plmDCA contacts. This observation is consistent
@@ -401,15 +400,15 @@ to be modeled less accurate.
 Proteins belonging to the {\it mainly alpha} CATH fold class seem to
 be easier to fold than proteins from the {\it alpha \& beta} fold
 class and proteins from the {\it mainly beta} fold class seem to be
-hardest to fold, see Figure~\ref{fig:main}b \red{ and
+hardest to fold, see Figure~\ref{fig:main}b { and
 Supplementary Figure 1}. On average predicted contact maps in
 mainly $\alpha$-helical proteins (blue) have similar or lower PPV
 values than those of $\beta$-sheet containing proteins (green and
 yellow), but the resulting models are more accurate in terms of
-TM-score. \red{This might be explained by higher
+TM-score. This might be explained by higher
 contact-order \cite[]{Plaxco1998985} in beta-sheet proteins, which
 renders such proteins more difficult to fold
-\cite[]{bradley_improved_2006}.}
+\cite[]{bradley_improved_2006}.
 
 
 
@@ -419,14 +418,14 @@ renders such proteins more difficult to fold
 Table~\ref{tab:qa} summarizes the evaluation of different MQAPs on the
 predictions for the PSICOV dataset. It shows average TM-scores for
 top-ranked models after re-ranking all models with each MQAP.
-\red{The difference between two TM-score values is significant
+{The difference between two TM-score values is significant
 with $>$95\% confidence if its absolute value is 0.02 or above.
 Due to the different ways constraints are used within CNS and
 Rosetta, we did not apply Rosetta's internal scoring function to
-the models generated by CNS.} \red{To provide a TM-score
+the models generated by CNS.} {To provide a TM-score
 baseline we ran the Rosetta folding step without constraints and
 using the internal scoring only. This resulted in an average
-TM-score of 0.34.} \red{For PconsFold and Rosetta/plmDCA the
+TM-score of 0.34.} {For PconsFold and Rosetta/plmDCA the
 internal scoring performed best, which is indicated by the highest
 average TM-score in Table~\ref{tab:qa}.} The internal scoring
 function takes into account the number of satisfied predicted
@@ -451,7 +450,7 @@ but we observe a strong decline in average model quality for PconsFold
 and Rosetta/plmDCA. 
 
 \begin{table}[!t]
-    \processtable{\red{Average TM-scores for top-ranked models.
+    \processtable{{Average TM-scores for top-ranked models.
     Models were ranked by different MQAPs.} \label{tab:qa}}
 {\begin{tabular}{llll}\toprule
         Method & EVfold-PLM & Rosetta/plmDCA & PconsFold \\ \midrule
@@ -549,7 +548,7 @@ models have slightly less clashes than the models from PconsFold. The
 average final MolProbity score is with 1.85 better for PconsFold then
 2.38 for EVfold-PLM. This corresponds to a better average MolProbity
 percentile rank of 80.69 for PconsFold than the average rank of 54.21
-for EVfold-PLM. \red{Additional analysis with PROCHECK confirmed this
+for EVfold-PLM. {Additional analysis with PROCHECK confirmed this
 trend with 0.1\% Ramachandran outliers for PconsFold and 8.6\% for EVfold.}
 
 
@@ -559,14 +558,14 @@ as published in \citeauthor{marks_protein_2011}
 \citeyear{marks_protein_2011}, with results from the current
 EVfold-PLM and PconsFold with 20,000 generated decoys. With an average
 TM-score of 0.55 EVfold-PLM performs 15\% better than EVfold with mean
-field \red{within the 90\% significance interval}, showing the
+field {within the 90\% significance interval}, showing the
 importance of improved contact prediction. When using PconsFold
 there is an additional improvement of 16\% to an average TM-score
-of 0.64 \red{within the 95\% significance interval}. This
+of 0.64 {within the 95\% significance interval}. This
 further supports our observation that improved contact maps
 improve structure prediction.
 
-\red{Generally, co-evolution based methods are applicable to larger proteins, as
+{Generally, co-evolution based methods are applicable to larger proteins, as
 earlier studies on membrane proteins have shown
 \cite[]{hopf_three-dimensional_2012, nugent_accurate_2012}. Limitations
 are given by the number of available sequences per residue
@@ -593,11 +592,11 @@ SPTB2\_HUMAN & 0.37 & 0.51 & 0.74 \\
 THIO\_ALIAC & 0.55 & 0.56  & 0.83 \\
 TRY2\_RAT & 0.53 ** & 0.78  & 0.54 \\
 YES\_HUMAN & 0.35 & 0.31  & 0.57 \\ \midrule
-Mean & 0.48 & 0.55 \red{(0.09$^\dagger$)} & 0.64 \red{(0.04$^\ddagger$)} \\ \botrule
+Mean & 0.48 & 0.55 {(0.09$^\dagger$)} & 0.64 {(0.04$^\ddagger$)} \\ \botrule
 \end{tabular}}{* The Uniprot entry A8MVQ9\_HUMAN of the EVfold
 publication was renamed into CD209\_HUMAN. ** This value was corrected
 as in the original publication it showed the value for the best
-possible model. \red{ $\dagger$ p-value for a one-sample t-test of TM-score
+possible model. { $\dagger$ p-value for a one-sample t-test of TM-score
 difference to EVfold TM-scores. $\ddagger$ p-value for a one-sample t-test of
 TM-score difference to EVfold-PLM TM-scores.}}
 \end{table}
@@ -610,7 +609,7 @@ Here, we show that improved contact predictions from PconsC
 structure prediction. Further, it is clear that for proteins with
 better-predicted contacts the generated models are of higher quality,
 i.e. future improvements in contact predictions will result in higher
-quality models. \red{According to
+quality models. {According to
 \cite{kamisetty_assessing_2013} there are 422 protein families
 without known structure that are suitable for co-evolution based
 contact prediction methods. This number will surely increase due
@@ -624,7 +623,7 @@ an improved folding protocol would improve the models. One option
 would be to use model-PPV as a measure of model quality, or as a
 stopping criterion for decoy generation, another option is to use both
 CNS and Rosetta and then try to identify the optimal model.
-\red{Our results on different fold classes show that model
+{Our results on different fold classes show that model
 quality, especially in beta-sheet containing proteins, could be
 even further enhanced by focusing future work on long-range
 contacts.}
