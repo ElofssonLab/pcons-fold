@@ -22,6 +22,13 @@ please cite the following publication:
 
 """)
 
+### parse parameters
+if len(sys.argv) < 4:
+    sys.stderr.write('Usage: ./%s [-c n_cores] [-n n_decoys] [-m n_models]\n' % sys.argv[0].strip('./'))
+    sys.stderr.write('            [-f factor] [--norelax] [--nohoms]\n')
+    sys.stderr.write('            <hhblits db> <jackhmmer db> <sequence file>\n')
+    sys.exit(0)
+
 sys.stderr.write('\nTesting dependencies...\n')
 
 if rosetta_flag:
@@ -159,11 +166,6 @@ else:
 
 sys.stderr.write('Dependencies OK.\n')
 
-
-### parse parameters
-if len(sys.argv) < 4:
-    print 'Usage: ./', sys.argv[0], ' [-c n_cores] [-n n_decoys] [--norelax] [--nohoms] <hhblits db> <jackhmmer db> <sequence file>'
-    sys.exit(0)
 
 nohoms_flag = False
 relax_flag = True
