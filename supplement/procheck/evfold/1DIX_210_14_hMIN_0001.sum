@@ -1,0 +1,24 @@
+
+ +----------<<<  P  R  O  C  H  E  C  K     S  U  M  M  A  R  Y  >>>----------+
+ |                                                                            |
+ | ../1DIX_210_14_hMIN_0001.pdb   2.0                            204 residues |
+ |                                                                            |
+*| Ramachandran plot:   43.0% core   26.2% allow   22.1% gener    8.7% disall |
+ |                                                                            |
+*| All Ramachandrans:   71 labelled residues (out of 202)                     |
++| Chi1-chi2 plots:      1 labelled residues (out of 120)                     |
++| Main-chain params:    5 better     0 inside      1 worse                   |
+ | Side-chain params:    5 better     0 inside      0 worse                   |
+ |                                                                            |
+*| Residue properties: Max.deviation:     5.8              Bad contacts:    7 |
+*|                     Bond len/angle:   11.4    Morris et al class:  4  1  2 |
++|     1 cis-peptides                                                         |
++| G-factors           Dihedrals:  -0.58  Covalent:  -0.18    Overall:  -0.37 |
+ |                                                                            |
+ | M/c bond lengths:100.0% within limits   0.0% highlighted                   |
+*| M/c bond angles:  88.9% within limits  11.1% highlighted       6 off graph |
++| Planar groups:    98.7% within limits   1.3% highlighted                   |
+ |                                                                            |
+ +----------------------------------------------------------------------------+
+   + May be worth investigating further.  * Worth investigating further.
+

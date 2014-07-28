@@ -1,0 +1,24 @@
+
+ +----------<<<  P  R  O  C  H  E  C  K     S  U  M  M  A  R  Y  >>>----------+
+ |                                                                            |
+ | ../CHEY_ECOLI_110_12_hMIN.pdb   2.0                           124 residues |
+ |                                                                            |
+*| Ramachandran plot:   62.7% core   20.0% allow    8.2% gener    9.1% disall |
+ |                                                                            |
+*| All Ramachandrans:   29 labelled residues (out of 122)                     |
+*| Chi1-chi2 plots:      4 labelled residues (out of  78)                     |
++| Main-chain params:    5 better     0 inside      1 worse                   |
+ | Side-chain params:    5 better     0 inside      0 worse                   |
+ |                                                                            |
++| Residue properties: Max.deviation:     6.8              Bad contacts:    1 |
+ |                     Bond len/angle:    2.5    Morris et al class:  3  2  2 |
+ |                                                                            |
+ | G-factors           Dihedrals:  -0.27  Covalent:   0.61    Overall:   0.08 |
+ |                                                                            |
+ | M/c bond lengths:100.0% within limits   0.0% highlighted                   |
+ | M/c bond angles:  99.6% within limits   0.4% highlighted                   |
+ | Planar groups:   100.0% within limits   0.0% highlighted                   |
+ |                                                                            |
+ +----------------------------------------------------------------------------+
+   + May be worth investigating further.  * Worth investigating further.
+
