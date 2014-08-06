@@ -115,7 +115,7 @@ def rescore_structures(scores_sorted, relax_flag):
         i += 1
     
 
-def compare_to_native(scores_sorted, relax_flag, rescore_flag, native_fname='native.pdb', name=''):
+def compare_to_native(scores_sorted, relax_flag, rescore_flag, native_fname='native.pdb', name='', chain='A'):
 
     scores = defaultdict(list)
     rosetta_scores = []
@@ -148,7 +148,7 @@ def compare_to_native(scores_sorted, relax_flag, rescore_flag, native_fname='nat
             score_filename = '%d.%s.%s.TMscore' % (i, run, tag)
 
         native_aligned_fname = native_fname[:-4] + '.aligned.pdb'
-        fix_numbering.fix(model_filename, native_fname, native_aligned_fname)
+        fix_numbering.fix(model_filename, native_fname, native_aligned_fname, chain2=chain)
         
         score_str = check_output(['%s' % tmscore_binary, model_filename, native_aligned_fname])
         score_f = open(score_filename, 'w')

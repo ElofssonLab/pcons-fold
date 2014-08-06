@@ -3,7 +3,7 @@ import sys
 sys.path.append('/bubo/sw/apps/bioinfo/biopython/1.59/tintin/lib/python')
 from Bio import pairwise2
 
-from parsing import parse_pdb
+import parse_pdb
 
 
 
