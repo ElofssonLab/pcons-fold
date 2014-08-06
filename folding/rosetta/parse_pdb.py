@@ -13,6 +13,7 @@ def parse_atm_record(line):
     record['res_name'] = line[17:20].strip()
     record['chain'] = line[21]
     record['res_no'] = int(line[22:26])
+    record['insert'] = line[26].strip()
     record['x'] = float(line[30:38])
     record['y'] = float(line[38:46])
     record['z'] = float(line[46:54])
@@ -22,7 +23,76 @@ def parse_atm_record(line):
     return record
 
 
-def read(pdbfile):
+def read(pdbfile, chain='', model=1):
+
+    header = ''
+    res_lst = []
+    atm_lst = []
+    tail = ''
+
+    seen_atoms = False
+    in_atoms = False
+    in_model = False
+    curr_resi = 0
+    prev_resi = 0
+    
+    for line in pdbfile:
+        if line.startswith('MODEL') and int(line.strip().split()[-1]) == model:
+            in_model = True
+            header += line
+        elif in_model and line.startswith('TER'):
+            atm_record = parse_atm_record(atm_lst[-1])
+            if chain and not chain == atm_record['chain']:
+                continue
+            seen_atoms = True
+            #print "seen_atoms model"
+            #print len(res_lst)
+            #in_atoms = False
+            tail += line
+        elif in_model and line.startswith('ENDMDL'):
+            in_model = False
+            tail += line
+        elif line.startswith('MODEL') and not int(line.strip().split()[-1]) == model:
+            continue
+        elif not in_model and line.startswith('TER'):
+            atm_record = parse_atm_record(atm_lst[-1])
+            if chain and not chain == atm_record['chain']:
+                continue
+            seen_atoms = True
+            #in_atoms = False
+            #print "seen atoms"
+            #print len(res_lst)
+            continue
+        elif not in_model and line.startswith('ENDMDL'):
+            continue
+        elif not line.startswith('ATOM') and not seen_atoms:
+            header += line
+        elif not line.startswith('ATOM') and seen_atoms:
+            tail += line
+        elif in_model or ((not seen_atoms) and (not in_model)):
+            atm_record = parse_atm_record(line)
+            if chain and not chain == atm_record['chain']:
+                atm_lst = [line]
+                continue
+            if not in_atoms:
+                curr_resi = atm_record['res_no']
+                prev_resi = curr_resi
+            in_atoms = True
+            curr_resi = atm_record['res_no']
+            if curr_resi == prev_resi:
+                atm_lst.append(line)
+            else:
+                res_lst.append(atm_lst)
+                atm_lst = [line]
+            prev_resi = curr_resi
+    res_lst.append(atm_lst)
+     
+    pdbfile.close()
+    pdb_lst = [header, res_lst, tail]
+    return pdb_lst
+
+
+def read_chain(pdbfile, chain):
 
     header = ''
     res_lst = []
@@ -40,6 +110,8 @@ def read(pdbfile):
             tail += line
         else:
             atm_record = parse_atm_record(line)
+            if not atm_record['chain'] == chain:
+                continue
             if not seen_atoms:
                 curr_resi = atm_record['res_no']
                 prev_resi = curr_resi
@@ -59,6 +131,7 @@ def read(pdbfile):
     return pdb_lst
 
 
+
 def write(pdb_lst, outfile):
 
     outfile.write(pdb_lst[0])
@@ -74,6 +147,10 @@ def write(pdb_lst, outfile):
 def get_coordinates(pdbfile, chain):
 
     res_dict = defaultdict(list)
+
+    if not chain:
+        chain = get_first_chain(pdbfile)
+        pdbfile.seek(0)
 
     for line in pdbfile:
         if not line.startswith('ATOM'):
@@ -127,100 +204,59 @@ def get_cb_coordinates(pdbfile, chain):
     cb_lst = []
     res_dict = defaultdict(list)
 
+    if not chain:
+        chain = get_first_chain(pdbfile)
+        pdbfile.seek(0)
+
     for line in pdbfile:
         if not line.startswith('ATOM'):
             continue
+
         atm_record = parse_atm_record(line)
+
         if atm_record['chain'] != ' ' and atm_record['chain'] != chain:
             continue
 
         res_i = atm_record['res_no']
         
+        if atm_record['insert'] == 'X':
+            res_i = res_i * 0.001
+
         atm = [float('inf'), float('inf'), float('inf')]
-        if 'GLY' in atm_record['res_name'] and atm_record['atm_name'] == 'CA':
+
+        if atm_record['atm_name'] == 'CA':
                 atm = [atm_record['x'], atm_record['y'], atm_record['z']]
                 res_dict[res_i].append(np.array(atm))    
         elif atm_record['atm_name'] == 'CB':
                 atm = [atm_record['x'], atm_record['y'], atm_record['z']]
-                res_dict[res_i].append(np.array(atm))    
+                res_dict[res_i].append(np.array(atm))  
         
-
-        """
-        line_arr = line.split()
-
-        if line_arr[4] != chain:
-            continue
-
-        if line_arr[2] == 'CA':
-            try:
-                res_i = int(line_arr[5])
-            except ValueError as exc:
-                continue
-            try:
-                atm = map(float, line_arr[6:9])
-            except ValueError as exc:
-                atm = [float('inf'), float('inf'), float('inf')]
-            res_dict[res_i].append(np.array(atm))
-        else:
-            if line_arr[2] != 'CB':
-                continue
-            try:
-                res_i = int(line_arr[5])
-            except ValueError as exc:
-                continue
-            if len(line_arr[3]) > 3 and line_arr[3].startswith('A'):
-                try:
-                    atm = map(float, line_arr[6:9])
-                except ValueError as exc:
-                    atm = [float('inf'), float('inf'), float('inf')]
-                atm_count += 1
-                cb_lst.append(np.array(atm))
-                res_dict[res_i].append(np.array(atm))
-            elif len(line_arr[3]) == 3:
-                try:
-                    atm = map(float, line_arr[6:9])
-                except ValueError as exc:
-                    atm = [float('inf'), float('inf'), float('inf')]
-                atm_count += 1
-                cb_lst.append(np.array(atm))
-                res_dict[res_i].append(np.array(atm))
-        #print line_arr[2]
-        
-        if line_arr[3] == 'GLY' or line_arr[3] == 'AGLY':
-            if line_arr[2] != 'CA':
-                continue
-            try:
-                res_i = int(line_arr[5])
-            except ValueError as exc:
-                continue
-            try:
-                atm = map(float, line_arr[6:9])
-            except ValueError as exc:
-                atm = [float('inf'), float('inf'), float('inf')]
-            #atm = map(float, line_arr[6:9])
-            atm_count += 1
-            cb_lst.append(np.array(atm))
-        """
- 
     cb_lst = []
-    for i in xrange(res_i):
-        if len(res_dict[i+1]) > 1:
-            #print res_dict[i+1]
-            cb_lst.append(res_dict[i+1][1])
-        elif len(res_dict[i+1]) == 1:
-            #print res_dict[i+1]
-            cb_lst.append(res_dict[i+1][0])
+    num_res = len(res_dict)+2
+    tmp_i = 0
+    for i in res_dict.keys():
+        if len(res_dict[i]) > 1:
+            tmp_i += 1
+            cb_lst.append(res_dict[i][-1])
+        elif len(res_dict[i]) == 1:
+            tmp_i += 1
+            cb_lst.append(res_dict[i][0])
     #print atm_count 
     pdbfile.close()
-    #print cb_lst
     return cb_lst
 
 
-def get_atom_seq(pdbfile, chain):
+def get_atom_seq(pdbfile, chain='', model=1):
 
     three_to_one = {'ARG':'R', 'HIS':'H', 'LYS':'K', 'ASP':'D', 'GLU':'E', 'SER':'S', 'THR':'T', 'ASN':'N', 'GLN':'Q', 'CYS':'C', 'GLY':'G', 'PRO':'P', 'ALA':'A', 'ILE':'I', 'LEU':'L', 'MET':'M', 'PHE':'F', 'TRP':'W', 'TYR':'Y', 'VAL':'V', 'UNK': 'X'}
     res_dict = {}
     
+    in_model = False
+ 
+    if not chain:
+        chain = get_first_chain(pdbfile)
+        pdbfile.seek(0)
+
     res_name = ''
     for line in pdbfile:
         if not line.startswith('ATOM'):
@@ -228,8 +264,14 @@ def get_atom_seq(pdbfile, chain):
         atm_record = parse_atm_record(line)
         if atm_record['chain'] != ' ' and atm_record['chain'] != chain:
             continue
+        if atm_record['atm_name'] != 'CA':
+            continue
 
         res_i = atm_record['res_no']
+        
+        if atm_record['insert'] == 'X':
+            res_i = res_i * 0.001
+         
         #print atm_record['res_name']
         if atm_record['res_name'] in three_to_one:
             #res_name = three_to_one[atm_record['res_name']]
@@ -259,7 +301,6 @@ def get_first_chain(pdbfile):
         atm_record = parse_atm_record(line)
         break
 
-    pdbfile.close
     return atm_record['chain']
  
 
@@ -271,6 +312,6 @@ if __name__ == '__main__':
     chain = sys.argv[2]
     #print get_atom_seq(pdbfile, chain)
     pdbfile.close()
-    pdbfile = open(sys.argv[1], 'r')
+    #pdbfile = open(sys.argv[1], 'r')
     #print get_coordinates(pdbfile)
-    pdbfile.close()
+    #pdbfile.close()
