@@ -3,29 +3,23 @@ import os
 import shutil
 import operator
 from collections import defaultdict
-from subprocess import call
+import subprocess
 
 import parse_rosetta_scores
 import parse_tmscore
 import fix_numbering
 from localconfig import *
 
-# directory containing the rundir
-# there is a rundir for every core rosetta was run on
-# e.g. on Triolith 1 node = 16 cores => there are 16 rundirs (run_1, ..., run_16)
-#rootdir = '/home/x_mirmi/pcons-fold/folding/rosetta/test'
+def check_output(command):
+    return subprocess.Popen(command, stdout=subprocess.PIPE).communicate()[0]
 
-#rosetta_binary_dir = '/home/x_mirmi/glob/rosetta/rosetta_source/bin'
-#rosetta_db_dir = '/home/x_mirmi/glob/rosetta/rosetta_database'
-
-#tmscore_binary = '/home/x_mirmi/pcons-fold/folding/rosetta/dependencies/TMscore/run_TMscore.sh'
 
 
 def get_best_models(num, rundir_i, scorefile):
 
     scores_dict = parse_rosetta_scores.read_successful(rundir_i, scorefile)
     scorefile.close()
-    scores_sorted = sorted(scores_dict.iteritems(), key=operator.itemgetter(1), reverse=True)
+    scores_sorted = sorted(scores_dict.iteritems(), key=operator.itemgetter(1))
 
     return scores_sorted[:num]
 
@@ -40,7 +34,8 @@ def get_best_of_all_runs(num, nruns, rundir, scorefile_name='score.fsc'):
         curr_scores = get_best_models(num, rundir_i, scorefile)
         all_scores += curr_scores
 
-    all_scores_sorted = sorted(all_scores, key=lambda(x):x[1][0], reverse=True)
+    all_scores_sorted = sorted(all_scores, key=lambda(x):x[1][0])
+
     return all_scores_sorted[:num]
 
 
@@ -66,7 +61,7 @@ def extract_structures(scores_sorted):
         if os.path.exists('../%d.%s.%s.pdb' % (i, run, tag)):
             os.chdir(currdir)
             continue 
-        call(['%s/extract_pdbs.static.linuxgccrelease' % rosetta_binary_dir, 
+        check_output(['%s/extract_pdbs.linuxgccrelease' % rosetta_binary_dir, 
               '-in:file:silent', 'default.out', 
               '-in:file:tags', '%s' % tag, 
               '-database', rosetta_db_dir])
@@ -84,10 +79,9 @@ def relax_structures(scores_sorted):
         run = rundir_tag.split('/')[-2]
         os.chdir('%s/' % '/'.join(rundir.split('/')[:-1]))
         if os.path.exists('%d.%s.%s_0001.pdb' % (i, run, tag)):
-            #call(['mv', '%d.%s.%s_0001.pdb' % (i, run, tag), '%d.%s.%s_0001.pdb_backup' % (i, run, tag)])
             os.chdir(currdir)
             continue 
-        call(['%s/relax.static.linuxgccrelease' % rosetta_binary_dir, 
+        check_output(['%s/relax.linuxgccrelease' % rosetta_binary_dir, 
             '-in:file:s', '%d.%s.%s.pdb' % (i, run, tag), 
             '-in:file:fullatom', 
             '-relax:quick',
@@ -110,11 +104,8 @@ def rescore_structures(scores_sorted, relax_flag):
             model_filename = '%d.%s.%s_0001.pdb' % (i, run, tag)
         else:
             model_filename = '%d.%s.%s.pdb' % (i, run, tag)
-        #print rundir
-        #print '%s/%s/' % (rootdir, '/'.join(rundir.split('/')[:-1]))
         os.chdir('%s/%s/' % (rootdir, '/'.join(rundir.split('/')[:-1])))
-        #print os.path.exists('1.run_14.S_00000399_0001.pdb')
-        call(['%s/score.static.linuxgccrelease' % rosetta_binary_dir, 
+        check_output(['%s/score.linuxgccrelease' % rosetta_binary_dir, 
             '-in:file:s', model_filename, 
             '-out:nooutput', 
             '-database', rosetta_db_dir])
@@ -124,13 +115,12 @@ def rescore_structures(scores_sorted, relax_flag):
         i += 1
     
 
-
-
-def compare_to_native(scores_sorted, relax_flag, rescore_flag):
+def compare_to_native(scores_sorted, relax_flag, rescore_flag, native_fname='native.pdb', name='', chain='A'):
 
     scores = defaultdict(list)
     rosetta_scores = []
-    name = scores_sorted[0][0].split('/')[0]
+    if not name:
+       name = scores_sorted[0][0].split('/')[0]
     i = 0
     currdir = os.getcwd()
     for (rundir_tag, score_list) in scores_sorted:
@@ -142,12 +132,10 @@ def compare_to_native(scores_sorted, relax_flag, rescore_flag):
             protdir = '/'.join(rundir_tag.split('/')[:-2])
             run = ''
         else: 
-            #rundir = '/'.join(rundir_tag.split('/')[:-1])
             configdir = '/'.join(rundir_tag.split('/')[:-2])
             protdir = '/'.join(rundir_tag.split('/')[:-3])
             run = rundir_tag.split('/')[-2]
         os.chdir('%s/' % configdir)# (rootdir, '/'.join(rundir.split('/')[:-1])))
-        #print '%s/%s/' % (rootdir, configdir)
         if relax_flag:
             if rescore_flag:
                 model_filename = '%s.pdb' % '_'.join(tag.split('_')[:-1])
@@ -158,23 +146,25 @@ def compare_to_native(scores_sorted, relax_flag, rescore_flag):
         else:
             model_filename = '%d.%s.%s.pdb' % (i, run, tag)
             score_filename = '%d.%s.%s.TMscore' % (i, run, tag)
-        
-        fix_numbering.fix(model_filename, 'native.pdb')
 
-        call(['%s' % tmscore_binary, model_filename, 'native.aligned.pdb', score_filename])
+        native_aligned_fname = native_fname[:-4] + '.aligned.pdb'
+        fix_numbering.fix(model_filename, native_fname, native_aligned_fname, chain2=chain)
+        
+        score_str = check_output(['%s' % tmscore_binary, model_filename, native_aligned_fname])
+        score_f = open(score_filename, 'w')
+        score_f.write(score_str)
+        score_f.close()
+
         tmp_scores = parse_tmscore.read(open(score_filename))
         for key, score in tmp_scores.iteritems():
             scores[key].append(score)
 
-        #os.chdir('%s' % rootdir)
         os.chdir(currdir)
     
     avg_scores = {}
     for key, score_lst in scores.iteritems():
         avg_scores[key] = sum(score_lst) / len(score_lst)
 
-    #print 'Average scores of the top %d structures:' % (i - 1)
-    #print 'RMSD = %s\nTM-score = %s\nMaxSub = %s\nGDT-TS = %s\nGDT-HA = %s\n' % (avg_scores['RMSD'], avg_scores['TM-score'], avg_scores['MaxSub'], avg_scores['GDT-TS'], avg_scores['GDT-HA'])
     outstr = ''
     outstr += '%s\tRosetta-score\t%s\n' % (name, '\t'.join(map(str, rosetta_scores)))
     outstr += '%s\tRMSD\t%s\n' % (name, '\t'.join(map(str, scores['RMSD'])))
@@ -184,7 +174,6 @@ def compare_to_native(scores_sorted, relax_flag, rescore_flag):
     outstr += '%s\tGDT-HA\t%s\n' % (name, '\t'.join(map(str, scores['GDT-HA'])))
     print outstr
     return outstr
-    #print '%s\t%s\t%s\t%s\t%s\t%s' % (name, avg_scores['RMSD'], avg_scores['TM-score'], avg_scores['MaxSub'], avg_scores['GDT-TS'], avg_scores['GDT-HA'])
 
 
 if __name__ == '__main__':
@@ -206,11 +195,11 @@ if __name__ == '__main__':
     #print top_rundir
     #print top_tag
     #write_table(all_scores_sorted, open(top_scores_filename,'w'))
-    #extract_structures(all_scores_sorted)
+    extract_structures(all_scores_sorted)
     if relax_flag:
         relax_structures(all_scores_sorted)
     #print 'Name\tRMSD\tTM-score\tMaxSub\tGDT-TS\tGDT-HA'
-    #compare_to_native(all_scores_sorted, relax_flag, False)
+    compare_to_native(all_scores_sorted, relax_flag, False)
     #rescore_structures(all_scores_sorted, relax_flag)
     #configdir = '/'.join(rundir.split('/')[:-1])
     #all_rescores_sorted = get_best_models(num, configdir, open('%s/default.sc' % configdir, 'r'))

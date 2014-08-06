@@ -8,7 +8,7 @@ def read(rundir, scorefile):
         line_arr = line.strip().split()
         tag = line_arr[-1]
         rundir_tag = '%s/%s' % (rundir, tag)
-        scores_dict[rundir_tag] = line_arr[1:-1]
+        scores_dict[rundir_tag] = map(float, line_arr[1:-1])
 
     return scores_dict
 
@@ -25,11 +25,11 @@ def read_successful(rundir, scorefile):
         # when reading regular score files
         if tag.startswith('S_'):
             rundir_tag = '%s/%s' % (rundir, tag)
-            scores_dict[rundir_tag] = line_arr[1:-1]
+            scores_dict[rundir_tag] = map(float, line_arr[1:-1])
         # in case of rescoring
         elif not tag.startswith('F_'):
             rundir_tag = '%s/%s' % (rundir, tag)
-            scores_dict[rundir_tag] = line_arr[1:-1]
+            scores_dict[rundir_tag] = map(float, line_arr[1:-1])
 
     if len(scores_dict) == 0:
         scorefile.seek(0)
