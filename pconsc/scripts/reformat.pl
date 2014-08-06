@@ -1,16 +1,41 @@
-#! /usr/bin/perl -w
-#
-# reformat.pl version 1.1.4 (June 2005)
+#! /usr/bin/env perl
+
+# reformat.pl 
 # Reformat a multiple alignment file
 #
-# Please report bugs to johannes@soeding.com. Thank you.
+#     HHsuite version 2.0.16 (January 2013)
+#
+#     Reference: 
+#     Remmert M., Biegert A., Hauser A., and Soding J.
+#     HHblits: Lightning-fast iterative protein sequence searching by HMM-HMM alignment.
+#     Nat. Methods, epub Dec 25, doi: 10.1038/NMETH.1818 (2011).
 
+#     (C) Johannes Soeding, 2012
+
+#     This program is free software: you can redistribute it and/or modify
+#     it under the terms of the GNU General Public License as published by
+#     the Free Software Foundation, either version 3 of the License, or
+#     (at your option) any later version.
+
+#     This program is distributed in the hope that it will be useful,
+#     but WITHOUT ANY WARRANTY; without even the implied warranty of
+#     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#     GNU General Public License for more details.
+
+#     You should have received a copy of the GNU General Public License
+#     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+#     We are very grateful for bug reports! Please contact us at soeding@genzentrum.lmu.de
+
+#use lib $ENV{"HHLIB"}."/scripts";
+#use HHPaths;   # config file with path variables for nr, blast, psipred, pdb, dssp etc.
 use strict;
+use warnings;
 my $numres=100;             # number of residues per line
 my $desclen=1000;           # maximum number of characters in nameline
 my $ARGC=scalar(@ARGV);
 if ($ARGC<2) {
-    print("
+    die(" 
 Read a multiple alignment in one format and write it in another format
 Usage: reformat.pl [informat] [outformat] infile outfile [options] 
   or   reformat.pl [informat] [outformat] 'fileglob' .ext [options] 
@@ -32,7 +57,7 @@ Available output formats:
    a3m:     like a2m, but gaps aligned to inserts are omitted
    sto:     Stockholm format; sequences in just one block, one line per sequence
    psi:     format as read by PSI-BLAST using the -B option 
-   clu:     CLUSTAL format
+   clu:     Clustal format
 If no input or output format is given the file extension is interpreted as format 
 specification ('aln' as 'clu')
 
@@ -41,9 +66,9 @@ Options:
   -num      add number prefix to sequence names: 'name', '1:name' '2:name' etc
   -noss     remove secondary structure sequences (beginning with >ss_)
   -sa       do not remove solvent accessibility sequences (beginning with >sa_)
-  -M int    make all columns with less than X% gaps match columns 
-            (for output format a2m or a3m)
   -M first  make all columns with residue in first seuqence match columns 
+            (default for output format a2m or a3m)
+  -M int    make all columns with less than X% gaps match columns 
             (for output format a2m or a3m)
   -r        remove all lower case residues (insert states) 
             (AFTER -M option has been processed)
@@ -52,7 +77,7 @@ Options:
   -g '-'    write all gaps as '-'
   -uc       write all residues in upper case (AFTER all other options have been processed)
   -lc       write all residues in lower case (AFTER all other options have been processed)
-  -l        number of residues per line (for CLUSTAL, FASTA, A2M, A3M formats) 
+  -l        number of residues per line (for Clustal, FASTA, A2M, A3M formats) 
             (default=$numres)
   -d        maximum number of characers in nameline (default=$desclen)
 
@@ -64,7 +89,6 @@ Examples: reformat.pl 1hjra.a3m 1hjra.a2m
 #  clu:  clustal format (hmmer output)
 #  sel:  Selex format
 #  phy:  Phylip format
-    exit(1);
 }
 
 my $informat="";
@@ -82,8 +106,8 @@ my $n;       # number of sequences read in
 my $k;       # counts sequences for output
 my $remove_inserts=0;
 my $remove_gapped=0;
-my $matchmode="";     # do not change capitalization
-my $match_gaprule=0;  # columns with less than this percentage of gaps will be match columns
+my $matchmode=""; # do not change capitalization
+my $match_gaprule=0;   # columns with less than this percentage of gaps will be match columns
 my $v=2;
 my $update=0;
 my $nss=-1;  # index of secondary structure sequence
@@ -179,7 +203,7 @@ if(!$found) {die("\nError: $outformat is not a valid output format option\n");}
 #if($outformat eq "psi") {
 #   $remove_inserts=1;
 #}
-if($outformat eq "ufas") {$gap=""; $outformat="fas";}
+if($outformat eq "ufas") {$gap="";}
 
 
 if ($infile=~/\*/ || $outfile=~/^\./) # if infile contains '*' or outfile is just an extension
@@ -340,7 +364,7 @@ sub reformat()
 		if ($noss && ($line=~/^aa_/ || $line=~/^ss_/ || $line=~/^sa_/)) {next;} # do not read in >ss_ and >aa_ sequences
 		chomp($line);
 		if ($line!~/^(\S{1,20})([a-zA-Z0-9.-]{$residues_per_line})(\s+\d+)?$/) {
-		    die ("\nError found in CLUSTAL format in $infile, line $.: '$line'\n");
+		    die ("\nError found in Clustal format in $infile, line $.: '$line'\n");
 		} 
 		$name=$1;
 		$residues=$2;
@@ -378,25 +402,54 @@ sub reformat()
    # Read psi format
     elsif ($informat eq "psi")
     {
+	my $block=1;         # number of block currently read 
 	my $name;
-	my $first_block=1;
+	my $residues;
+	$n=0;                # sequence number of first block
+	$k=0;                # sequence index to zero for first block
 	
-	$n=0;
-	while ($line = <INFILE>) #scan through PsiBlast-output line by line
+	while ($line = <INFILE>)
 	{
+#	    print($namefieldlen.$line);
 	    $line=~tr/\r//d;
-	    if ($line=~/^\s*$/) {next;}
-	    if ($line!~/\s*(\S+)\s+(\S+)/) {
-		die ("\nERROR found in psi format: $!");
+	    if ($line=~/^\s*$/){                          # new sequence block starts
+		if ($k) {
+		    if ($n && $n!=$k) {die("\nError: different number of sequences in blocks 1 and $block of $infile\n");} 
+		    $block++;
+		    $n=$k;
+		    $k=0;  # set sequence index to zero for next block to read
+		}
+		next;
 	    }
-	    if ($line=~/^(aa|ss|sa)_/) {next;} # do not read in >ss_ and >aa_ sequences
-	    $names[$n]=$1;
-	    $seqs[$n]=$2;
-	    $n++;
+
+	    if ($noss && ($line=~/^aa_/ || $line=~/^ss_/ || $line=~/^sa_/)) {next;} # do not read in >ss_ and >aa_ sequences
+	    if ($line=~/^aa_/ || $line=~/^sa_/) {next;}     # do not read in >ss_ and >aa_ sequences
+	    if ($line=~/^ss_/) {
+#		    if ($line=~/^ss_conf/)  {next;} # comment out to read sequence with confidence values
+#		    if ($nss>=0) {next;}  # comment out: allow for two or more >ss_dssp and >ss_pred lines
+		$nss=$n;
+	    }  
+	    $line=~/^(\S+)\s+([ a-zA-Z0-9.-]+?)(\s+\d+)?$/;
+	    $name=$1;
+	    $residues=$2;
+	    $residues=~tr/ //d;
+	
+	    if ($block==1) {
+		$names[$k]=$name;
+		$seqs[$k]=$residues;
+	    } else {
+		$seqs[$k].=$residues;
+		if ($names[$k] ne $name) {
+		    print("WARNING: name of sequence $k in block 1 ($names[$k]) is not the same as in block $block ($name) in $infile\n");
+		}
+	    }
+#	    printf("%3i %3i %-16.16s %s\n",$block,$k,$names[$k],$seqs[$k]);
+	    $k++;
 	}
+	if ($k && $n && $n!=$k) {die("\nError: different number of sequences in blocks 1 and $block of $infile\n");} 
+	if (!$n) {$n=$k;}
     }
-    
-    
+        
     close INFILE;
     
     
@@ -478,6 +531,9 @@ sub reformat()
 ################################################################################################
 # Match state assignment
 ################################################################################################
+
+    # Default match state rule for a3m is -M first
+    if ($matchmode eq "" && ($outformat eq "a3m" || $outformat eq "a2m")) {$matchmode="first";}
 
     # Use gap rule for match state assignment?
     if ($matchmode eq "gaprule") {
@@ -640,7 +696,7 @@ sub reformat()
     ####################################################
     # Check that sequences have same length
     ####################################################
-    if ($outformat ne "a3m") {
+    if ($outformat ne "a3m" && $outformat ne "ufas") {
 	my $len=length($seqs[0]);
 	for($k=1; $k<$n; $k++) {
   	    if (length($seqs[$k])!=$len) {
