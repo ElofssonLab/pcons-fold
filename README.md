@@ -1,7 +1,7 @@
 PconsFold
 =========
 
-![PconsFold pipeline](https://github.com/MMichel/pcons-fold/blob/master/pipeline_horiz.png?raw=true)
+![PconsFold pipeline](https://github.com/ElofssonLab/pcons-fold/blob/master/pipeline_horiz.png?raw=true)
 
 A pipeline for protein folding using predicted contacts from PconsC and a  Rosetta folding protocol.
 
