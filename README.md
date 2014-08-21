@@ -75,4 +75,4 @@ The first script generates the file `(pconsc_output)-(factor).constraints` which
 
 ## Citation
 
-PconsFold: Improved contact predictions improve protein models. M Michel, S Hayat, MJ Skwark, C Sander, DS Marks and A Elofsson.
+__PconsFold: Improved contact predictions improve protein models.__ M Michel, S Hayat, MJ Skwark, C Sander, DS Marks and A Elofsson.
