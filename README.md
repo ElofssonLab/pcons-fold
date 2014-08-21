@@ -72,3 +72,7 @@ And then __fold the protein__ according to given predicted contacts with the fol
 
 The first script generates the file `(pconsc_output)-(factor).constraints` which is then used by Rosetta in the next step with `rosetta_constraintfile`.
 
+
+## Citation
+
+PconsFold: Improved contact predictions improve protein models. M Michel, S Hayat, MJ Skwark, C Sander, DS Marks and A Elofsson.
