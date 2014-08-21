@@ -166,10 +166,6 @@ else:
 
 sys.stderr.write('Dependencies OK.\n')
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 nohoms_flag = False
 relax_flag = True
 factor = 1.0
