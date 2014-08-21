@@ -5,7 +5,7 @@ import multiprocessing
 import subprocess
 
 if __name__ == '__main__':
-    print 'Please do not run me! Use run_pipeline.py'
+    print 'Please do not run me! Use pcons_fold.py'
     print '\n\tYours sincerely,\n\n\t', sys.argv[0]
     sys.exit(0)
 
