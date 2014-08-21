@@ -15,8 +15,10 @@ sys.stderr.write("""
      PconsFold : Improved contact predictions improve protein models 
 ****************************************************************************
 
-If you use PconsFold for protein structure prediction, 
-please cite:
+If you use PconsFold for protein structure prediction please cite:
+
+"PconsFold: Improved contact predictions improve protein models." 
+M Michel, S Hayat, MJ Skwark, C Sander, DS Marks and A Elofsson.
 
 -----------------------------------------------------------------------------
 
