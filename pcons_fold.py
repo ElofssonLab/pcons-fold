@@ -16,7 +16,7 @@ sys.stderr.write("""
 ****************************************************************************
 
 If you use PconsFold for protein structure prediction, 
-please cite the following publication:
+please cite:
 
 -----------------------------------------------------------------------------
 
