@@ -3,7 +3,9 @@ PconsFold
 
 ![PconsFold pipeline](https://github.com/ElofssonLab/pcons-fold/blob/master/pipeline_horiz.png?raw=true)
 
-A pipeline for protein folding using predicted contacts from PconsC and a  Rosetta folding protocol. You find supplementary data, such as protein IDs, sequences, native and predicted structures, predicted contacts at the bottom of the [release page](https://github.com/ElofssonLab/pcons-fold/releases/tag/v1.0).
+A pipeline for protein folding using predicted contacts from PconsC and a  Rosetta folding protocol. 
+
+You find __supplementary data__, such as protein IDs, sequences, native and predicted structures, predicted contacts at the bottom of the [release page](https://github.com/ElofssonLab/pcons-fold/releases/tag/v1.0).
 
 
 ## Pipeline overview:
