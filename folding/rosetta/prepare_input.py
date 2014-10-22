@@ -53,7 +53,7 @@ if __name__ == "__main__":
     if '-f' in sys.argv:
         idx = sys.argv.index('-f')
         try:
-            factor = int(sys.argv[idx+1])
+            factor = float(sys.argv[idx+1])
         except:
             print 'Factor of sequence length (determining number of constraints to be used during folding) -f must be float, %r is not. Default is %s.' % (sys.argv[idx+1], factor)
             sys.exit(1)
